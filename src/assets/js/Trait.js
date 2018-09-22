@@ -1,0 +1,156 @@
+import merge from 'deepmerge';
+import { mapActions, mapState, mapGetters } from 'vuex';
+
+export default class Trait {
+  constructor() {
+    this.app = {
+      components: {},
+      methods: {},
+      computed: {},
+      datas: [],
+      props: [],
+      watch: {},
+      createds: [],
+      mounteds: [],
+      traits: [],
+    };
+  }
+
+  layout(name) {
+    this.app.layout = name;
+    return this;
+  }
+
+  use(...traitstoapply) {
+    for (const trait of traitstoapply) {
+      if (typeof trait === 'string') {
+        // trait = await use('traits/' + trait)
+      }
+      this.applyTrait(trait);
+    }
+    return this;
+  }
+
+  with(...components) {
+    for (const componentpath of components) {
+
+      // Full Component is given
+      if(typeof componentpath == 'object') {
+        this.addComponent({ full: true, component: componentpath})
+      } 
+
+      // Component name is given
+      else {
+        const component = {}
+        if(componentpath.includes(':')) {
+          component.name = componentpath.split(':')[0]
+          component.path = componentpath.split(':')[1]
+        } else {
+          component.path = componentpath
+        }
+        this.addComponent(component);
+        }
+    }
+
+    return this;
+  }
+
+  methods(functions) {
+    for (const func in functions) {
+      this.app.methods[func] = functions[func];
+    }
+    return this;
+  }
+
+  computed(functions) {
+    for (const func in functions) {
+      this.app.computed[func] = functions[func];
+    }
+    return this;
+  }
+
+  method(name, func) {
+    this.app.methods[name] = func;
+    return this;
+  }
+
+  data(callback) {
+    this.app.datas.push(callback);
+    return this;
+  }
+
+  props(...props) {
+    this.app.props = this.app.props.concat(props);
+    return this
+  }
+
+  watch(name, callback) {
+    if(!callback) {
+      const watchers = name
+      Object.assign(this.app.watch, watchers)
+    } else {
+      this.app.watch[name] = callback
+    }
+    return this
+  }
+
+  created(callback) {
+    this.app.createds.push(callback);
+    return this;
+  }
+
+  mounted(callback) {
+    this.app.mounteds.push(callback);
+    return this;
+  }
+
+  actions(...actions) {
+    if (typeof actions[0] === 'object') {
+      actions = actions[0];
+    }
+    Object.assign(this.app.methods, mapActions(actions));
+    return this;
+  }
+
+  state(...states) {
+    if (typeof states[0] === 'object') {
+      states = states[0];
+    }
+    Object.assign(this.app.computed, mapState(states));
+    return this;
+  }
+
+  getters(...getters) {
+    if (typeof getters[0] === 'object') {
+      getters = getters[0];
+    }
+    Object.assign(this.app.computed, mapGetters(getters));
+    return this;
+  }
+
+  addComponent(component) {
+
+    // Full component is given
+    if(component.full) {
+      this.app.components[component.component.name] = component.component
+    }
+
+    // Component name is given
+    else {
+      const componentname = { from_path: component.path.toLowerCase().replace('/', '-'), given: component.name }
+
+      this.app.components[componentname.given || componentname.from_path] = this.loadComponent(component.path);
+    }
+
+    return this;
+  }
+
+  loadComponent(name) {
+    return () => import(`@/components/${name}.vue`);
+  }
+
+  applyTrait(trait) {
+    this.app = merge(this.app, trait.app);
+    return this;
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": "dodoninja",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@feathersjs/authentication-client": "^1.0.4",
+    "@feathersjs/feathers": "^3.1.7",
+    "@feathersjs/socketio-client": "^1.1.2",
+    "@saeris/vue-spinners": "^1.0.6",
+    "autosize": "^4.0.2",
+    "deepmerge": "^2.1.1",
+    "feathers-authentication-client": "^0.3.3",
+    "feathers-vuex": "^1.4.8",
+    "register-service-worker": "^1.0.0",
+    "socket.io-client": "^2.1.1",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.1",
+    "@vue/cli-plugin-eslint": "^3.0.1",
+    "@vue/cli-plugin-pwa": "^3.0.1",
+    "@vue/cli-service": "^3.0.1",
+    "@vue/eslint-config-airbnb": "^3.0.1",
+    "tailwindcss": "^0.6.5",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "@vue/airbnb"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {},
+      "tailwindcss": "tailwind.js"
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}

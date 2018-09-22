@@ -1,0 +1,42 @@
+[class*="-enter-active"], [class*="-leave-active"] {
+    transition: all 300ms ease-out;
+}
+
+.scale-enter, .scale-leave-to {
+    transform: translateX(-50px);
+}
+
+.slide-right-enter-active {
+    z-index: 10;
+}
+.slide-right-enter, .slide-right-leave-to {
+    transform: translateX(100%);
+}
+
+.modal-enter-active .content, .modal-leave-active .content, .modal-enter-active .dimmer, .modal-leave-active .dimmer {
+    transition: all 300ms ease-out;
+}
+.modal-enter .dimmer, .modal-leave-to .dimmer {
+    opacity: 0;
+}
+.modal-enter .content, .modal-leave-to .content {
+    transform: translateY(100%)
+}
+
+.list-item {
+    display: inline-block;
+    margin-right: 10px;
+}
+.list-item {
+transition: all 1s;
+display: inline-block;
+margin-right: 10px;
+}
+.list-enter, .list-leave-to
+/* .list-complete-leave-active below version 2.1.8 */ {
+opacity: 0;
+transform: translateY(30px);
+}
+.list-leave-active {
+position: absolute;
+}

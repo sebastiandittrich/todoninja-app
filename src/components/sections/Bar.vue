@@ -1,0 +1,25 @@
+<template>
+    <div class="flex flex-row justify-around items-center p-8">
+        <sections-item link="/tasks/do">
+            <i class="mi mi-Lightbulb mr-2"></i>
+            Do
+        </sections-item>
+        <sections-item link="/tasks/today">
+            <i class="mi mi-FavoriteStar mr-2"></i>
+            Today
+        </sections-item>
+        <sections-item link="/tasks/all">
+            <i class="mi mi-BulletedList mr-2"></i>
+            All
+        </sections-item>
+    </div>
+</template>
+
+<script>
+import Item from './Item';
+import Page from '@/assets/js/Page';
+
+export default new Page('SectionsBar')
+  .with('sections/Item')
+  .vue();
+</script>

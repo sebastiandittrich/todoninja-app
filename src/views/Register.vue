@@ -1,0 +1,65 @@
+<template>
+    <div class="h-screen" style="display: grid; grid-template: 'content' auto 'footer' 1fr / 1fr">
+        <div style="grid-area: content">
+            <div class="absolute pin-t pin-r z-0" style="z-index: -10">
+                <img src="img/logo-bg.svg" class="w-1/3 opacity-50 m-8 float-right">
+            </div>
+            <div class="font-bold text-blue flex flex-row items-center justify-start p-8 pt-16">
+                <img src="img/logo.svg" class="h-6 mr-4">
+                Todoninja
+            </div>
+            <div class="m-8 font-bold text-3xl">
+                Welcome!
+                <div class="text-grey-darker text-base font-normal mt-4">
+                    Lets get you started by creating an account.
+                </div>
+            </div>
+            <error class="mx-8" :error="error"></error>
+            <inputt classes="pb-2 mx-8" type="text" name="Full Name" placeholder="John Doe" v-model="name"></inputt>
+            <inputt classes="mt-4 pb-2 mx-8" name="Email" placeholder="john.doe@domain.com" type="email" v-model="email"></inputt>
+            <inputt classes="mt-4 pb-2 mx-8" name="Password" placeholder="********" type="password" v-model="password"></inputt>
+
+            <div class="button m-8" @click="submitForm">
+                Register
+            </div>
+
+            <SyncLoader color="#45547c" class="inline-block" :loading="loading"></SyncLoader>
+
+        </div>
+
+        <div class="bg-grey-lighter py-16 flex flex-row items-center justify-center self-end" style="grid-area: footer">
+            You already have an account? <router-link class="ml-4 link" to="/login">Sign in</router-link>
+        </div>
+
+    </div>
+</template>
+
+<script>
+import Page from '@/assets/js/Page';
+import form from '@/assets/js/traits/form';
+import guest from '@/assets/js/traits/guest';
+
+export default new Page('Register')
+  .use(form, guest)
+  .actions({
+    create: 'users/create',
+    authenticate: 'auth/authenticate',
+  })
+  .data(() => ({
+    name: '',
+    email: '',
+    password: '',
+  }))
+  .methods({
+    submitForm() {
+      this.load(async () => {
+        await this.create({ email: this.email, password: this.password, name: this.name });
+        await this.authenticate({ strategy: 'local', email: this.email, password: this.password });
+      })
+
+        .then(() => this.$router.push('/'))
+        .catch(this.showError);
+    },
+  })
+  .vue();
+</script>
