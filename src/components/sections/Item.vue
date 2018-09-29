@@ -8,7 +8,9 @@
 import Page from '@/assets/js/Page';
 
 export default new Page('SectionsItem')
-  .props('link')
+  .props({
+      link: String
+  })
   .vue();
 
 </script>

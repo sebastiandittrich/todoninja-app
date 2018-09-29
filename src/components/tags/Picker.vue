@@ -4,21 +4,24 @@
             <div v-for="tag of tags" @click="tagClick(tag.id)" :key="tag.id" :class="isActive(tag) ? 'border-blue text-blue' : 'border-grey text-grey'" class="whitespace-no-wrap transition rounded-full border py-1 px-4 mr-2">
                 {{ tag.name }}
             </div>
-            <div key="add" class="text-blue cursor-pointer flex flex-row items-center ml-2 pr-6 flex-no-wrap whitespace-no-wrap" @click="show_tags_creator = true">
-                <i class="mi mi-Add mr-2"></i>
+            <div key="add" class="text-blue cursor-pointer flex flex-row items-center ml-2 pr-6 flex-no-wrap whitespace-no-wrap" @click="showModal('tags-creator', $event)">
+                <i class="feather icon-plus mr-2"></i>
                 Add tag
             </div>
         </transition-group>    
-        <tags-creator :show="show_tags_creator" @hide="show_tags_creator = false"></tags-creator>
+        <tags-creator :state="modalState('tags-creator')" @hide="hideModal('tags-creator')" @created="tagCreated"></tags-creator>
     </div>
 </template>
 
 <script>
 import Page from '@/assets/js/Page'
+import hasModals from '@/assets/js/traits/hasModals'
 
 export default new Page('TagsPicker')
-    .props('value')
-    .with('tags/Creator')
+    .props({
+        value: Array
+    })
+    .use( hasModals({ 'tags-creator': 'tags/Creator' }) )
     .getters({
         tags_list: 'tags/list'
     })
@@ -35,6 +38,9 @@ export default new Page('TagsPicker')
             } else {
                 this.$emit('input', [ ...this.value, id ])
             }
+        },
+        tagCreated(tag) {
+            this.tagClick(tag.id)
         }
     })
     .computed({

@@ -1,22 +1,42 @@
 <template>
-    <div class="fixed pin-b bg-white w-full flex flex-row justify-around items-center" style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,.3))">
+    <div class="fixed pin-b pin-x bg-white flex flex-row justify-around items-center text-xl px-2 py-3 text-grey-dark rounded-t-lg nav-bar">
         <navigation-item>
-            <i class="mi mi-Home text-blue text-xl"></i>
+            <i class="feather icon-home"></i>
         </navigation-item>
         <navigation-item>
-            <i class="mi mi-Filter text-blue text-xl"></i>
+            <i class="feather icon-filter"></i>
         </navigation-item>
         <navigation-item>
-            <i class="mi mi-Search text-blue text-xl"></i>
+            <i class="feather icon-search"></i>
         </navigation-item>
-        <navigation-item link="/tasks/create">
-            <i class="mi mi-Add text-white bg-blue p-2 text-md rounded-full"></i>
+        <navigation-item link="/tasks/create" class="add-icon transition">
+            <i class="feather icon-plus text-white p-3 rounded-full bg-blue -mt-8 -mx-3"></i>
         </navigation-item>
         <navigation-item>
-            <i class="mi mi-GlobalNavButton text-blue text-xl"></i>
+            <i class="feather icon-menu"></i>
         </navigation-item>
     </div>
 </template>
+
+<style scoped>
+    .nav-bar {
+        filter: drop-shadow(0px 0px 50px rgba(0,0,0,0.11));
+    }
+    .add-icon {
+        filter: drop-shadow(0px 10px 10px hsl(224, 28%, 38%));
+        /* color: hsl(224, 28%, 38%);
+        background: hsl(224, 20%, 85%);
+        padding: 0.5rem;
+        border-radius: 100%;
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center; */
+    }
+</style>
+
 
 <script>
 import Page from '@/assets/js/Page'

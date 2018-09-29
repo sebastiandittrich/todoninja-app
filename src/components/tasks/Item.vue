@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-row items-center justify-start mb-4">
-        <i class="mi mi-CircleRing mr-4 text-grey text-xl"></i>
+    <div class="flex flex-row items-center justify-start mb-4" @click="$router.push({ name: 'Tasks.Detail', params: { id: task.id } })">
+        <i class="feather icon-circle mr-4 text-grey text-xl"></i>
         <div>
             <div class="font-bold text-xl">
                 {{ task.title }}

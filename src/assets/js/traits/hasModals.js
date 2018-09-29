@@ -7,7 +7,7 @@ export default function(modalsargs) {
     for(const modalname in modalsargs) {
         trait.with(modalname + ':' + modalsargs[modalname])
 
-        modals[modalname] = { active: false }
+        modals[modalname] = { show: false, position: {x: 0, y: 0} }
     }
 
     trait.data(() => ({
@@ -15,15 +15,15 @@ export default function(modalsargs) {
     }))
     .methods({
         modalState(name) {
-            return Object.keys(this.modals).includes(name) ? this.modals[name] : { active: false }
+            return Object.keys(this.modals).includes(name) ? this.modals[name] : null
         },
         hideModal(name) {
-            this.modals[name].active = false
+            this.modals[name].show = false
         },
         showModal(name, $event) {
-            this.modals[name].position = { x: $event.clientX, y: $event.clientY }
-            console.log(this.modals[name].position)
-            this.modals[name].active = true
+            this.modals[name].position.x = $event.clientX
+            this.modals[name].position.y = $event.clientY
+            this.modals[name].show = true
         }
     })
 

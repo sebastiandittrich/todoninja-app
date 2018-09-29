@@ -6,10 +6,13 @@
         <input  @focusin="focused = true"
                 @focusout="focused = false"
                 v-bind:value="value" @input="$emit('input', $event.target.value)"
+                @keyup.enter="$emit('press-enter', $event)"
                 :type="type"
                 :placeholder="focused || value.length > 0 || !name ? placeholder : name"
                 :class="iclass"
-                class="bg-transparent border-b-2 border-grey-light block focus:border-blue transition">
+                class="bg-transparent border-b-2 border-grey-light block focus:border-blue transition"
+                :autofocus="autofocus"
+                ref="input">
     </div>
 </template>
 
@@ -23,14 +26,16 @@
 
 <script>
 export default {
-  props: ['name', 'type', 'value', 'placeholder', 'classes', 'iclass'],
+  props: ['name', 'type', 'value', 'placeholder', 'classes', 'iclass', 'autofocus'],
   data() {
     return {
       focused: false,
     };
   },
   methods: {
-
+      focus() {
+          this.$nextTick(() => this.$refs.input.focus())
+      }
   },
 };
 </script>

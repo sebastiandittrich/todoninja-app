@@ -8,7 +8,7 @@ export default class Trait {
       methods: {},
       computed: {},
       datas: [],
-      props: [],
+      props: {},
       watch: {},
       createds: [],
       mounteds: [],
@@ -79,8 +79,18 @@ export default class Trait {
     return this;
   }
 
-  props(...props) {
-    this.app.props = this.app.props.concat(props);
+  props(props = {}) {
+
+    Object.assign(this.app.props, props)
+
+    // if(typeof props[0] == 'string') {
+    //   this.app.props = this.app.props.concat(props);
+    // } else {
+    //   if(Array.isArray(this.app.props)) {
+    //     this.app.props = {}
+    //   }
+    //   Object.assign(this.app.props, { ...props[0] })
+    // }
     return this
   }
 

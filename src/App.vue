@@ -1,6 +1,6 @@
 <template>
-  <div id="app" class="pb-32">
-    <router-view class="absolute pin bg-white"/>
+  <div id="app" class="pb-32 bg-white absolute pin">
+    <router-view class="absolute pin"/>
   </div>
 </template>
 
@@ -8,6 +8,7 @@
 import '@/assets/css/micon.min.css'
 import '@/assets/css/transitions.css'
 import '@/assets/css/main.css';
+import '@/assets/css/iconfont.css';
 import Page from '@/assets/js/Page'
 
 export default new Page()

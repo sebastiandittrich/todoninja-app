@@ -14,17 +14,27 @@ export default new Router({
     {
       path: '/',
       alias: '/tasks',
-      redirect: '/tasks/sections/do',
+      redirect: '/tasks/do',
     },
     {
-      path: '/tasks/sections/:section',
-      name: 'do',
+      path: '/tasks/',
+      name: 'Tasks',
       component: page('Home'),
+      children: [
+        { path: 'do', component: page('Tasks.Do'), name: 'Tasks.Do' },
+        { path: 'today', component: page('Tasks.Today'), name: 'Tasks.Today' },
+        { path: 'all', component: page('Tasks.All'), name: 'Tasks.All' }
+      ]
     },
     {
       path: '/tasks/create',
       name: 'Tasks.Create',
-      component: page('Tasks.Create'),
+      component: page('Tasks.Detail'),
+    },
+    {
+      path: '/tasks/:id',
+      name: 'Tasks.Detail',
+      component: page('Tasks.Detail'),
     },
 
     {

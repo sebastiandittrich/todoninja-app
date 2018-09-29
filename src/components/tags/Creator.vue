@@ -1,20 +1,18 @@
 <template>
-    <div>
-        <bg :show="show" @hide="hide">
+        <modal :state="state" @hide="hide" @after-enter="afterEnter">
 
             <headline>New tag</headline>
 
             <div class="mx-8">
-                <inputt placeholder="Name your tag" type="text" v-model="tag.name"></inputt>
+                <inputt placeholder="Name your tag" type="text" v-model="tag.name" ref="inputt"></inputt>
             </div>
 
             <actions>
                 <cancel @click="hide"/>
-                <action @click="createClick">Create <i class="mi mi-Add ml-2"></i> </action>
+                <action @click="createClick">Create <i class="feather icon-check ml-2"></i> </action>
             </actions>
 
-        </bg>
-    </div>
+        </modal>
 </template>
 
 <script>
@@ -25,7 +23,7 @@ export default new Modal()
     .data(() => ({
         tag: {
             name: ''
-        }
+        },
     }))
     .methods({
         async createClick() {
@@ -33,6 +31,9 @@ export default new Modal()
             this.tag.name = ''
             this.$emit('created', created)
             this.$emit('hide')
+        },
+        afterEnter() {
+            this.$refs.inputt.focus()
         }
     })
     .vue()

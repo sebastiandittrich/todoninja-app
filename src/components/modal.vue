@@ -20,7 +20,9 @@ import Page from '@/assets/js/Page'
 
 export default new Page('WorkspaceCreator')
     .with('inputt')
-    .props('show')
+    .props({
+        show: Boolean
+    })
     .data(() => ({
         workspace: {
             name: ''

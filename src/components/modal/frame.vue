@@ -1,18 +1,58 @@
 <template>
-    <transition name="modal">
-        <div v-show="show">
-            <div class="h-full w-full bg-black opacity-50 absolute pin dimmer" @click="$emit('hide')"></div>
-            <div class="bg-white rounded-t-lg absolute pin-b pin-x content">
-                <slot></slot>
+    <div>
+        <transition :name="isPositioned ? 'popup' : 'modal'" @after-enter="$emit('after-enter')">
+            <div v-show="state.show" class="z-10">
+                <div :class="isPositioned ? 'opacity-25' : 'opacity-50'" class="h-full w-full bg-black absolute pin dimmer z-10" @click="$emit('hide')"></div>
+                <div ref="content" :class="isPositioned ? 'shadow-lg rounded-lg' : 'rounded-t-lg pin-x pin-b'" class="z-10 bg-white absolute content" :style="contentStyle">
+                    <slot></slot>
+                </div>
             </div>
-        </div>
-    </transition>
+        </transition>
+        <slot name="submodals"></slot>
+    </div>
 </template> 
 
 <script>
 import Page from '@/assets/js/Page'
 
 export default new Page()
-    .props('show')
+    .props({
+        state: Object,
+        positioned: {
+            type: Boolean,
+            default: false
+        }
+    })
+    // .watch('state.show', function(from, to) { console.log(this.$refs.content.offsetHeight) })
+    .computed({
+        isPositioned() {
+            return !!this.positioned
+        },
+        contentStyle() {
+            if(this.isPositioned) {
+                return this.positionedStyle
+            } else {
+                return this.defaultStyle
+            }
+        },
+        defaultStyle() {
+            return {}
+        },
+        positionedStyle() {
+            const elementdims = { width: 0, height: 0 }
+            const element = $(this.$refs.content)
+            if(element) {
+                elementdims.width = element.actual('width')
+                elementdims.height = element.actual('height')
+            }
+            const maxleft = window.innerWidth - elementdims.width
+            const maxtop = window.innerHeight - elementdims.height
+            console.log(elementdims)
+            return {
+                top: Math.min(this.state.position.y, maxtop) + 'px',
+                left: Math.min(this.state.position.x - elementdims.width/2, maxleft) + 'px'
+            }
+        }
+    })
     .vue()
 </script>

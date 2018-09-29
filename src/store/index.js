@@ -21,6 +21,10 @@ export default new Vuex.Store({
   plugins: [
     service('tasks', {
       instanceDefaults: {
+        state: 0,
+        title: '',
+        description: '',
+        tags: [],
         workspaceId: null, 
         workspace: 'Workspace'
       }
