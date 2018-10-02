@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import feathersVuex from 'feathers-vuex';
 import feathersClient from '@/assets/js/FeathersClient';
+import merge from 'deepmerge';
 
 const { service, auth, FeathersVuex } = feathersVuex(feathersClient, { idField: 'id' });
 
@@ -27,7 +28,61 @@ export default new Vuex.Store({
         tags: [],
         workspaceId: null, 
         workspace: 'Workspace'
-      }
+      },
+
+      state: {
+        currentFilter: {},
+      },
+      getters: {
+        filteredFind(state, getters) {
+          return function(filter = {}) {
+            return getters['find'](merge(state.currentFilter, filter))
+          }
+        }
+      },
+      mutations: {
+        mergeCurrentFilter(state, payload) {
+          state.currentFilter = merge(state.currentFilter, payload, { arrayMerge: (destination, source) => source })
+        },
+        removeCurrentFilter(state, { path } = {}) {
+          if(path != undefined) {
+            path = path.split('.')
+            const last = path.pop()
+            let current = state.currentFilter
+
+            for(const breadcrumb of path) {
+              if(typeof current[breadcrumb] != 'object') {
+                Vue.set(current, breadcrumb, {})
+              }
+
+              current = current[breadcrumb]
+            }
+
+            Vue.delete(current, last)
+          } else {
+            state.currentFilter = {}
+          }
+        },
+        setCurrentFilter(state, { path, value }) {
+          if(path != undefined) {
+            path = path.split('.')
+            const last = path.pop()
+            let current = state.currentFilter
+
+            for(const breadcrumb of path) {
+              if(typeof current[breadcrumb] != 'object') {
+                Vue.set(current, breadcrumb, {})
+              }
+
+              current = current[breadcrumb]
+            }
+
+            Vue.set(current, last, value)
+          } else {
+            state.currentFilter = value
+          }
+        }
+      },
     }),
     service('tags'),
     service('workspaces'),

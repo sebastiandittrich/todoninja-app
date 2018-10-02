@@ -1,5 +1,5 @@
 <template>
-    <transition-group name="list" tag="div" class="mx-4">
+    <transition-group name="list" tag="div" class="mx-4" @enter="enter">
         <tasks-item v-for="task in displayTasks" :task="task" :key="task.id"></tasks-item>
     </transition-group>
 </template>
@@ -16,6 +16,14 @@ export default new Page()
       }
   })
   .getters({taskList: 'tasks/list'})
+  .methods({
+    enter(el, done) {
+      // var delay = el.dataset.index * 150
+      setTimeout(() => {
+       done() 
+      }, 1000);
+    }
+  })
   .computed({
       displayTasks() {
           return this.tasks !== undefined ? this.tasks : this.taskList

@@ -20,7 +20,7 @@ export default function(modalsargs) {
         hideModal(name) {
             this.modals[name].show = false
         },
-        showModal(name, $event) {
+        showModal(name, $event = {}) {
             this.modals[name].position.x = $event.clientX
             this.modals[name].position.y = $event.clientY
             this.modals[name].show = true

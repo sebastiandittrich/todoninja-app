@@ -8,7 +8,7 @@
     export default new Page()
         .with('tasks/List')
         .getters({
-            findTasks: 'tasks/find'
+            findTasks: 'tasks/filteredFind'
         })
         .computed({
             tasks() {

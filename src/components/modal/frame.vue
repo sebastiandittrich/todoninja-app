@@ -26,7 +26,7 @@ export default new Page()
     // .watch('state.show', function(from, to) { console.log(this.$refs.content.offsetHeight) })
     .computed({
         isPositioned() {
-            return !!this.positioned
+            return !!this.positioned && (this.state.position.x != undefined && this.state.position.y != undefined)
         },
         contentStyle() {
             if(this.isPositioned) {

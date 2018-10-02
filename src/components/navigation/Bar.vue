@@ -1,20 +1,23 @@
 <template>
-    <div class="fixed pin-b pin-x bg-white flex flex-row justify-around items-center text-xl px-2 py-3 text-grey-dark rounded-t-lg nav-bar">
-        <navigation-item>
-            <i class="feather icon-home"></i>
-        </navigation-item>
-        <navigation-item>
-            <i class="feather icon-filter"></i>
-        </navigation-item>
-        <navigation-item>
-            <i class="feather icon-search"></i>
-        </navigation-item>
-        <navigation-item link="/tasks/create" class="add-icon transition">
-            <i class="feather icon-plus text-white p-3 rounded-full bg-blue -mt-8 -mx-3"></i>
-        </navigation-item>
-        <navigation-item>
-            <i class="feather icon-menu"></i>
-        </navigation-item>
+    <div>
+        <div class="fixed pin-b pin-x bg-white flex flex-row justify-around items-center text-xl px-2 py-3 text-grey-dark rounded-t-lg nav-bar">
+            <navigation-item @click="showModal('workspaces-picker')">
+                <i class="feather icon-home"></i>
+            </navigation-item>
+            <navigation-item>
+                <i class="feather icon-filter"></i>
+            </navigation-item>
+            <navigation-item>
+                <i class="feather icon-search"></i>
+            </navigation-item>
+            <navigation-item link="/tasks/create" class="add-icon transition">
+                <i class="feather icon-plus text-white p-3 rounded-full bg-blue -mt-8 -mx-3"></i>
+            </navigation-item>
+            <navigation-item>
+                <i class="feather icon-menu"></i>
+            </navigation-item>
+        </div>
+        <workspaces-picker :value="activeWorkspace" @input="changeWorkspace" :state="modalState('workspaces-picker')" @hide="hideModal('workspaces-picker')"></workspaces-picker>
     </div>
 </template>
 
@@ -40,8 +43,23 @@
 
 <script>
 import Page from '@/assets/js/Page'
+import hasModals from '@/assets/js/traits/hasModals'
 
 export default new Page('NavigationBar')
     .with('navigation/Item')
+    .use( hasModals({ 'workspaces-picker': 'workspaces/Picker' }) )
+    .data(() => ({
+        activeWorkspace: null
+    }))
+    .methods({
+        changeWorkspace(id) {
+            this.activeWorkspace = id
+            if(id != undefined) {
+                this.$store.commit('tasks/setCurrentFilter', { path: 'query.workspaceId', value: id})
+            } else {
+                this.$store.commit('tasks/removeCurrentFilter', { path: 'query.workspaceId' })
+            }
+        }
+    })
     .vue()
 </script>

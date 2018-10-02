@@ -1,5 +1,5 @@
 <template>
-<div>
+<div @click="$emit('click', $event)">
     <router-link v-if="link" :to="link" class="cursor-pointer py-2">
         <slot></slot>
     </router-link>

@@ -6,9 +6,9 @@
 
 <script>
 import '@/assets/css/micon.min.css'
-import '@/assets/css/transitions.css'
 import '@/assets/css/main.css';
 import '@/assets/css/iconfont.css';
+import '@/assets/css/transitions.css'
 import Page from '@/assets/js/Page'
 
 export default new Page()
