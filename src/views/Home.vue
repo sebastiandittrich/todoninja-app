@@ -5,10 +5,10 @@
       <greeting class="rounded-lg m-2 shadow-lg"></greeting>
       <sections-bar></sections-bar>
 
-      <div class="relative">
+      <div class="stacking overflow-hidden">
         <transition :name="transition">
           <keep-alive>
-            <router-view class="pb-32 absolute"></router-view>
+            <router-view class="pb-32"></router-view>
           </keep-alive>
         </transition>
       </div>

@@ -2,7 +2,9 @@
     <div>
         <div class="fixed pin-b pin-x bg-white flex flex-row justify-around items-center text-xl px-2 py-3 text-grey-dark rounded-t-lg nav-bar">
             <navigation-item @click="showModal('workspaces-picker')">
+                <div style="display: grid; grid-"></div>
                 <i class="feather icon-home"></i>
+                <i class="w-1 h-1 rounded-full bg-blue"></i>
             </navigation-item>
             <navigation-item>
                 <i class="feather icon-filter"></i>

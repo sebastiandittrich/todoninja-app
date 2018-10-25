@@ -24,6 +24,7 @@ export default new Vuex.Store({
       instanceDefaults: {
         state: 0,
         title: '',
+        doneAt: null,
         description: '',
         tags: [],
         workspaceId: null, 
@@ -83,6 +84,21 @@ export default new Vuex.Store({
           }
         }
       },
+      actions: {
+        async findAll({ dispatch }, options = {}) {
+          options = Object.assign({
+            $limit: 10,
+            $skip: 0,
+          }, options)
+    
+          const countquery = await dispatch('find', { query: { $limit: 0 } })
+          const total = countquery.total
+    
+          for(options.$skip; options.$skip < total; options.$skip = options.$skip + options.$limit) {
+            await dispatch('find', { query: { ...options }})
+          }
+        }
+      }
     }),
     service('tags'),
     service('workspaces'),

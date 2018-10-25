@@ -126,7 +126,8 @@ export default class Trait {
     if (typeof states[0] === 'object') {
       states = states[0];
     }
-    Object.assign(this.app.computed, mapState(states));
+    this.computed(mapState(states))
+    // Object.assign(this.app.computed, mapState(states));
     return this;
   }
 

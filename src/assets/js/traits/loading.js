@@ -1,19 +1,30 @@
 import Trait from '@/assets/js/Trait';
-import { SyncLoader } from '@saeris/vue-spinners';
+import Loader from 'vue-spinner/src/GridLoader.vue';
 
-SyncLoader.name = 'SyncLoader';
+Loader.name = 'Loader';
 
 export default new Trait()
   .data(() => ({
-    loading: false,
+    loading_running: 0,
   }))
-  .with(SyncLoader)
+  .computed({
+    loading() {
+      return this.loading_running !== 0
+    }
+  })
+  .with(Loader)
   .methods({
+    incrementLoading() {
+      this.loading_running++
+    },
+    decrementloading() {
+      this.loading_running = this.loading_running -1
+    },
     load(func) {
-      this.loading = true;
+      this.incrementLoading();
       const prms = Promise.resolve(func());
-      prms.then(() => this.loading = false);
-      prms.catch(() => this.loading = false);
+      prms.then(() => this.decrementLoading());
+      prms.catch(() => decrementLoading());
       return prms;
     },
   });

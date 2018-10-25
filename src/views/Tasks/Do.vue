@@ -1,5 +1,7 @@
 <template>
-    <tasks-list :tasks="tasks"></tasks-list>
+    <div>
+        <tasks-list :tasks="tasks"></tasks-list>
+    </div>
 </template>
 
 <script>
@@ -12,7 +14,7 @@
         })
         .computed({
             tasks() {
-                return this.findTasks({ query: { state: 0 } }).data
+                return this.findTasks({ query: { state: 0, doneAt: null } }).data
             }
         })
         .vue()    
