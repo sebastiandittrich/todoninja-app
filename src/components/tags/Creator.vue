@@ -4,7 +4,7 @@
             <headline>New tag</headline>
 
             <div class="mx-8">
-                <inputt placeholder="Name your tag" type="text" v-model="tag.name" ref="inputt"></inputt>
+                <inputt @press-enter="createClick" placeholder="Name your tag" type="text" v-model="tag.name" ref="inputt"></inputt>
             </div>
 
             <actions>

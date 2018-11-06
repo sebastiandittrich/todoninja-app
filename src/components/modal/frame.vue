@@ -45,12 +45,13 @@ export default new Page()
                 elementdims.width = element.actual('width')
                 elementdims.height = element.actual('height')
             }
-            const maxleft = window.innerWidth - elementdims.width
-            const maxtop = window.innerHeight - elementdims.height
-            console.log(elementdims)
+            const maxleft = window.innerWidth - elementdims.width - 5
+            const maxtop = window.innerHeight - elementdims.height - 5
+            const minleft = 5
+            const mintop = 5
             return {
-                top: Math.min(this.state.position.y, maxtop) + 'px',
-                left: Math.min(this.state.position.x - elementdims.width/2, maxleft) + 'px'
+                top: Math.max(Math.min(this.state.position.y, maxtop), mintop) + 'px',
+                left: Math.max(Math.min(this.state.position.x - elementdims.width/2, maxleft), minleft) + 'px'
             }
         }
     })

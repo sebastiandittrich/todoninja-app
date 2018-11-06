@@ -10,11 +10,11 @@
                     {{ activeState.name }}
                 </div>
                 <div class="font-light text-lg">
-                    24. September 2018
+                    {{ value.humanDeadline() }}
                 </div>
             </div>
         </div>
-        <state-picker v-model="value.state" :state="modalState('state-picker')" @hide="hideModal('state-picker')"/>
+        <state-picker @change="$emit('change', $event)" v-model="value" :state="modalState('state-picker')" @hide="hideModal('state-picker')"/>
     </div>
 </template> 
 
@@ -38,7 +38,7 @@ import Page from '@/assets/js/Page'
 import hasModals from '@/assets/js/traits/hasModals'
 import State from '@/assets/js/State'
 
-const d = new Page()
+export default new Page()
     .props({
         value: Object
     })
@@ -48,12 +48,8 @@ const d = new Page()
     .computed({
         activeState() {
             return this.states.filter(state => this.value.state == state.state)[0]
-        }
+        },
     })
     .use( hasModals({ 'state-picker': 'state/Picker' }) )
     .vue()
-
-    console.log(d)
-
-export default d
 </script>

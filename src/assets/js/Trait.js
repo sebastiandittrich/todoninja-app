@@ -10,6 +10,7 @@ export default class Trait {
       datas: [],
       props: {},
       watch: {},
+      directives: {},
       createds: [],
       mounteds: [],
       traits: [],
@@ -114,6 +115,11 @@ export default class Trait {
     return this;
   }
 
+  filters(filters) {
+    Object.assign(this.app.filters, {...filters})
+    return this
+  }
+
   actions(...actions) {
     if (typeof actions[0] === 'object') {
       actions = actions[0];
@@ -137,6 +143,15 @@ export default class Trait {
     }
     Object.assign(this.app.computed, mapGetters(getters));
     return this;
+  }
+
+  directive(name, callback) {
+    return this.directives({[name]: callback})
+  }
+
+  directives(directives) {
+    Object.assign(this.app.directives, directives)
+    return this
   }
 
   addComponent(component) {

@@ -1,10 +1,14 @@
 <template>
     <transition name="slide-right" @after-enter="afterEnter">
         <div class="bg-white">
+
+            <!-- Save Button -->
             <div v-show="isCreate || isEdit" @click="save" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide fixed pin-b pin-r m-8">
                 <i class="feather icon-check text-2xl mr-2"></i>
                 Save
             </div>
+
+            <!-- Header Part -->
             <div class="bg-grey-light p-6">
                 <div class="flex flex-row items-center justify-between mb-6 text-2xl">
                     <i @click="$router.go(-1)" class="feather icon-chevron-left"></i>
@@ -16,24 +20,36 @@
                     <i class="feather icon-menu"></i>
                 </div>
                 <div class="flex flex-row items-center">
-                    <i class="feather icon-circle text-2xl mr-6"></i>
-                    <inputt @press-enter="save" ref="inputt" iclass="font-bold text-2xl" v-model="task.title" placeholder="My new task" type="text"></inputt>
+                    <!-- State -->
+                    <done-indicator :task="task" class="text-2xl mr-6"></done-indicator>
+
+                    <!-- Title -->
+                    <inputt @press-enter="save" ref="inputt" @input="setEdited" iclass="font-bold text-2xl" v-model="task.title" placeholder="My new task" type="text"></inputt>
                 </div>
             </div>
+
+            <!-- Middle Part -->
             <div class="m-6">
-                <state-presenter v-model="task" class="z-10 mb-6"/>
+
+                <!-- State -->
+                <state-presenter @change="save" v-model="task" class="z-10 mb-6"/>
                 <div class="font-bold text-sm mb-2">Description</div>
-                <textarea class="-z-10 w-full font-light text-lg focus:shadow-lg rounded-lg transition focus:p-2" rows="2" placeholder="Describe your task!"></textarea>
+                <textarea @input="setEdited" v-model="task.description" class="-z-10 w-full font-light text-lg focus:shadow-lg rounded-lg transition focus:p-2" rows="2" placeholder="Describe your task!"></textarea>
 
                 <div class="font-bold text-sm mb-2 mt-6">
                     Tags
                 </div>
-                <tags-picker class="-mx-6 px-6 overflow-x-auto" v-model="task.tags"></tags-picker>
+
+                <!-- Tags -->
+                <tags-picker @input="save" class="-mx-6 px-6 overflow-x-auto" v-model="task.tags"></tags-picker>
+
             </div>
-            <workspaces-picker @hide="hideModal('workspaces-picker')" :state="modalState('workspaces-picker')" v-model="task.workspaceId"></workspaces-picker>
+
+            <!-- Workspace -->
+            <workspaces-picker @input="save" @hide="hideModal('workspaces-picker')" :state="modalState('workspaces-picker')" v-model="task.workspaceId"></workspaces-picker>
         </div>
     </transition>
-</template> 
+</template>  
 
 <script>
 import Page from '@/assets/js/Page'
@@ -41,26 +57,51 @@ import hasModals from '@/assets/js/traits/hasModals'
 import Vue from 'vue'
 
 export default new Page()
-    .with('inputt', 'workspaces/Picker', 'tags/Picker', 'state/Presenter')
+    // .directive('autosave', {
+    //     inserted(el) {
+    //         console.log('inserted')
+    //         el.setAttribute('v-on:input', 'log("test")')
+    //     }
+    // })
+    .with('inputt', 'tags/Picker', 'state/Presenter', 'done/Indicator')
     .use( hasModals({ 'workspaces-picker': 'workspaces/Picker' }) )
 
     .getters({
         getWorkspace: 'workspaces/get'
     })
     .actions({
-        getTask: 'tasks/get'
+        getTask: 'tasks/get',
+        loadWorkspace: 'workspaces/get'
     })
 
     .data(() =>({
         mode: null,
-        task: new (Vue.$FeathersVuex.Task)()
+        edited: false,
+        task: new (Vue.$FeathersVuex.Task)(),
+        selectedWorkspaceName: 'No workspace',
     }))
     .methods({
+        setEdited() {
+            this.edited = true
+        },
+        async updateWorkspaceName() {
+            if(!this.task.workspaceId) {
+                this.selectedWorkspaceName = 'No Workspace'
+            } else {
+                const workspace = this.getWorkspace(this.task.workspaceId) || (await this.loadWorkspace(this.task.workspaceId))
+                this.selectedWorkspaceName = workspace.name
+            }
+        },
+
         async save() {
-            console.log(this.task)
+            console.log('saving', this.task)
             await this.task.save()
+            console.log('saved')
+
             if(this.isCreate) {
                 this.$router.go(-1)
+            } else if(this.isEdit) {
+                this.edited = false
             }
         },
         afterEnter() {
@@ -72,19 +113,14 @@ export default new Page()
         async fetchData() {
             if(!isNaN(this.$route.params.id) && Number.isInteger(parseInt(this.$route.params.id))) {
                 this.mode = 'view'
-                this.task = (await this.getTask(parseInt(this.$route.params.id))).clone()
+                this.task = (await this.getTask(parseInt(this.$route.params.id)))
             } else {
                 this.mode = 'create'
                 this.task = new this.$FeathersVuex.Task()
             }
-            console.log(this.task)
         }
     })
     .computed({
-        selectedWorkspaceName() {
-            return this.task.workspaceId ? this.getWorkspace(this.task.workspaceId).name : 'No workspace'
-        },
-
         isView() {
             return this.mode == 'view'
         },
@@ -92,7 +128,7 @@ export default new Page()
             return this.mode == 'create'
         },
         isEdit() {
-
+            return this.isView ? this.edited : false
         }
     })
 
@@ -100,6 +136,7 @@ export default new Page()
         vue.fetchData()
     })
     .watch('$route', 'fetchData')
+    .watch('task.workspaceId', 'updateWorkspaceName')
 
     .vue()
 </script>

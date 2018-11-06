@@ -1,6 +1,9 @@
 <template>
-    <div>
+    <div class="flex flex-col">
         <tasks-list :tasks="tasks"></tasks-list>
+        <div class="button" @click="loadDoneClick">
+            Load done tasks
+        </div>
     </div>
 </template>
 
@@ -17,6 +20,10 @@ export default new Page()
             return this.findTasks().data
         }
     })
-    .mounted(vue => vue.$store.dispatch('tasks/findAll'))
+    .methods({
+        loadDoneClick() {
+            this.$store.dispatch('tasks/findAll')
+        }
+    })
     .vue()    
 </script>

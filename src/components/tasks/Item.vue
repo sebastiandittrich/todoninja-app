@@ -1,7 +1,6 @@
 <template>
     <div class="flex flex-row items-center justify-start mb-4" @click="$router.push({ name: 'Tasks.Detail', params: { id: task.id } })">
-        <i v-show="task.doneAt == null" class="feather icon-circle mr-4 text-grey text-xl"></i>
-        <i v-show="task.doneAt != null" class="feather icon-check-circle mr-4 text-green text-xl"></i>
+        <done-indicator :task="task" class="text-xl mr-4"></done-indicator>
         <div>
             <div class="font-bold text-xl">
                 {{ task.title }}
@@ -14,8 +13,12 @@
 </template>
 
 <script>
-export default {
-  name: 'TasksItem',
-  props: ['task'],
-};
+import Page from '@/assets/js/Page'
+
+export default new Page('TasksItem')
+    .with('done/Indicator')
+    .props({
+        task: Object
+    })
+    .vue()
 </script>

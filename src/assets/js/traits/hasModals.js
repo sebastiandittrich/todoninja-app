@@ -7,7 +7,7 @@ export default function(modalsargs) {
     for(const modalname in modalsargs) {
         trait.with(modalname + ':' + modalsargs[modalname])
 
-        modals[modalname] = { show: false, position: {x: 0, y: 0} }
+        modals[modalname] = { show: false, position: {x: 0, y: 0}, unwatchers: [] }
     }
 
     trait.data(() => ({
@@ -20,10 +20,20 @@ export default function(modalsargs) {
         hideModal(name) {
             this.modals[name].show = false
         },
-        showModal(name, $event = {}) {
-            this.modals[name].position.x = $event.clientX
-            this.modals[name].position.y = $event.clientY
-            this.modals[name].show = true
+        async showModal(name, $event = {}) {
+            return new Promise((resolve) => {
+                console.log($event)
+                this.modals[name].data = $event.data
+                this.modals[name].position.x = $event.clientX
+                this.modals[name].position.y = $event.clientY
+                this.modals[name].show = true
+
+                var unwatcher = null
+                unwatcher = this.$watch(() => this.modals[name].show, () => {
+                    unwatcher()
+                    resolve()
+                })
+            })
         }
     })
 

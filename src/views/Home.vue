@@ -1,5 +1,5 @@
 <template>
-  <transition name="scale">
+  <transition name="move-left">
     <div>
 
       <greeting class="rounded-lg m-2 shadow-lg"></greeting>
@@ -23,11 +23,15 @@
 import Page from '@/assets/js/Page';
 import auth from '@/assets/js/traits/auth';
 
-const p = new Page()
+export default new Page()
+
+  .use(auth)
   .with('Greeting', 'sections/Bar', 'tasks/List', 'navigation/Bar')
+
   .data(() => ({
     transition: 'opacity-slide-right'
   }))
+
   .watch('$route', function(to, from) {
     console.log(from)
     if(from.name == 'Tasks.Do') {
@@ -42,10 +46,5 @@ const p = new Page()
       }
     }
   })
-  .use(auth)
   .vue();
-
-  console.log(p)
-
-  export default p
 </script>

@@ -5,7 +5,7 @@
 
         <div class="mx-8">
             <div class="text-lg flex flex-col items-stretch">
-                <div v-for="state of states" :key="state.state" @click="stateClick(state)" :class="isActive(state) ? 'text-blue font-black' : 'font-light text-grey-darker'" class="rounded-lg px-4 py-2 flex flex-row items-center justify-start cursor-pointer">
+                <div v-for="state of states" :key="state.state" @click="stateClick(state, $event)" :class="isActive(state) ? 'text-blue font-black' : 'font-light text-grey-darker'" class="rounded-lg px-4 py-2 flex flex-row items-center justify-start cursor-pointer">
                     <i class="mr-4" :class="{[state.icon]: true, 'text-grey-dark': !isActive(state)}"></i>
                     {{ state.name }}
                 </div>
@@ -16,27 +16,35 @@
             <cancel @click="hide"/>
         </actions>
 
+        <div slot="submodals">
+            <datepicker v-model="value.deadlineAsDate" @hide="hideModal('datepicker')" :state="modalState('datepicker')"></datepicker>
+        </div>
+
     </modal>
 </template>
 
 <script>
 import Modal from '@/assets/js/Modal'
 import State from '@/assets/js/State'
+import hasModals from '@/assets/js/traits/hasModals'
 
 export default new Modal()
+    .use( hasModals({ 'datepicker': 'datepicker' }) )
     .props({
-        value: Number
+        value: Object
     })
     .data(() => ({
         states: State.states
     }))
     .methods({
-        stateClick(state) {
-            this.$emit('input', state.state)
-            this.$emit('hide')
+        async stateClick(state, $event) {
+            await this.showModal('datepicker', $event)
+            this.value.state = state.state
+            this.$emit('change')
+            setTimeout(() => this.$emit('hide'), 100)
         },
         isActive(state) {
-            return this.value == state.state
+            return this.value.state == state.state
         }
     })
     .vue()

@@ -36,6 +36,11 @@ export default new Router({
       name: 'Tasks.Detail',
       component: page('Tasks.Detail'),
     },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: page('Settings'),
+    },
 
     {
       path: '/login',

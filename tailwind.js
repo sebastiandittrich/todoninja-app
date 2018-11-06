@@ -99,10 +99,11 @@ const colors = {
   'blue-darkest': '#12283a',
   'blue-darker': '#1c3d5a',
   'blue-dark': '#2779bd',
-  blue: '#45547c',
+  // #45547c
+  blue: 'hsl(224, 28%, 38%)',
   'blue-light': '#6cb2eb',
   'blue-lighter': '#bcdefa',
-  'blue-lightest': '#ced8f2',
+  'blue-lightest': 'hsl(224, 15%, 90%)',
 
   'indigo-darkest': '#191e38',
   'indigo-darker': '#2f365f',
@@ -130,6 +131,10 @@ const colors = {
 };
 
 module.exports = {
+
+  experiments: {
+    shadowLookup: true,
+  },
 
   /*
   |-----------------------------------------------------------------------------

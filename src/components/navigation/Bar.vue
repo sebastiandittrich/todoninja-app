@@ -15,7 +15,7 @@
             <navigation-item link="/tasks/create" class="add-icon transition">
                 <i class="feather icon-plus text-white p-3 rounded-full bg-blue -mt-8 -mx-3"></i>
             </navigation-item>
-            <navigation-item>
+            <navigation-item link="/settings">
                 <i class="feather icon-menu"></i>
             </navigation-item>
         </div>
