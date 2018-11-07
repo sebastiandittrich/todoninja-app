@@ -8,7 +8,7 @@
                 v-bind:value="value" @input="$emit('input', $event.target.value)"
                 @keyup.enter="$emit('press-enter', $event)"
                 :type="type"
-                :placeholder="focused || value.length > 0 || !name ? placeholder : name"
+                :placeholder="focused || value && value.length > 0 || !name ? placeholder : name"
                 :class="iclass"
                 class="bg-transparent border-b-2 border-grey-light block focus:border-blue transition"
                 :autofocus="autofocus"

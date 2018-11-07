@@ -2,9 +2,10 @@
     <div>
         <div class="fixed pin-b pin-x bg-white flex flex-row justify-around items-center text-xl px-2 py-3 text-grey-dark rounded-t-lg nav-bar">
             <navigation-item @click="showModal('workspaces-picker')">
-                <div style="display: grid; grid-"></div>
-                <i class="feather icon-home"></i>
-                <i class="w-1 h-1 rounded-full bg-blue"></i>
+                <div class="stacking">
+                    <i class="feather icon-home"></i>
+                    <div v-if="workspaceFilterActive" class="w-2 h-2 bg-blue rounded-full -mt-2 -mr-1" style="justify-self: end"></div>
+                </div>
             </navigation-item>
             <navigation-item>
                 <i class="feather icon-filter"></i>
@@ -50,12 +51,26 @@ import hasModals from '@/assets/js/traits/hasModals'
 export default new Page('NavigationBar')
     .with('navigation/Item')
     .use( hasModals({ 'workspaces-picker': 'workspaces/Picker' }) )
-    .data(() => ({
-        activeWorkspace: null
-    }))
+    .computed({
+        activeWorkspace() {
+            const filter = this.$store.state.tasks.currentFilter
+            if(filter && filter.query && filter.query.workspaceId) {
+                return filter.query.workspaceId
+            } else {
+                return null
+            }
+        },
+        workspaceFilterActive() {
+            const filter = this.$store.state.tasks.currentFilter
+            if(filter && filter.query && filter.query.workspaceId) {
+                return true
+            } else {
+                return false
+            }
+        }
+    })
     .methods({
         changeWorkspace(id) {
-            this.activeWorkspace = id
             if(id != undefined) {
                 this.$store.commit('tasks/setCurrentFilter', { path: 'query.workspaceId', value: id})
             } else {

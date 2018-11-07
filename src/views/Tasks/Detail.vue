@@ -25,11 +25,16 @@
 
                     <!-- Title -->
                     <inputt @press-enter="save" ref="inputt" @input="setEdited" iclass="font-bold text-2xl" v-model="task.title" placeholder="My new task" type="text"></inputt>
+
+                    <!-- Today -->
+                    <today-indicator :task="task" class="text-2xl ml-6"></today-indicator>
                 </div>
             </div>
 
             <!-- Middle Part -->
             <div class="m-6">
+
+                <!-- Was today -->
 
                 <!-- State -->
                 <state-presenter @change="save" v-model="task" class="z-10 mb-6"/>
@@ -63,7 +68,7 @@ export default new Page()
     //         el.setAttribute('v-on:input', 'log("test")')
     //     }
     // })
-    .with('inputt', 'tags/Picker', 'state/Presenter', 'done/Indicator')
+    .with('inputt', 'tags/Picker', 'state/Presenter', 'done/Indicator', 'today/Indicator')
     .use( hasModals({ 'workspaces-picker': 'workspaces/Picker' }) )
 
     .getters({

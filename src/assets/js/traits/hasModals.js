@@ -22,7 +22,6 @@ export default function(modalsargs) {
         },
         async showModal(name, $event = {}) {
             return new Promise((resolve) => {
-                console.log($event)
                 this.modals[name].data = $event.data
                 this.modals[name].position.x = $event.clientX
                 this.modals[name].position.y = $event.clientY

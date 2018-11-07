@@ -1,6 +1,6 @@
 <template>
     <div>
-        <transition :name="isPositioned ? 'popup' : 'modal'" @after-enter="$emit('after-enter')">
+        <transition :name="isPositioned ? 'popup' : 'modal'" @after-enter="$emit('after-enter', $event)" @before-enter="$emit('before-enter', $event)">
             <div v-show="state.show" class="z-10">
                 <div :class="isPositioned ? 'opacity-25' : 'opacity-50'" class="h-full w-full bg-black absolute pin dimmer z-10" @click="$emit('hide')"></div>
                 <div ref="content" :class="isPositioned ? 'shadow-lg rounded-lg' : 'rounded-t-lg pin-x pin-b'" class="z-10 bg-white absolute content" :style="contentStyle">
@@ -23,7 +23,6 @@ export default new Page()
             default: false
         }
     })
-    // .watch('state.show', function(from, to) { console.log(this.$refs.content.offsetHeight) })
     .computed({
         isPositioned() {
             return !!this.positioned && (this.state.position.x != undefined && this.state.position.y != undefined)

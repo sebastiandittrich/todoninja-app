@@ -8,6 +8,9 @@ export default class Page extends Trait {
     this.methods({
       log(...args) {
         console.log(...args)
+      },
+      timeout(...args) {
+        setTimeout(...args)
       }
     })
   }

@@ -1,4 +1,4 @@
-import { isMoment } from "moment";
+import States from '@/assets/js/State'
 
 export default {
     state: 0,
@@ -8,7 +8,9 @@ export default {
     tags: [],
     workspaceId: null,
     workspace: 'Workspace',
+    waiting: null,
     deadline: null,
+    today: null,
 
     get deadlineAsDate() {
         if(!this.deadline || this.deadline instanceof Date) {
@@ -21,19 +23,47 @@ export default {
         return this.deadline = value
     },
 
-    get isDone() {
+    isDone() {
         return this.doneAt != null
+    },
+    isWaiting() {
+        return this.state === States.waiting
+    },
+    hasDeadline() {
+        return this.deadline != null && this.deadline.length > 0
+    },
+    isToday() {
+        return this.today != null && this.today.length > 0
+    },
+    wasToday() {
+        return this.isToday() ? this.todayMoment().isBefore(moment(), 'day') : false
+    },
+    isDeadlineToday() {
+        return this.hasDeadline() && this.deadlineMoment().isSame(moment(), 'day')
     },
 
     toggleState() {
-        if(!this.isDone){
+        if(!this.isDone()){
             this.doneAt = new Date()
         } else {
             this.doneAt = null
         }
     },
+    toggleToday() {
+        if(!this.isToday()) {
+            this.today = new Date()
+        } else {
+            this.today = null
+        }
+    },
+    resetDeadline() {
+        this.deadline = null
+    },
     deadlineMoment() {
         return this.deadline ? moment(this.deadline) : this.deadline
+    },
+    todayMoment() {
+        return this.today ? moment(this.today) : this.today
     },
     humanDeadline() {
         return this.deadlineMoment() ? this.deadlineMoment().calendar(null, {
