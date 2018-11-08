@@ -3,7 +3,7 @@
         <div class="bg-white">
 
             <!-- Save Button -->
-            <div v-show="isCreate || isEdit" @click="save" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide fixed pin-b pin-r m-8">
+            <div v-show="isCreate || isEdit" @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide fixed pin-b pin-r m-8">
                 <i class="feather icon-check text-2xl mr-2"></i>
                 Save
             </div>
@@ -21,13 +21,13 @@
                 </div>
                 <div class="flex flex-row items-center">
                     <!-- State -->
-                    <done-indicator :task="task" class="text-2xl mr-6"></done-indicator>
+                    <done-indicator @change="save()" :task="task" class="text-2xl mr-6"></done-indicator>
 
                     <!-- Title -->
-                    <inputt @press-enter="save" ref="inputt" @input="setEdited" iclass="font-bold text-2xl" v-model="task.title" placeholder="My new task" type="text"></inputt>
+                    <inputt @press-enter="save()" ref="inputt" @input="setEdited" iclass="font-bold text-2xl" v-model="task.title" placeholder="My new task" type="text"></inputt>
 
                     <!-- Today -->
-                    <today-indicator :task="task" class="text-2xl ml-6"></today-indicator>
+                    <today-indicator @change="save()" :task="task" class="text-2xl ml-6"></today-indicator>
                 </div>
             </div>
 
@@ -37,7 +37,7 @@
                 <!-- Was today -->
 
                 <!-- State -->
-                <state-presenter @change="save" v-model="task" class="z-10 mb-6"/>
+                <state-presenter @change="save()" v-model="task" class="z-10 mb-6"/>
                 <div class="font-bold text-sm mb-2">Description</div>
                 <textarea @input="setEdited" v-model="task.description" class="-z-10 w-full font-light text-lg focus:shadow-lg rounded-lg transition focus:p-2" rows="2" placeholder="Describe your task!"></textarea>
 
@@ -46,12 +46,12 @@
                 </div>
 
                 <!-- Tags -->
-                <tags-picker @input="save" class="-mx-6 px-6 overflow-x-auto" v-model="task.tags"></tags-picker>
+                <tags-picker @input="save()" class="-mx-6 px-6 overflow-x-auto" v-model="task.tags"></tags-picker>
 
             </div>
 
             <!-- Workspace -->
-            <workspaces-picker @input="save" @hide="hideModal('workspaces-picker')" :state="modalState('workspaces-picker')" v-model="task.workspaceId"></workspaces-picker>
+            <workspaces-picker @input="save()" @hide="hideModal('workspaces-picker')" :state="modalState('workspaces-picker')" v-model="task.workspaceId"></workspaces-picker>
         </div>
     </transition>
 </template>  
@@ -98,15 +98,23 @@ export default new Page()
             }
         },
 
-        async save() {
-            console.log('saving', this.task)
-            await this.task.save()
-            console.log('saved')
+        async save({ explicit = false } = {}) {
+            // If save is triggered by a change event on a component and 
+            // task is in create mode, don't save the task, so the page 
+            // will not close unexpected.
+            // 
+            // If the user explicitly saves the task, 
+            // the page will close
+            if( !(this.isCreate && !explicit) ) {
 
-            if(this.isCreate) {
-                this.$router.go(-1)
-            } else if(this.isEdit) {
-                this.edited = false
+                await this.task.save()
+
+                if(this.isCreate) {
+                    this.$router.go(-1)
+                } else if(this.isEdit) {
+                    this.edited = false
+                }
+
             }
         },
         afterEnter() {

@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-row items-center justify-between mb-4" @click="$router.push({ name: 'Tasks.Detail', params: { id: task.id } })">
         <div class="flex flex-row items-center justify-start">
-            <done-indicator :task="task" class="text-xl mr-4"></done-indicator>
+            <done-indicator @change="save" :task="task" class="text-xl mr-4"></done-indicator>
             <div>
                 <div class="font-bold text-xl">
                     {{ task.title }}
@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-        <today-indicator :task="task" class="text-xl ml-4"></today-indicator>
+        <today-indicator @change="save" :task="task" class="text-xl ml-4"></today-indicator>
     </div>
 </template>
 
@@ -32,5 +32,10 @@ export default new Page('TasksItem')
     .data(() => ({
         States
     }))
+    .methods({
+        save() {
+            this.task.save()
+        }
+    })
     .vue()
 </script>

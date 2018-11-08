@@ -16,9 +16,9 @@ export default new Page()
         task: Object
     })
     .methods({
-        async toggleToday() {
+        toggleToday() {
             this.task.toggleToday()
-            await this.task.save()
+            this.$emit('change')
         }
     })
     .vue()

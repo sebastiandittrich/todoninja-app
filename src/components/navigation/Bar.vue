@@ -30,16 +30,6 @@
     }
     .add-icon {
         filter: drop-shadow(0px 10px 10px hsl(224, 28%, 38%));
-        /* color: hsl(224, 28%, 38%);
-        background: hsl(224, 20%, 85%);
-        padding: 0.5rem;
-        border-radius: 100%;
-        width: 3rem;
-        height: 3rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center; */
     }
 </style>
 
