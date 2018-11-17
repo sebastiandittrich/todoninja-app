@@ -1,6 +1,6 @@
 <template>
-  <div id="app" class="pb-32 bg-white absolute pin">
-    <router-view class="absolute pin bg-white"/>
+  <div id="app" class="pb-32 bg-white absolute pin md:-z-20">
+    <router-view class="absolute pin bg-white md:-z-20"/>
   </div>
 </template>
 

@@ -3,7 +3,7 @@
         <transition :name="isPositioned ? 'popup' : 'modal'" @after-enter="$emit('after-enter', $event)" @before-enter="$emit('before-enter', $event)">
             <div v-show="state.show" class="z-10">
                 <div :class="isPositioned ? 'opacity-25' : 'opacity-50'" class="h-full w-full bg-black absolute pin dimmer z-10" @click="$emit('hide')"></div>
-                <div ref="content" :class="isPositioned ? 'shadow-lg rounded-lg' : 'rounded-t-lg pin-x pin-b'" class="z-10 bg-white absolute content" :style="contentStyle">
+                <div ref="content" :class="isPositioned ? 'shadow-lg rounded-lg' : 'rounded-t-lg pin-x pin-b md:shadow-lg md:rounded-lg md:pin-none'" class="z-10 bg-white absolute content modalframe" :style="contentStyle">
                     <slot></slot>
                 </div>
             </div>

@@ -13,28 +13,25 @@ export default new Router({
   routes: [
     {
       path: '/',
-      alias: '/tasks',
-      redirect: '/tasks/do',
+      redirect: '/tasks',
     },
     {
-      path: '/tasks/',
+      path: '/tasks',
       name: 'Tasks',
       component: page('Home'),
+      props: route => ({ view: route.query.view }),
       children: [
-        { path: 'do', component: page('Tasks.Do'), name: 'Tasks.Do' },
-        { path: 'today', component: page('Tasks.Today'), name: 'Tasks.Today' },
-        { path: 'all', component: page('Tasks.All'), name: 'Tasks.All' }
+        {
+          path: 'create',
+          name: 'Tasks.Create',
+          component: page('Tasks.Detail'),
+        },
+        {
+          path: ':id',
+          name: 'Tasks.Detail',
+          component: page('Tasks.Detail'),
+        },
       ]
-    },
-    {
-      path: '/tasks/create',
-      name: 'Tasks.Create',
-      component: page('Tasks.Detail'),
-    },
-    {
-      path: '/tasks/:id',
-      name: 'Tasks.Detail',
-      component: page('Tasks.Detail'),
     },
     {
       path: '/settings',

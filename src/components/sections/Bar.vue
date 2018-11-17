@@ -1,14 +1,14 @@
 <template>
     <div class="flex flex-row justify-around items-center p-8">
-        <sections-item link="/tasks/do">
+        <sections-item link="do">
             <i class="transition feather icon-zap mr-2"></i>
             Do
         </sections-item>
-        <sections-item link="/tasks/today">
+        <sections-item link="today">
             <i class="transition feather icon-sun mr-2"></i>
             Today
         </sections-item>
-        <sections-item link="/tasks/all">
+        <sections-item link="all">
             <i class="transition feather icon-list mr-2"></i>
             All
         </sections-item>

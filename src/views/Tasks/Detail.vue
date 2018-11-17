@@ -9,9 +9,13 @@
             </div>
 
             <!-- Header Part -->
-            <div class="bg-grey-light p-6">
+            <div class="bg-blue-lightest p-6 relative">
+                <!-- <div class="bg-blue-lightest absolute pin hidden md:block -z-10" style="transform: scaleX(2) translateX(-50%)"></div> -->
                 <div class="flex flex-row items-center justify-between mb-6 text-2xl">
-                    <i @click="$router.go(-1)" class="feather icon-chevron-left"></i>
+                    <!-- Back button -->
+                    <i @click="$router.go(-1)" class="feather icon-chevron-left md:hidden"></i>
+                    <div class="hidden md:block"></div>
+
                     <div class="flex flex-row items-center text-sm text-grey-darker cursor-pointer" @click="showModal('workspaces-picker', $event)">
                         <i class="feather icon-home mr-2 text-base"></i>
                         <span class="font-bold">{{ selectedWorkspaceName }}</span>
@@ -24,7 +28,7 @@
                     <done-indicator @change="save()" :task="task" class="text-2xl mr-6"></done-indicator>
 
                     <!-- Title -->
-                    <inputt @press-enter="save()" ref="inputt" @input="setEdited" iclass="font-bold text-2xl" v-model="task.title" placeholder="My new task" type="text"></inputt>
+                    <inputt @press-enter="save()" ref="inputt" @input="setEdited" iclass="font-bold text-2xl border-none" v-model="task.title" placeholder="My new task" type="text" class="w-full"></inputt>
 
                     <!-- Today -->
                     <today-indicator @change="save()" :task="task" class="text-2xl ml-6"></today-indicator>
