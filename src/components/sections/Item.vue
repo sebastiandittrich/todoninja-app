@@ -18,7 +18,7 @@ export default new Page('SectionsItem')
   })
   .computed({
       isActive() {
-
+          return !['do', 'today', 'all'].includes(this.$route.query.view) ? this.link == 'do' : this.$route.query.view == this.link
       }
   })
   .vue();

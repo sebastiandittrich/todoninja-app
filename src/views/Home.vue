@@ -2,7 +2,7 @@
   <transition name="move-left">
     <div class="page">
 
-      <greeting class="rounded-lg m-2 shadow-lg md:hidden"></greeting>
+      <greeting ref="greeting" class="rounded-lg m-2 shadow-lg md:hidden"></greeting>
 
       <sections-bar class="md:bg-blue-lightest md:p-4 md:pt-6" style="grid-area: sections"></sections-bar>
 
@@ -41,11 +41,9 @@
 
 <script>
 import Page from '@/assets/js/Page';
-import auth from '@/assets/js/traits/auth';
 
 export default new Page()
 
-  .use(auth)
   .with('Greeting', 'sections/Bar', 'tasks/List', 'navigation/Bar', 'navigation/Sidebar', 'tasks/Do', 'tasks/Today', 'tasks/All', 'search/Bar')
 
   .data(() => ({

@@ -40,10 +40,9 @@
 <script>
 import Page from '@/assets/js/Page';
 import form from '@/assets/js/traits/form';
-import guest from '@/assets/js/traits/guest';
 
 const t = new Page()
-  .use(form, guest)
+  .use(form)
   .actions({
     authenticate: 'auth/authenticate',
   })

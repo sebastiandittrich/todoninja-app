@@ -1,5 +1,5 @@
 import Trait from '@/assets/js/Trait';
-import Loader from 'vue-spinner/src/GridLoader.vue';
+import Loader from 'vue-spinner/src/PulseLoader.vue';
 
 Loader.name = 'Loader';
 

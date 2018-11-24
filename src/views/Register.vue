@@ -41,10 +41,9 @@
 <script>
 import Page from '@/assets/js/Page';
 import form from '@/assets/js/traits/form';
-import guest from '@/assets/js/traits/guest';
 
 export default new Page('Register')
-  .use(form, guest)
+  .use(form)
   .actions({
     create: 'users/create',
     authenticate: 'auth/authenticate',

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row items-center justify-between mb-4" @click="$router.push({ name: 'Tasks.Detail', params: { id: task.id } })">
+    <div class="flex flex-row items-center justify-between mb-4" @click="$router.push({ name: 'Tasks.Detail', params: { id: task.id }, query: $route.query })">
         <div class="flex flex-row items-center justify-start">
             <done-indicator @change="save" :task="task" class="text-xl mr-4"></done-indicator>
             <div>

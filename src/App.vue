@@ -1,6 +1,9 @@
 <template>
   <div id="app" class="pb-32 bg-white absolute pin md:-z-20">
-    <router-view class="absolute pin bg-white md:-z-20"/>
+    <router-view v-if="!splashscreenVisible" class="absolute pin bg-white md:-z-20"/>
+    <transition name="splashscreen"  appear>
+      <splashscreen v-if="splashscreenVisible" class="absolute pin"></splashscreen>
+    </transition>
   </div>
 </template>
 
@@ -11,13 +14,33 @@ import '@/assets/css/iconfont.css';
 import '@/assets/css/transitions.css'
 import Page from '@/assets/js/Page'
 
-export default new Page()
-  .created(async vue => {
-    console.log('Starting...')
-    await vue.$store.dispatch('auth/authenticate')
-    vue.$store.dispatch('workspaces/findAll')
-    vue.$store.dispatch('tags/findAll')
-    vue.$store.dispatch('tasks/findAll', { doneAt: null })
+const test = new Page()
+  .with('Splashscreen')
+  .data(() =>({
+    splashscreenVisible: true,
+  }))
+  .methods({
+    async boot() {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 3000);
+      })
+      try {
+        await this.$store.dispatch('auth/authenticate')
+        await this.$store.dispatch('tasks/findAll', { doneAt: null })
+        this.$store.dispatch('workspaces/findAll')
+        this.$store.dispatch('tags/findAll')
+        this.splashscreenVisible = false
+      } catch(error) {
+        this.splashscreenVisible = false
+      }
+    }
+  })
+  .created(vue => {
+    vue.boot()
   })
   .vue()
+
+  console.log(test)
+
+export default test
 </script>
