@@ -14,7 +14,7 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
 
-    working_directory: /tmp
+    working_directory: ~/repo
 
     steps:
       - checkout
@@ -39,23 +39,24 @@ jobs:
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is 
           # taken to be the root directory of the workspace.
-          root: workspace
+          root: ~/repo
           # Must be relative path from root
           paths:
             - dist
   deploy:
     machine:
       enabled: true
-    working_directory: /tmp
+    working_directory: ~/repo
     steps:
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
-          at: /tmp/workspace
+          at: ~/repo
       - run: ls -la
+      - run: pwd
       - run:
           name: Deploy Over SSH
           command: |
-            scp -r dist $SSH_USER@$SSH_HOST:~/app
+            scp -r /tmp/workspace/dist $SSH_USER@$SSH_HOST:~/app
 workflows:
   version: 2
   build-and-deploy:
