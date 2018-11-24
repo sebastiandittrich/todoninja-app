@@ -35,3 +35,23 @@ jobs:
         
       # run build!
       - run: npm run build
+  deploy:
+    machine:
+      enabled: true
+    working_directory: ~/repo
+    steps:
+      - run:
+          name: Deploy Over SSH
+          command: |
+            scp -r dist $SSH_USER@$SSH_HOST:~/app
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
