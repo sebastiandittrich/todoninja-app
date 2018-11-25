@@ -1,0 +1,4 @@
+build:
+  script:
+    - pwd
+    - ls -la
