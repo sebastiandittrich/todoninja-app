@@ -5,8 +5,7 @@ stages:
 build:
   stage: build
   script:
-    - pwd
-    - ls -la
+    - node
 
 test:
   stage: test
