@@ -1,6 +1,6 @@
 stages:
   - build
-  - test
+  - deploy
 
 image: node:8.12
 
@@ -14,8 +14,16 @@ build:
       - dist
 
 
-test:
-  stage: test
+deploy:
+  stage: deploy
+  only:
+    - master
+  variables:
+    GIT_STRATEGY: none
   script:
-    - pwd
-    - ls -la
+    - mkdir ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - echo "$SSH_PUBLIC_KEY" >> ~/.ssh/id_rsa.pub
+    - chmod 600 ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa.pub
+    - scp -r dist $SSH_USER@$SSH_HOST:~/app
