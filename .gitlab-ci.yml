@@ -1,4 +1,15 @@
+stages:
+  - build
+  - test
+
 build:
+  stage: build
+  script:
+    - pwd
+    - ls -la
+
+test:
+  stage: test
   script:
     - pwd
     - ls -la
