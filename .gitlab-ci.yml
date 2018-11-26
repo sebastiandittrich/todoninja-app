@@ -52,5 +52,12 @@ deploy:
     ##
     #- git config --global user.email "user@example.com"
     #- git config --global user.name "User name"
+
+    ##
+    ## Assuming you created the SSH_KNOWN_HOSTS variable, uncomment the
+    ## following two lines.
+    ##
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:
     - scp -r dist $SSH_USER@$SSH_HOST:~/app
