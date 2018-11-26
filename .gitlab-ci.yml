@@ -16,6 +16,7 @@ build:
 
 deploy:
   stage: deploy
+  environment: production
   only:
     - master
   variables:
