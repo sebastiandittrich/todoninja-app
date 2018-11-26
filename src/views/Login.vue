@@ -11,7 +11,7 @@
             Todoninja
           </div>
           <div class="m-8 font-bold text-3xl">
-            Hey!
+            Hey! LOL
             <div class="text-grey-darker text-base font-normal mt-4">
               You can use your email and password to log in!
             </div>
