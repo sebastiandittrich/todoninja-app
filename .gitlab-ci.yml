@@ -13,7 +13,7 @@ build:
   artifacts:
     paths:
       - dist
-      - .commitname
+      - .commithash
 
 deploy:
   stage: deploy
