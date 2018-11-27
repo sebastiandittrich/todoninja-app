@@ -7,12 +7,13 @@ image: node:8.12
 build:
   stage: build
   script:
+    - echo $(git rev-parse HEAD) > .commithash
     - npm install
     - npm run build
   artifacts:
     paths:
       - dist
-
+      - .commitname
 
 deploy:
   stage: deploy
@@ -61,6 +62,6 @@ deploy:
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - dirname="$(git rev-parse HEAD)"
+    - dirname="$(cat .commithash)"
     - ssh $SSH_USER@$SSH_HOST "cd ~ && (mkdir -p deployments)"
     - scp -r dist $SSH_USER@$SSH_HOST:~/deployments/$dirname
