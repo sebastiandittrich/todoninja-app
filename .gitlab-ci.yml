@@ -7,7 +7,7 @@ image: node:8.12
 build:
   stage: build
   script:
-    - echo $(git rev-parse HEAD) > .commithash
+    - echo $(git rev-parse --short=8 HEAD) > .commithash
     - npm install
     - npm run build
   artifacts:
@@ -63,5 +63,6 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - dirname="$(cat .commithash)"
+    - thetime="$(date +%s)"
     - ssh $SSH_USER@$SSH_HOST "cd ~ && (mkdir -p deployments)"
-    - scp -r dist $SSH_USER@$SSH_HOST:~/deployments/$dirname
+    - scp -r dist $SSH_USER@$SSH_HOST:~/deployments/$thetime-$dirname
