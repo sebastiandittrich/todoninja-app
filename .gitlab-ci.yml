@@ -66,3 +66,4 @@ deploy:
     - thetime="$(date +%s)"
     - ssh $SSH_USER@$SSH_HOST "cd ~ && (mkdir -p deployments)"
     - scp -r dist $SSH_USER@$SSH_HOST:~/deployments/$thetime-$dirname
+    - ssh $SSH_USER@SSH_HOST "ln -nfs ~/deployments/$thetime-$dirname ~/"
