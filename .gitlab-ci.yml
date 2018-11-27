@@ -61,4 +61,6 @@ deploy:
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - scp -r dist $SSH_USER@$SSH_HOST:~/app
+    - thetime="$(date "+%s-%N")"
+    - ssh $SSH_USER@$SSH_HOST "cd ~ && (mkdir -p deployments)"
+    - scp -r dist $SSH_USER@$SSH_HOST:~/deployments/$thetime
