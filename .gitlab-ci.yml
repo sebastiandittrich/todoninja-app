@@ -62,8 +62,7 @@ deploy:
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - dirname="$(cat .commithash)"
-    - thetime="$(date +%s)"
+    - dirname="~/deployments/$(date +%s)-$(cat .commithash)"
     - ssh $SSH_USER@$SSH_HOST "cd ~ && (mkdir -p deployments)"
-    - scp -r dist $SSH_USER@$SSH_HOST:~/deployments/$thetime-$dirname
-    - ssh $SSH_USER@$SSH_HOST "ln -nfs ~/deployments/$thetime-$dirname ~/app"
+    - scp -r dist $SSH_USER@$SSH_HOST:$dirname
+    - ssh $SSH_USER@$SSH_HOST "ln -nfs $dirname ~/app"
