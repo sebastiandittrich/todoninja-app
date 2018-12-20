@@ -2,33 +2,37 @@
     <transition name="slide-right">
         <div>
             <!-- Header Bar -->
-            <div class="bg-grey-lighter p-4 flex flex-row items-center justify-start text-2xl">
-                <i class="feather icon-arrow-left" @click="$router.back()"></i>
-                <div class="ml-8">Settings</div>
+            <div class="bg-grey-lighter">
+                <div class="p-4 flex flex-row items-center justify-start text-2xl mx-auto container">
+                    <i class="feather icon-arrow-left" @click="$router.back()"></i>
+                    <div class="ml-8">Settings</div>
+                </div>
             </div>
 
             <!-- User -->
-            <div class="p-4 pt-8 bg-grey-lighter">
-                <div class="flex flex-row items-center justify-start">
-                    <div class="rounded-full border-grey-light border-2 overflow-hidden h-16 w-16 flex items-center justify-center bg-white mr-8">
-                        <img src="/img/logo.svg" class="h-8">
-                    </div>
-                    <div class="flex flex-col">
-                        <div class="font-bold">
-                            {{ user.name }}
+            <div class="bg-grey-lighter">
+                <div class="mx-auto container p-4 pt-8">
+                    <div class="flex flex-row items-center justify-start">
+                        <div class="rounded-full border-grey-light border-2 overflow-hidden h-16 w-16 flex items-center justify-center bg-white mr-8">
+                            <img src="/img/logo.svg" class="h-8">
                         </div>
-                        <div class="text-grey-darker">
-                            {{ user.email }}
+                        <div class="flex flex-col">
+                            <div class="font-bold">
+                                {{ user.name }}
+                            </div>
+                            <div class="text-grey-darker">
+                                {{ user.email }}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="flex flex-row justify-end">
-                    <div @click="logoutClick" class="button-red">Logout</div>
+                    <div class="flex flex-row justify-end">
+                        <div @click="logoutClick" class="button-red">Logout</div>
+                    </div>
                 </div>
             </div>
 
             <!-- Workspaces -->
-            <div class="m-4 mt-8 mx-0">
+            <div class="m-4 mt-8 mx-auto container">
                 <div class="mx-4 flex flex-row items-center justify-between">
                     <div class="font-bold">
                         Workspaces
@@ -47,7 +51,7 @@
             <workspaces-picker :value="null" manage @hide="hideModal('workspaces-picker')" :state="modalState('workspaces-picker')"></workspaces-picker>
 
             <!-- Tags -->
-            <div class="m-4 mt-8 mx-0">
+            <div class="m-4 mt-8 mx-auto container">
                 <div class="mx-4 flex flex-row items-center justify-between">
                     <div class="font-bold">
                         Tags

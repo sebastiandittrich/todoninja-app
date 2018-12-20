@@ -11,7 +11,7 @@
             </div>
         </div>
         <div>
-            <item icon="feather icon-settings">Settings</item>
+            <item @click="$router.push('/settings')" icon="feather icon-settings">Settings</item>
         </div>
     </div>
 </template>

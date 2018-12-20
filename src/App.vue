@@ -21,9 +21,6 @@ const test = new Page()
   }))
   .methods({
     async boot() {
-      await new Promise((resolve) => {
-        setTimeout(resolve, 3000);
-      })
       try {
         await this.$store.dispatch('auth/authenticate')
         await this.$store.dispatch('tasks/findAll', { doneAt: null })

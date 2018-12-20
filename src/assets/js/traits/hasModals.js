@@ -27,6 +27,9 @@ export default function(modalsargs) {
                 this.modals[name].position.y = $event.clientY
                 this.modals[name].show = true
 
+                console.log($event.clientX)
+                console.log($event.clientY)
+
                 var unwatcher = null
                 unwatcher = this.$watch(() => this.modals[name].show, () => {
                     unwatcher()

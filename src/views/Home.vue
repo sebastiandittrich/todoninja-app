@@ -10,8 +10,8 @@
 
       <div class="hidden md:block" style="grid-area: search"><search-bar class="bg-blue-lightest pl-6 h-full" ></search-bar></div>
 
-      <div style="grid-area: tasks">
-        <div class="hidden md:block p-2 mb-6" style="background: linear-gradient(hsl(224, 15%, 90%) 47%, white 46%)">
+      <div style="grid-area: tasks" class="relative overflow-auto">
+        <div class="hidden md:block p-2 mb-6 sticky pin-t pin-x" style="background: linear-gradient(hsl(224, 15%, 90%) 47%, white 46%)">
           <greeting class="rounded-lg shadow-md"></greeting>
         </div>
         <div class="stacking overflow-hidden mx-2">
@@ -24,7 +24,9 @@
       </div>
 
       <navigation-bar class="md:hidden"></navigation-bar>
-      <router-view class="absolute pin md:static z-10 md:z-10" style="grid-area: detail"></router-view>
+      <router-view class="fixed overflow-scroll pin md:static z-10 md:z-10" style="grid-area: detail"></router-view>
+
+      <loading-indicator class="z-10"></loading-indicator>
 
     </div>
   </transition>
@@ -44,7 +46,7 @@ import Page from '@/assets/js/Page';
 
 export default new Page()
 
-  .with('Greeting', 'sections/Bar', 'tasks/List', 'navigation/Bar', 'navigation/Sidebar', 'tasks/Do', 'tasks/Today', 'tasks/All', 'search/Bar')
+  .with('Greeting', 'sections/Bar', 'tasks/List', 'navigation/Bar', 'navigation/Sidebar', 'tasks/Do', 'tasks/Today', 'tasks/All', 'search/Bar', 'loading/Indicator')
 
   .data(() => ({
     transition: 'opacity-slide-right'
@@ -66,15 +68,14 @@ export default new Page()
   })
 
   .watch('$route', function(to, from) {
-    console.log(from)
-    if(from.name == 'Tasks.Do') {
+    if(from.query.view == 'do') {
       this.transition = 'opacity-slide-left'
-    } else if(from.name == 'Tasks.All') {
+    } else if(from.query.view == 'all') {
       this.transition = 'opacity-slide-right'
-    } else if(from.name == 'Tasks.Today') {
-      if(to.name == 'Tasks.Do') {
+    } else if(from.query.view == 'today') {
+      if(to.query.view == 'do') {
         this.transition = 'opacity-slide-right'
-      } else if(to.name == 'Tasks.All') {
+      } else if(to.query.view == 'all') {
         this.transition = 'opacity-slide-left'
       }
     }

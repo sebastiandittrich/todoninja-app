@@ -72,5 +72,6 @@ export default new Page('TagsPicker')
             })
         }
     })
+    .watch('value', () => console.log('tags changed'))
     .vue()
 </script>

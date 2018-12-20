@@ -2,7 +2,7 @@
     <div class="flex flex-col">
         <tasks-list :tasks="tasks"></tasks-list>
         <div class="button" @click="loadDoneClick">
-            Load done tasks
+            Load more tasks
         </div>
     </div>
 </template>

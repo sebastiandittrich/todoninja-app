@@ -23,6 +23,15 @@
     opacity: 0;
 }
 
+.opacity-slide-up-enter {
+    opacity: 0;
+    transform: translateY(50px);
+}
+.opacity-slide-up-leave-to {
+    opacity: 0;
+    transform: translateY(50px);
+}
+
 .opacity-slide-right-enter {
     opacity: 0;
     transform: translateX(-50px);

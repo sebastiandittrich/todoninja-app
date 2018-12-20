@@ -5,7 +5,7 @@ export default {
     title: '',
     doneAt: null,
     description: '',
-    tags: [],
+    tags: 'Tags',
     workspaceId: null,
     workspace: 'Workspace',
     waiting: null,

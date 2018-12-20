@@ -28,7 +28,7 @@
                     <done-indicator @change="save()" :task="task" class="text-2xl mr-6"></done-indicator>
 
                     <!-- Title -->
-                    <inputt @press-enter="save()" ref="inputt" @input="setEdited" iclass="font-bold text-2xl border-none" v-model="task.title" placeholder="My new task" type="text" class="w-full"></inputt>
+                    <inputt @press-enter="save({ explicit: true })" ref="inputt" @input="setEdited" iclass="font-bold text-2xl border-none" v-model="task.title" placeholder="My new task" type="text" class="w-full"></inputt>
 
                     <!-- Today -->
                     <today-indicator @change="save()" :task="task" class="text-2xl ml-6"></today-indicator>
