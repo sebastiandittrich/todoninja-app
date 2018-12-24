@@ -43,13 +43,13 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      meta: { guest: true },
+      meta: { guest: 'only' },
       component: page('Login'),
     },
     {
       path: '/register',
       name: 'register',
-      meta: { guest: true },
+      meta: { guest: 'only' },
       component: page('Register'),
     },
   ],
@@ -58,7 +58,11 @@ const router = new Router({
 router.beforeEach(async (to, from, next) => {
   // Check if some of the matched routes have the "guest" meta field
   if(to.matched.some(route => route.meta.guest)) {
-    next()
+    if(to.matched.some(route => route.meta.guest == 'only')) {
+      next('/')
+    } else {
+      next()
+    }
   } else {
     if(store.state.auth.accesToken) {
       next()

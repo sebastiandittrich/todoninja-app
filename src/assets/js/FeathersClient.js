@@ -2,7 +2,6 @@ import feathers from '@feathersjs/feathers';
 import socketio from '@feathersjs/socketio-client';
 import auth from '@feathersjs/authentication-client';
 import io from 'socket.io-client';
-import rest from '@feathersjs/rest-client'
 
 let socket
 
