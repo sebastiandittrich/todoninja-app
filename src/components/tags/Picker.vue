@@ -5,7 +5,7 @@
                 <i v-if='remove' class="feather icon-trash text-red-lighter"></i>
                 {{ tag.name }}
             </div>
-            <div v-if="!remove" key="add" class="text-blue cursor-pointer flex flex-row items-center ml-2 pr-6 flex-no-wrap whitespace-no-wrap" @click="showModal('tags-creator', $event)">
+            <div v-if="!remove && !hideAddTag" key="add" class="text-blue cursor-pointer flex flex-row items-center ml-2 pr-6 flex-no-wrap whitespace-no-wrap" @click="showModal('tags-creator', $event)">
                 <i class="feather icon-plus mr-2"></i>
                 Add tag
             </div>
@@ -28,6 +28,7 @@ export default new Page('TagsPicker')
         value: Array,
         // Is remove mode
         remove: Boolean,
+        hideAddTag: { type: Boolean, default: false }
     })
     .use( hasModals({ 'tags-creator': 'tags/Creator', 'confirmator': 'confirmator' }) )
     .getters({

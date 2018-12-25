@@ -9,6 +9,10 @@
                     {{ workspace.name }}
                 </item>
             </div>
+            <div class="font-bold m-8 mt-8 mb-4 ml-6">
+                Filter
+            </div>
+            <filter-picker class="mt-4"></filter-picker>
         </div>
         <div>
             <item @click="$router.push('/settings')" icon="feather icon-settings">Settings</item>
@@ -20,7 +24,7 @@
 import Page from '@/assets/js/Page'
 
 export default new Page()
-    .with('item:navigation/SidebarItem')
+    .with('item:navigation/SidebarItem', 'filter/Picker')
     .getters({
         workspaces: 'workspaces/list'
     })

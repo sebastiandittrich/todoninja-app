@@ -11,5 +11,8 @@ import Page from '@/assets/js/Page'
 export default new Page()
     .with('inputt')
     .data(() => ({ query: null }))
+    .watch('query', function(to, from) {
+        this.$store.commit('tasks/setCurrentFilter', { path: 'query.title.$like', value: to})
+    })
     .vue()
 </script>

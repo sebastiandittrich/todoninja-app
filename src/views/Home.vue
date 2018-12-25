@@ -6,7 +6,7 @@
 
       <sections-bar class="md:bg-blue-lightest md:p-4 md:pt-6" style="grid-area: sections"></sections-bar>
 
-      <div class="hidden md:block" style="grid-area: sidebar"><navigation-sidebar class="md:bg-blue-lightest"></navigation-sidebar></div>
+      <div class="hidden md:block overflow-hidden" style="grid-area: sidebar"><navigation-sidebar class="md:bg-blue-lightest"></navigation-sidebar></div>
 
       <div class="hidden md:block" style="grid-area: search"><search-bar class="bg-blue-lightest pl-6 h-full" ></search-bar></div>
 

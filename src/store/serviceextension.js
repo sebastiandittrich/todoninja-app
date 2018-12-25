@@ -7,7 +7,18 @@ export const state = {
 export const getters = {
   filteredFind(state, getters) {
     return function(filter = {}) {
-      return getters['find'](merge(state.currentFilter, filter))
+      let fullFilter = merge(state.currentFilter, filter)
+      const $functions = fullFilter.query.$functions || []
+      delete fullFilter.query.$functions
+      const data = getters['find'](fullFilter)
+
+      for(let $function of $functions) {
+        if(typeof $function == 'function') {
+          data.data = data.data.filter($function)
+        }
+      }
+      data.total = data.data.length
+      return data
     }
   }
 }
@@ -53,6 +64,20 @@ export const mutations = {
     } else {
       state.currentFilter = value
     }
+  },
+  addCurrentFilterFunction(state, $function) {
+    if(!state.currentFilter.query) {
+      Vue.set(state.currentFilter, 'query', {})
+    }
+    if(!Array.isArray(state.currentFilter.query.$functions)) {
+      console.log('not array')
+      Vue.set(state.currentFilter.query, '$functions', [])
+    }
+    console.log(state)
+    state.currentFilter.query.$functions.push($function)
+  },
+  removeCurrentFilterFunction(state, $function) {
+    state.$functions.splice(state.$functions.indexOf($function), 1)
   }
 }
 

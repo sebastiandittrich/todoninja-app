@@ -4,7 +4,7 @@
         <div key="loader" class="flex flex-row items-center justify-center w-full">
             <Loader color="#45547c" class="" :loading="$store.state.tasks.isFindPending"></Loader>
         </div>
-        <div key="ad"  class="flex items-center justify-center flex-col">
+        <!-- <div key="ad"  class="flex items-center justify-center flex-col">
             <iframe class="my-4"
             style="border:0;width:320px;height:144px;"
             src="https://makerads.xyz/ad"
@@ -12,7 +12,7 @@
             <div>
             Ads by <a class="link" href="http://makerads.xyz">Makerads</a>
             </div>
-        </div>
+        </div> -->
     </transition-group>
 </template>
 

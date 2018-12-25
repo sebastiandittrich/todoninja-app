@@ -59,7 +59,13 @@ router.beforeEach(async (to, from, next) => {
   // Check if some of the matched routes have the "guest" meta field
   if(to.matched.some(route => route.meta.guest)) {
     if(to.matched.some(route => route.meta.guest == 'only')) {
-      next('/')
+      if(store.state.auth.accesToken) {
+        next('/')
+      } else {
+        store.dispatch('auth/authenticate')
+        .then(() => next('/'))
+        .catch(() => next())
+      }
     } else {
       next()
     }
