@@ -11,8 +11,16 @@ import Page from '@/assets/js/Page'
 export default new Page()
     .with('inputt')
     .data(() => ({ query: null }))
-    .watch('query', function(to, from) {
-        this.$store.commit('tasks/setCurrentFilter', { path: 'query.title.$like', value: to})
+    .methods({
+        searchFilter(task) {
+            if(!this.query) {
+                return true
+            }
+            return task.title.includes(this.query)
+        }
+    })
+    .created(vue => {
+        vue.$store.commit('tasks/addCurrentFilterFunction', vue.searchFilter)
     })
     .vue()
 </script>
