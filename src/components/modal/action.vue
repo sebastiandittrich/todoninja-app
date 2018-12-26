@@ -1,5 +1,5 @@
 <template>
-    <div :class="primary ? 'button button-small mt-0' : 'p-4 cursor-pointer flex flex-row items-center'" @click="$emit('click', $event)">
+    <div class="px-4 py-2 font-bold uppercase text-grey-dark cursor-pointer select-none" :class="primary ? 'text-blue tracking-wide' : ''" @click="$emit('click', $event)">
         <slot></slot>
     </div>
 </template> 

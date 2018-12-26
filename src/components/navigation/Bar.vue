@@ -10,7 +10,7 @@
             <navigation-item @click="showModal('filter-modal')">
                 <i class="feather icon-filter"></i>
             </navigation-item>
-            <navigation-item>
+            <navigation-item @click="showModal('search-modal')">
                 <i class="feather icon-search"></i>
             </navigation-item>
             <navigation-item link="/tasks/create" class="add-icon transition">
@@ -22,6 +22,7 @@
         </div>
         <workspaces-picker :value="activeWorkspace" @input="changeWorkspace" :state="modalState('workspaces-picker')" @hide="hideModal('workspaces-picker')"></workspaces-picker>
         <filter-modal :state="modalState('filter-modal')" @hide="hideModal('filter-modal')"></filter-modal>
+        <search-modal :state="modalState('search-modal')" @hide="hideModal('search-modal')"></search-modal>
     </div>
 </template>
 
@@ -41,7 +42,7 @@ import hasModals from '@/assets/js/traits/hasModals'
 
 export default new Page('NavigationBar')
     .with('navigation/Item')
-    .use( hasModals({ 'workspaces-picker': 'workspaces/Picker', 'filter-modal': 'filter/Modal' }) )
+    .use( hasModals({ 'workspaces-picker': 'workspaces/Picker', 'filter-modal': 'filter/Modal', 'search-modal': 'search/Modal' }) )
     .computed({
         activeWorkspace() {
             const filter = this.$store.state.tasks.currentFilter

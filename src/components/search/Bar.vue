@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-row items-center p-4">
         <i class="feather icon-search mr-4 text-grey-darker"></i>
-        <inputt iclass="border-none" class="inline-flex" v-model="query" placeholder="Search for a task..." type="text"></inputt>
+        <inputt ref="searchinputt" iclass="border-none" class="inline-flex" v-model="query" placeholder="Search for a task..." type="text"></inputt>
     </div>
 </template>
 
@@ -17,6 +17,9 @@ export default new Page()
                 return true
             }
             return task.title.includes(this.query)
+        },
+        focus() {
+            this.$refs.searchinputt.focus()
         }
     })
     .created(vue => {
