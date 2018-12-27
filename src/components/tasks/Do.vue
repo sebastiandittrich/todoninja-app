@@ -6,16 +6,27 @@
 
 <script>
     import Page from '@/assets/js/Page'
+    import _ from 'lodash'
 
     export default new Page()
         .with('tasks/List')
         .getters({
-            findTasks: 'tasks/filteredFind'
+            filteredFind: 'tasks/filteredFind'
+        })
+        .methods({
+            findTasks(query) {
+                return this.filteredFind({ query: { doneAt: null, ...query } }).data
+            },
         })
         .computed({
             tasks() {
-                return this.findTasks({ query: { state: 0, doneAt: null } }).data
+                const list = [ ]
+
+                list.push(this.findTasks({ state: 0 }))
+                list.push(this.findTasks().filter(task => task.isDeadlineToday() ))
+
+                return _.uniqBy(_.flatten(list), 'id')
             }
         })
-        .vue()    
+        .vue()
 </script>
