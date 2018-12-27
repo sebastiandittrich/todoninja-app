@@ -100,7 +100,12 @@ export default class Trait {
       const watchers = name
       Object.assign(this.app.watch, watchers)
     } else {
-      this.app.watch[name] = callback
+      if(!Array.isArray(name)) {
+        name = [name]
+      }
+      for(let watchername of name) {
+        this.app.watch[watchername] = callback
+      }
     }
     return this
   }
