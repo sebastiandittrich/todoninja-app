@@ -17,7 +17,7 @@
                 <i class="feather icon-plus text-white p-3 rounded-full bg-blue -mt-8 -mx-3"></i>
             </navigation-item>
             <navigation-item link="/settings">
-                <i class="feather icon-menu"></i>
+                <i class="feather icon-settings"></i>
             </navigation-item>
         </div>
         <workspaces-picker :value="activeWorkspace" @input="changeWorkspace" :state="modalState('workspaces-picker')" @hide="hideModal('workspaces-picker')"></workspaces-picker>
