@@ -59,6 +59,5 @@ const t = new Page()
   })
   .vue();
 
-console.log(t);
 export default t;
 </script>

@@ -22,6 +22,12 @@ export default new Page()
             this.$refs.searchinputt.focus()
         }
     })
+    .watch('query', function(to) {
+        const path = '$meta.search.active'
+        const value = !!to
+
+        this.$store.commit('tasks/setCurrentFilter', {path, value})
+    })
     .created(vue => {
         vue.$store.commit('tasks/addCurrentFilterFunction', vue.searchFilter)
     })

@@ -37,7 +37,5 @@ const test = new Page()
   })
   .vue()
 
-  console.log(test)
-
 export default test
 </script>

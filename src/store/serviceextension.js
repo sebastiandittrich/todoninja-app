@@ -10,6 +10,7 @@ export const getters = {
       let fullFilter = merge(state.currentFilter, filter)
       const $functions = fullFilter.query.$functions || []
       delete fullFilter.query.$functions
+      delete fullFilter.$meta
       const data = getters['find'](fullFilter)
 
       for(let $function of $functions) {
@@ -70,10 +71,8 @@ export const mutations = {
       Vue.set(state.currentFilter, 'query', {})
     }
     if(!Array.isArray(state.currentFilter.query.$functions)) {
-      console.log('not array')
       Vue.set(state.currentFilter.query, '$functions', [])
     }
-    console.log(state)
     state.currentFilter.query.$functions.push($function)
   },
   removeCurrentFilterFunction(state, $function) {

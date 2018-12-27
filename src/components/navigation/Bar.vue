@@ -8,10 +8,16 @@
                 </div>
             </navigation-item>
             <navigation-item @click="showModal('filter-modal')">
-                <i class="feather icon-filter"></i>
+                <div class="stacking">
+                    <i class="feather icon-filter"></i>
+                    <div v-if="filterActive" class="w-2 h-2 bg-blue rounded-full -mt-2 -mr-1" style="justify-self: end"></div>
+                </div>
             </navigation-item>
             <navigation-item @click="showModal('search-modal')">
-                <i class="feather icon-search"></i>
+                <div class="stacking">
+                    <i class="feather icon-search"></i>
+                    <div v-if="searchActive" class="w-2 h-2 bg-blue rounded-full -mt-2 -mr-1" style="justify-self: end"></div>
+                </div>
             </navigation-item>
             <navigation-item link="/tasks/create" class="add-icon transition">
                 <i class="feather icon-plus text-white p-3 rounded-full bg-blue -mt-8 -mx-3"></i>
@@ -22,7 +28,7 @@
         </div>
         <workspaces-picker :value="activeWorkspace" @input="changeWorkspace" :state="modalState('workspaces-picker')" @hide="hideModal('workspaces-picker')"></workspaces-picker>
         <filter-modal :state="modalState('filter-modal')" @hide="hideModal('filter-modal')"></filter-modal>
-        <search-modal :state="modalState('search-modal')" @hide="hideModal('search-modal')"></search-modal>
+        <search-modal ref="searchmodal" :state="modalState('search-modal')" @hide="hideModal('search-modal')"></search-modal>
     </div>
 </template>
 
@@ -39,6 +45,7 @@
 <script>
 import Page from '@/assets/js/Page'
 import hasModals from '@/assets/js/traits/hasModals'
+import _ from 'lodash'
 
 export default new Page('NavigationBar')
     .with('navigation/Item')
@@ -59,6 +66,12 @@ export default new Page('NavigationBar')
             } else {
                 return false
             }
+        },
+        searchActive() {
+            return !!_.get(this, '$store.state.tasks.currentFilter.$meta.search.active')
+        },
+        filterActive() {
+            return !!_.get(this, '$store.state.tasks.currentFilter.$meta.filter.active')
         }
     })
     .methods({
@@ -70,5 +83,6 @@ export default new Page('NavigationBar')
             }
         }
     })
+    .created(vue => window.bar = vue)
     .vue()
 </script>

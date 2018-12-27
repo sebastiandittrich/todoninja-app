@@ -25,8 +25,18 @@ export default new Page()
                 }
             }
             return false
+        },
+        updateFilterActive() {
+            const active = (value = true) => this.$store.commit('tasks/setCurrentFilter', { path: '$meta.filter.active', value })
+
+            if(this.tags.length > 0) {
+                return active()
+            }
+
+            return active(false)
         }
     })
+    .watch('tags', 'updateFilterActive')
     .created(vue => {
         vue.$store.commit('tasks/addCurrentFilterFunction', vue.tagsFilter)
     })

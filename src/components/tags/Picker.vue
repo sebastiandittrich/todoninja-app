@@ -54,7 +54,6 @@ export default new Page('TagsPicker')
             }
         },
         async deleteTag(id) {
-            console.log(id)
             return await this.$store.dispatch('tags/remove', id)
         },
         tagCreated(tag) {
@@ -73,6 +72,5 @@ export default new Page('TagsPicker')
             })
         }
     })
-    .watch('value', () => console.log('tags changed'))
     .vue()
 </script>
