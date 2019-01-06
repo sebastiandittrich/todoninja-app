@@ -24,9 +24,13 @@
       </div>
 
       <navigation-bar class="md:hidden"></navigation-bar>
-      <router-view class="fixed overflow-scroll pin md:static z-10 md:z-10" style="grid-area: detail"></router-view>
+      <router-view class="fixed pin md:static z-10 md:z-10 overflow-x-hidden" style="grid-area: detail"></router-view>
 
       <loading-indicator class="z-10"></loading-indicator>
+
+      <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="add-icon transition hidden md:flex fixed pin-r pin-b z-10 m-8" style="filter: drop-shadow(0px 10px 10px hsl(224, 28%, 38%));">
+          <i class="feather icon-plus text-white p-3 rounded-full bg-blue"></i>
+      </navigation-item>
 
     </div>
   </transition>
@@ -46,7 +50,7 @@ import Page from '@/assets/js/Page';
 
 export default new Page()
 
-  .with('Greeting', 'sections/Bar', 'tasks/List', 'navigation/Bar', 'navigation/Sidebar', 'tasks/Do', 'tasks/Today', 'tasks/All', 'search/Bar', 'loading/Indicator')
+  .with('Greeting', 'sections/Bar', 'tasks/List', 'navigation/Bar', 'navigation/Item', 'navigation/Sidebar', 'tasks/Do', 'tasks/Today', 'tasks/All', 'search/Bar', 'loading/Indicator')
 
   .data(() => ({
     transition: 'opacity-slide-right'
