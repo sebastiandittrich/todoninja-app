@@ -1,4 +1,4 @@
-# dodoninja
+# dodoninja [![pipeline status](https://gitlab.com/ninja-labs/todoninja-v2/badges/master/pipeline.svg)](https://gitlab.com/ninja-labs/todoninja-v2/commits/master)
 
 ## Project setup
 ```
