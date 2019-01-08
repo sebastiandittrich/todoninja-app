@@ -15,6 +15,6 @@ const feathersClient = feathers()
 
 feathersClient.configure(socketio(socket))
 
-feathersClient.configure(auth({ storage: window.localStorage }));
+feathersClient.configure(auth({ storage: window.localStorage, timeout: /* 5 minutes */ 300000 }));
 
 export default feathersClient;
