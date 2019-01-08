@@ -29,6 +29,9 @@ export default {
     isWaiting() {
         return this.state === States.waiting
     },
+    isDo() {
+        return this.state == States.do || this.isDeadlineToday() || this.isDeadlineOver()
+    },
     hasDeadline() {
         return this.deadline != null && this.deadline.length > 0
     },
@@ -39,7 +42,10 @@ export default {
         return this.isToday() ? this.todayMoment().isBefore(moment(), 'day') : false
     },
     isDeadlineToday() {
-        return this.hasDeadline() && this.deadlineMoment().isSame(moment(), 'day')
+        return !this.isDone() && this.hasDeadline() && this.deadlineMoment().isSame(moment(), 'day')
+    },
+    isDeadlineOver() {
+        return !this.isDone() && this.hasDeadline() && this.deadlineMoment().isBefore(moment(), 'day')
     },
 
     toggleState() {

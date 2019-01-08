@@ -22,8 +22,7 @@
             tasks() {
                 const list = [ ]
 
-                list.push(this.findTasks({ state: 0 }))
-                list.push(this.findTasks().filter(task => task.isDeadlineToday() ))
+                list.push(this.findTasks().filter(task => task.isDo() ))
 
                 return _.uniqBy(_.flatten(list), 'id')
             }
