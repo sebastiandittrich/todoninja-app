@@ -8,20 +8,20 @@
                 </div>
                 <transition name="expand">
                     <div class="text-sm font-light text-grey-darker" v-if="!task.isDone()">
+                        <span>
+                            {{ States.states.filter(state => state.state == task.state)[0].name }}
+                        </span>
                         <span v-if="task.isDeadlineToday()">
+                            &bull;
                             <span class="text-blue font-bold">
                                 Today
                             </span>
-                            &bull;
                         </span>
                         <span v-if="task.isDeadlineOver()">
+                            &bull;
                             <span class="text-orange-light font-bold">
                                 {{ task.deadlineMoment().fromNow() }} 
                             </span>
-                            &bull;
-                        </span>
-                        <span>
-                            {{ States.states.filter(state => state.state == task.state)[0].name }}
                         </span>
                     </div>
                 </transition>
