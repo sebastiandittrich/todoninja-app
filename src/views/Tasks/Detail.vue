@@ -21,7 +21,8 @@
                         <span class="font-bold">{{ selectedWorkspaceName }}</span>
                         <i class="feather icon-chevron-down ml-2 text-base"></i>
                     </div>
-                    <i class="feather icon-menu"></i>
+                    <!-- Options Button -->
+                    <i :class="{'opacity-0': isCreate}" @click="!isCreate ? showModal('tasks-options', $event) : null" class="feather icon-more-vertical"></i>
                 </div>
                 <div class="flex flex-row items-center">
                     <!-- State -->
@@ -56,6 +57,8 @@
 
             <!-- Workspace -->
             <workspaces-picker @input="save()" @hide="hideModal('workspaces-picker')" :state="modalState('workspaces-picker')" v-model="task.workspaceId"></workspaces-picker>
+            <!-- Options Modal -->
+            <tasks-options @hide="hideModal('tasks-options')" :state="modalState('tasks-options')" :task="task" @delete="$router.go(-1)"></tasks-options>
         </div>
     </transition>
 </template>  
@@ -73,7 +76,7 @@ export default new Page()
     //     }
     // })
     .with('inputt', 'tags/Picker', 'state/Presenter', 'done/Indicator', 'today/Indicator')
-    .use( hasModals({ 'workspaces-picker': 'workspaces/Picker' }) )
+    .use( hasModals({ 'workspaces-picker': 'workspaces/Picker', 'tasks-options': 'tasks/Options' }) )
 
     .getters({
         getWorkspace: 'workspaces/get'
