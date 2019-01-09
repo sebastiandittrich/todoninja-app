@@ -50,7 +50,7 @@ deploy:
 
 deploy_beta:
   stage: deploy
-  environment: production
+  environment: beta
   only:
     - beta
   variables:
