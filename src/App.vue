@@ -20,12 +20,15 @@ const test = new Page()
     splashscreenVisible: true,
   }))
   .methods({
-    async boot() {
-      try {
-        await this.$store.dispatch('auth/authenticate')
+    async fetchData() {
         await this.$store.dispatch('tasks/findAll', { doneAt: null })
         this.$store.dispatch('workspaces/findAll')
         this.$store.dispatch('tags/findAll')
+    },
+    async boot() {
+      try {
+        await this.$store.dispatch('auth/authenticate')
+        await this.fetchData()
         this.splashscreenVisible = false
       } catch(error) {
         this.splashscreenVisible = false
@@ -35,6 +38,7 @@ const test = new Page()
   .created(vue => {
     vue.boot()
   })
+  .watch('$store.state.auth.accessToken', 'fetchData')
   .vue()
 
 export default test
