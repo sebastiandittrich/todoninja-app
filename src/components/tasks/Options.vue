@@ -39,6 +39,5 @@ export default new Modal()
             this.$emit('hide')
         }
     })
-    .watch('task', to => console.log(to))
     .vue()
 </script>
