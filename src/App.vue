@@ -22,13 +22,13 @@ const test = new Page()
   .methods({
     async fetchData() {
         await this.$store.dispatch('tasks/findAll', { doneAt: null })
-        this.$store.dispatch('workspaces/findAll')
-        this.$store.dispatch('tags/findAll')
+        await this.$store.dispatch('workspaces/findAll')
+        await this.$store.dispatch('tags/findAll')
     },
     async boot() {
       try {
         await this.$store.dispatch('auth/authenticate')
-        await this.fetchData()
+        this.fetchData()
         this.splashscreenVisible = false
       } catch(error) {
         this.splashscreenVisible = false
