@@ -30,11 +30,7 @@
     opacity: 0;
 }
 
-.opacity-slide-up-enter {
-    opacity: 0;
-    transform: translateY(50px);
-}
-.opacity-slide-up-leave-to {
+.opacity-slide-up-enter, .opacity-slide-up-leave-to {
     opacity: 0;
     transform: translateY(50px);
 }

@@ -13,6 +13,16 @@
             Earlier
         </div>
         <tasks-list :tasks="earlierTasks"></tasks-list>
+
+        <transition name="opacity-slide-up">
+            <div v-if="tasks.length < 1 && yesterdayTasks.length < 1 && earlierTasks.length < 1" class="flex flex-col items-center">
+                <img src="/img/today_done.svg" alt="woman jumping and smartphone with checkmark on it" class="w-1/2 mt-8">
+                <div class="font-light text-xl text-blue-darkest px-8 mt-8 text-center">
+                    Everything is done for today.
+                    <div class="text-sm font-bold mt-4">Now you're free!</div>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 
