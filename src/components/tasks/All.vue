@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col">
         <tasks-list :tasks="tasks"></tasks-list>
-        <div class="button" @click="loadDoneClick">
+        <div v-if="moreTasksAvailable" class="button" @click="loadDoneClick">
             Load more tasks
         </div>
     </div>
@@ -12,6 +12,9 @@ import Page from '@/assets/js/Page'
 
 export default new Page()
     .with('tasks/List')
+    .data(() => ({
+        moreTasksAvailable: true
+    }))
     .getters({
         findTasks: 'tasks/filteredFind'
     })
@@ -23,7 +26,10 @@ export default new Page()
     .methods({
         loadDoneClick() {
             this.$store.dispatch('tasks/findAll')
-        }
+        },
+    })
+    .watch('tasks.length', function(length) {
+        this.moreTasksAvailable = this.$store.dispatch('tasks/find', { query: { $limit: 0 } }).total > length
     })
     .vue()    
 </script>
