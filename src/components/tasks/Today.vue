@@ -22,7 +22,12 @@
     export default new Page()
         .with('tasks/List')
         .getters({
-            findTasks: 'tasks/filteredFind'
+            _findTasks: 'tasks/filteredFind'
+        })
+        .methods({
+            findTasks(...args) {
+                return this._findTasks(...args).data.filter(task => !task.isDone())
+            }
         })
         .computed({
             tasksDate() {
@@ -32,13 +37,13 @@
                 return moment().subtract(1, 'day').format('YYYY-MM-DD')
             },
             tasks() {
-                return this.findTasks({query: { today: this.tasksDate }}).data
+                return this.findTasks({query: { today: this.tasksDate }})
             },
             yesterdayTasks() {
-                return this.findTasks({ query: { today: this.yesterdayTasksDate } }).data
+                return this.findTasks({ query: { today: this.yesterdayTasksDate } })
             },
             earlierTasks() {
-                return this.findTasks({ query: { today: { $ne: null, $nin: [ this.tasksDate, this.yesterdayTasksDate ] } } }).data
+                return this.findTasks({ query: { today: { $ne: null, $nin: [ this.tasksDate, this.yesterdayTasksDate ] } } })
             }
         })
         .vue()    
