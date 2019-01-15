@@ -2,7 +2,7 @@
     <div class="flex flex-col">
         <tasks-list :tasks="tasks"></tasks-list>
         <div v-if="moreTasksAvailable" class="button" @click="loadDoneClick">
-            Load more tasks
+            Load {{ moreTasksAvailable }} more tasks
         </div>
     </div>
 </template>
@@ -27,9 +27,13 @@ export default new Page()
         loadDoneClick() {
             this.$store.dispatch('tasks/findAll')
         },
+        async updateTaskCount(length) {
+            const res = this.$store.dispatch('tasks/find', { query: { $limit: 0 } })
+            console.log(res)
+            this.moreTasksAvailable = (await res).total - length
+        }
     })
-    .watch('tasks.length', function(length) {
-        this.moreTasksAvailable = this.$store.dispatch('tasks/find', { query: { $limit: 0 } }).total > length
-    })
+    .watch('tasks.length', 'updateTaskCount')
+    .created(vue => vue.updateTaskCount(vue.tasks.length))
     .vue()    
 </script>
