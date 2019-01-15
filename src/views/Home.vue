@@ -2,7 +2,7 @@
   <transition name="move-left">
     <div class="page">
 
-      <greeting ref="greeting" class="rounded-lg m-2 shadow-lg md:hidden"></greeting>
+      <greeting ref="greeting" class="rounded-lg m-2 shadow-lg md:hidden" style="grid-area: greeting"></greeting>
 
       <sections-bar class="md:bg-blue-lightest md:p-4 md:pt-6" style="grid-area: sections"></sections-bar>
 
@@ -10,18 +10,19 @@
 
       <div class="hidden md:block" style="grid-area: search"><search-bar class="bg-blue-lightest pl-6 h-full" ></search-bar></div>
 
-      <div style="grid-area: tasks" class="relative overflow-auto">
+
+      <v-touch @swipe="listSwipe" style="grid-area: tasks" class="relative overflow-auto">
         <div class="hidden md:block p-2 mb-6 sticky pin-t pin-x" style="background: linear-gradient(hsl(224, 15%, 90%) 47%, white 46%)">
           <greeting class="rounded-lg shadow-md"></greeting>
         </div>
-        <div class="stacking overflow-hidden mx-2">
-          <transition :name="transition">
-            <keep-alive>
-              <component :is="this.TaskListView" class="pb-32"></component>
-            </keep-alive>
-          </transition>
-        </div>
-      </div>
+          <div class="stacking overflow-hidden mx-2">
+            <transition :name="transition">
+              <keep-alive>
+                <component :is="this.TaskListView" class="pb-32"></component>
+              </keep-alive>
+            </transition>
+          </div>
+      </v-touch>
 
       <navigation-bar class="md:hidden"></navigation-bar>
       <router-view class="fixed pin md:static z-10 md:z-10 overflow-x-hidden" style="grid-area: detail"></router-view>
@@ -67,6 +68,28 @@ export default new Page()
         return 'tasks-all'
       } else {
         return 'tasks-do'
+      }
+    }
+  })
+
+  .methods({
+    listSwipe({ direction }) {
+      direction = direction == 2 ? 'left' : (direction == 4 ? 'right' : 'other')
+      let name = null
+      console.log(this.TaskListView + direction)
+      if(this.TaskListView == 'tasks-do' && direction == 'left') {
+        name = 'today'
+      } else if(this.TaskListView == 'tasks-today') {
+        if(direction == 'left') {
+          name = 'all'
+        } else if (direction == 'right') {
+          name = 'do'
+        }
+      } else if(this.TaskListView == 'tasks-all' && direction == 'right') {
+        name = 'today'
+      }
+      if(name) {
+        this.$router.replace({ ...this.$route, query: { ...this.$route.query, view: name }})
       }
     }
   })
