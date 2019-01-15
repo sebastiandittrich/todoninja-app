@@ -2,7 +2,7 @@
   <transition name="move-left">
     <div class="page">
 
-      <greeting ref="greeting" class="rounded-lg m-2 shadow-lg md:hidden" style="grid-area: greeting"></greeting>
+      <greeting ref="greeting" class="rounded-lg m-2 shadow-lg md:hidden"></greeting>
 
       <sections-bar class="md:bg-blue-lightest md:p-4 md:pt-6" style="grid-area: sections"></sections-bar>
 
@@ -11,7 +11,7 @@
       <div class="hidden md:block" style="grid-area: search"><search-bar class="bg-blue-lightest pl-6 h-full" ></search-bar></div>
 
 
-      <v-touch @swipe="listSwipe" style="grid-area: tasks" class="relative overflow-auto">
+      <v-touch @swipe="listSwipe" :swipe-options="{direction: 'horizontal'}" style="grid-area: tasks" class="relative overflow-auto">
         <div class="hidden md:block p-2 mb-6 sticky pin-t pin-x" style="background: linear-gradient(hsl(224, 15%, 90%) 47%, white 46%)">
           <greeting class="rounded-lg shadow-md"></greeting>
         </div>
