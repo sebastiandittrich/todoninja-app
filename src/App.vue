@@ -38,7 +38,7 @@ const test = new Page()
   .created(vue => {
     vue.boot()
   })
-  .watch('$store.state.auth.accessToken', 'fetchData')
+  .watch('$store.state.auth.user.id', 'fetchData')
   .vue()
 
 export default test
