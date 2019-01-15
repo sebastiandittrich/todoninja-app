@@ -9,10 +9,7 @@
                     {{ workspace.name }}
                 </item>
             </div>
-            <div class="font-bold m-8 mt-8 mb-4 ml-6">
-                Filter
-            </div>
-            <filter-picker class="mt-4"></filter-picker>
+            <filter-picker></filter-picker>
         </div>
         <div>
             <item @click="$router.push('/settings')" icon="feather icon-settings">Settings</item>

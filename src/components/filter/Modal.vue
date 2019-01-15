@@ -8,7 +8,7 @@
             </div>
 
             <actions>
-                <cancel @click="hide"/>
+                <!-- <cancel @click="hide"/> -->
             </actions>
 
         </modal>

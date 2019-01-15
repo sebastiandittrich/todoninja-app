@@ -1,16 +1,18 @@
 <template>
-    <div class="mx-4">
+    <div class="mx-4 md:mx-6">
         <!-- Filter -->
-        <div class="font-bold text-sm mb-2">Tags</div>
-        <div class="overflow-auto -mx-4">
-            <tags-picker class="mx-4" v-model="tags" hideAddTag></tags-picker>
+        <div class="font-bold text-sm md:text-base md:mt-8">Tags</div>
+        <div class="overflow-auto -mx-8 md:-mx-6 mt-2">
+            <tags-picker class="mx-8 md:mx-6" v-model="tags" hideAddTag></tags-picker>
         </div>
 
         <!-- State -->
-        <div class="font-bold text-sm mb-2 mt-4">State</div>
-        <div class="flex flex-row items-center justify-start mt-4 overflow-x-auto pb-2 -mx-4 text-grey-darker">
-            <div v-for="state of State.states" :key="state.state" @click="stateClick(state)" :class="states.includes(state.state) ? 'font-bold text-blue' : ''" class="rounded-lg p-2 border-grey-lighter md:border-grey border-2 ml-4 -mr-2 whitespace-no-wrap transition">
-                {{ state.name }}
+        <div class="font-bold text-sm md:text-base mt-8">State</div>
+        <div class="mt-2 overflow-x-auto -mx-8 md:-mx-6 text-grey-darker">
+            <div class="flex flex-row items-center justify-start pb-2 mx-8 md:mx-6">
+                <div v-for="state of State.states" :key="state.state" @click="stateClick(state)" :class="states.includes(state.state) ? 'border-blue text-white bg-blue' : 'border-grey-lighter md:border-grey'" class="rounded-lg p-2 border-2 mr-2 whitespace-no-wrap transition">
+                    {{ state.name }}
+                </div>
             </div>
         </div>
     </div>
