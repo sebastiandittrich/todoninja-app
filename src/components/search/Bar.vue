@@ -7,19 +7,28 @@
 
 <script>
 import Page from '@/assets/js/Page'
+import Fuse from 'fuse.js'
 
 export default new Page()
     .with('inputt')
     .data(() => ({ query: null }))
+    .getters({ tasks: 'tasks/list' })
     .methods({
         searchFilter(task) {
             if(!this.query) {
                 return true
             }
-            return task.title.includes(this.query)
+            
+            return this.searchedTasks.includes(task)
         },
         focus() {
             this.$refs.searchinputt.focus()
+        }
+    })
+    .computed({
+        searchedTasks() {
+            const fuse = new Fuse(this.tasks, { keys: ['title', 'description', 'waiting_for'] })
+            return fuse.search(this.query)
         }
     })
     .watch('query', function(to) {

@@ -8,8 +8,12 @@ export const getters = {
   filteredFind(state, getters) {
     return function(filter = {}) {
       let fullFilter = merge(state.currentFilter, filter)
-      const $functions = fullFilter.query.$functions || []
-      delete fullFilter.query.$functions
+      let $functions = []
+      if(fullFilter.query && fullFilter.query.$functions) {
+        $functions = fullFilter.query.$functions
+        delete fullFilter.query.$functions
+      }
+
       delete fullFilter.$meta
       const data = getters['find'](fullFilter)
 
@@ -18,6 +22,7 @@ export const getters = {
           data.data = data.data.filter($function)
         }
       }
+
       data.total = data.data.length
       return data
     }
@@ -77,7 +82,7 @@ export const mutations = {
   },
   removeCurrentFilterFunction(state, $function) {
     state.$functions.splice(state.$functions.indexOf($function), 1)
-  }
+  },
 }
 
 export const actions = {
