@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-row items-center p-4">
         <i class="feather icon-search mr-4 text-grey-darker"></i>
-        <inputt ref="searchinputt" iclass="border-none" class="inline-flex" v-model="query" placeholder="Search for a task..." type="text"></inputt>
+        <inputt ref="searchinputt" iclass="border-none" class="inline-flex" v-model="query" placeholder="Search for a task..." type="text" @press-enter="$emit('press-enter', $event)"></inputt>
     </div>
 </template>
 

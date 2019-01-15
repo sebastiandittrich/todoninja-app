@@ -4,7 +4,7 @@
             <headline>Search</headline>
 
             <div class="mx-4">
-                <search-bar ref="searchinput"></search-bar>
+                <search-bar ref="searchinput" @press-enter="$emit('hide')"></search-bar>
             </div>
 
             <actions>
