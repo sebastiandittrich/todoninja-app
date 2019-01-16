@@ -52,6 +52,11 @@ const router = new Router({
       meta: { guest: 'only' },
       component: page('Register'),
     },
+    {
+      path: '*',
+      name: '404',
+      component: page('404')
+    }
   ],
 });
 
