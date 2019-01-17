@@ -17,14 +17,14 @@ export default new Trait()
     incrementLoading() {
       this.loading_running++
     },
-    decrementloading() {
+    decrementLoading() {
       this.loading_running = this.loading_running -1
     },
     load(func) {
       this.incrementLoading();
       const prms = Promise.resolve(func());
       prms.then(() => this.decrementLoading());
-      prms.catch(() => decrementLoading());
+      prms.catch(() => this.decrementLoading());
       return prms;
     },
   });

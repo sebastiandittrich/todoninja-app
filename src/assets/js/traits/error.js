@@ -4,10 +4,11 @@ export default new Trait()
   .with('error')
   .methods({
     showError(error) {
+      console.log(error)
       if (error) {
         this.error = {
           header: 'Something went wrong.',
-          message: error.reason,
+          message: error.message,
         };
       } else {
         this.error = false;
