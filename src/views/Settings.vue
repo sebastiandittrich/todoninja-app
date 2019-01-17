@@ -72,7 +72,7 @@
             <settings-card title="Info" class="mt-8">
                 <div>
                     <div class="text-">Version</div>
-                    <div class="text-grey-dark text-sm">You are using version 1.0.0</div>
+                    <div class="text-grey-dark text-sm">You are using version {{ version }}</div>
                 </div>
             </settings-card>
 
@@ -100,6 +100,11 @@ export default new Page()
     .data(() => ({
         tags_remove: false,
     }))
+    .computed({
+        version() {
+            return JSON.parse(unescape(process.env.PACKAGE_JSON || '%7Bversion%3A0%7D')).version
+        }
+    })
     .methods({
         async logoutClick() {
             await this.logout()
