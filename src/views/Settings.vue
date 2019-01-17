@@ -93,7 +93,7 @@ export default new Page()
     .methods({
         async logoutClick() {
             await this.logout()
-            this.$router.push('/')
+            window.location.reload()
         }
     })
     .vue()
