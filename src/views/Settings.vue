@@ -70,8 +70,11 @@
             </settings-card>
 
             <settings-card title="Info" class="mt-8">
-                <div>
-                    <div class="text-">Version</div>
+                <a target="_blank" href="https://gitlab.com/ninja-labs/todoninja-v2/blob/master/CHANGELOG.md" class="">
+                    <div class="focus:bg-grey-lightest -mx-8 px-8 py-3">Changelog</div>
+                </a>
+                <div class="-mx-8 px-8 py-3 cursor-pointer focus:bg-grey-lightest">
+                    <div class="">Version</div>
                     <div class="text-grey-dark text-sm">You are using version {{ version }}</div>
                 </div>
             </settings-card>
