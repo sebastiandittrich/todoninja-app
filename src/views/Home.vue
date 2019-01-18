@@ -15,13 +15,13 @@
         <div class="hidden md:block p-2 mb-6 sticky pin-t pin-x" style="background: linear-gradient(hsl(224, 15%, 90%) 47%, white 46%)">
           <greeting class="rounded-lg shadow-md"></greeting>
         </div>
-          <div class="stacking overflow-hidden mx-2">
-            <transition :name="transition">
-              <keep-alive>
-                <component :is="this.TaskListView" class="pb-32"></component>
-              </keep-alive>
-            </transition>
-          </div>
+        <div class="stacking overflow-hidden mx-2">
+          <transition :name="transition">
+            <keep-alive>
+              <component :is="this.TaskListView" class="pb-32"></component>
+            </keep-alive>
+          </transition>
+        </div>
       </v-touch>
 
       <navigation-bar class="md:hidden"></navigation-bar>
@@ -29,7 +29,7 @@
 
       <loading-indicator class="z-10"></loading-indicator>
 
-      <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="add-icon transition hidden md:flex fixed pin-r pin-b z-10 m-8" style="filter: drop-shadow(0px 10px 10px hsl(224, 28%, 38%));">
+      <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="add-icon transition hidden md:flex fixed pin-r pin-b z-10 m-8" style="margin-right: calc(50% + 2rem); filter: drop-shadow(0px 10px 10px hsl(224, 28%, 38%));">
           <i class="feather icon-plus text-white p-3 rounded-full bg-blue"></i>
       </navigation-item>
 
