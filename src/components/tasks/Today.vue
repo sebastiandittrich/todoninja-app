@@ -14,15 +14,10 @@
         </div>
         <tasks-list :tasks="earlierTasks"></tasks-list>
 
-        <transition name="opacity-slide-up">
-            <div v-if="tasks.length < 1 && yesterdayTasks.length < 1 && earlierTasks.length < 1" class="flex flex-col items-center">
-                <img src="/img/today_done.svg" alt="woman jumping and smartphone with checkmark on it" class="w-1/2 mt-8">
-                <div class="font-light text-xl text-blue-darkest px-8 mt-8 text-center">
-                    Everything is done for today.
-                    <div class="text-sm font-bold mt-4">Now you're free!</div>
-                </div>
-            </div>
-        </transition>
+        <tasks-placeholder image="/img/today_done.svg" v-if="tasks.length < 1 && yesterdayTasks.length < 1 && earlierTasks.length < 1">
+            Everything is done for today.
+            <div slot="subtitle">Now you're free!</div>
+        </tasks-placeholder>
     </div>
 </template>
 
@@ -30,7 +25,7 @@
     import Page from '@/assets/js/Page'
 
     export default new Page()
-        .with('tasks/List')
+        .with('tasks/List', 'tasks/Placeholder')
         .getters({
             _findTasks: 'tasks/filteredFind'
         })

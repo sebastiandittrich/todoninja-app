@@ -3,7 +3,7 @@
         <div v-for="event of events" :key="event.id" :class="'bg-' + event.color + '-lightest text-' + event.color" class="rounded-full shadow-md px-4 py-2 flex flex-row items-center mb-4 font-bold">
             <i v-if="event.icon" :class="event.icon" class="mr-2"></i> {{ event.message }}
         </div>
-        <div v-if="loading" key="loader" class="bg-blue-lightest text-blue rounded-full shadow-md px-4 py-2 flex flex-row items-center mb-4 font-bold">
+        <div v-if="isLoading" key="loader" class="bg-blue-lightest text-blue rounded-full shadow-md px-4 py-2 flex flex-row items-center mb-4 font-bold">
             <Loader loading color="#45547c"></Loader>
         </div>
     </transition-group>
@@ -38,7 +38,7 @@ export default new Page()
     })
     .data(() => ({
         _timeout: null,
-        loading: false
+        isLoading: false
     }))
     .methods({
         actionPending(service, action) {
@@ -48,7 +48,7 @@ export default new Page()
             for(let action of actions) {
                 if(this.actionPending(service, action)) {
                     return true
-                }
+                }this.isCreate ? 'created.' : 'saved.'
             }
             return false
         }
@@ -67,12 +67,12 @@ export default new Page()
         if(newval) {
             this._timeout = setTimeout(() => {
                 if(this.isPending) {
-                    this.loading = true
+                    this.isLoading = true
                 }
             }, 500)
         } else {
             clearTimeout(this._timeout)
-            this.loading = false
+            this.isLoading = false
         }
     })
     .vue()

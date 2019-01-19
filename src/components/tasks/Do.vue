@@ -1,15 +1,11 @@
 <template>
     <div>
         <tasks-list :tasks="tasks"></tasks-list>
-        <transition name="opacity-slide-up">
-            <div v-if="tasks.length < 1" class="flex flex-col items-center">
-                <img src="/img/success.svg" alt="woman jumping and smartphone with checkmark on it" class="w-1/2 mt-8">
-                <div class="font-light text-xl text-blue-darkest px-8 mt-8 text-center">
-                    There is nothing more you can do.
-                    <div class="text-sm font-bold mt-4">Sit back and relax!</div>
-                </div>
-            </div>
-        </transition>
+
+        <tasks-placeholder image="/img/success.svg" v-if="tasks.length < 1">
+            There is nothing more you can do.
+            <div slot="subtitle">Sit back and relax!</div>
+        </tasks-placeholder>
     </div>
 </template>
 
@@ -18,7 +14,7 @@
     import _ from 'lodash'
 
     export default new Page()
-        .with('tasks/List')
+        .with('tasks/List', 'tasks/Placeholder')
         .getters({
             filteredFind: 'tasks/filteredFind'
         })
