@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-theme-gradient py-6 text-white flex flex-row items-center justify-around text-3xl font-light">
+    <div class="bg-theme-gradient py-6 text-white text-center text-3xl font-light">
         {{ greeting }}
     </div>
 </template>
@@ -19,7 +19,9 @@ export default new Page('Greeting')
       } else {
         result += 'Hello';
       }
-      if(this.$store.)
+      if(this.$store.state.auth.user) {
+        result += ', ' + this.$store.state.auth.user.name.split(' ')[0]
+      }
       result += '!';
       return result;
     },
