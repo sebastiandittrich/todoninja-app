@@ -15,9 +15,14 @@
                     </div>
                 </div>
             </div>
-            <div v-if="value.isWaiting()" @click.stop="showModal('personpicker', $event)" class="button-secondary button-small mt-0">
-                <i class="feather icon-edit mr-2"></i>
-                Person
+            <div v-if="value.isWaiting()">
+                <div @click.stop="showModal('personpicker', $event)" class="button-secondary button-small mt-0 rounded-r-none border-r-0">
+                    <i class="feather icon-edit"></i>
+                </div>
+                <div @click.stop="showModal('datepicker', $event)" class="button-secondary button-small mt-0 rounded-l-none" :class="{ 'text-orange border-orange bg-orange-lightest': value.isDeadlineOver(), 'text-blue border-blue bg-blue-lightest': value.isDeadlineToday(), 'font-bold': value.isDeadlineOver() || value.isDeadlineToday() }">
+                    <i v-if="!value.hasDeadline()" class="feather icon-plus mr-2"></i>
+                    {{ value.hasDeadline() ? value.deadlineMoment().fromNow() : 'Deadline' }}
+                </div>
             </div>
             <div v-else-if="value.hasDeadline()" @click.stop="showModal('datepicker', $event)" class="button-secondary button-small mt-0">
                 <i class="feather icon-edit mr-2"></i>
