@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-theme-gradient py-6 text-white text-center text-3xl font-light">
+    <div class="bg-theme-gradient py-6 px-4 text-white text-center text-3xl font-light flex flex-col items-center justify-center">
         {{ greeting }}
     </div>
 </template>
