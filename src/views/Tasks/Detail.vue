@@ -116,6 +116,8 @@ export default new Page()
 
                 await this.task.save()
 
+                if(explicit) this.$store.dispatch('events/success', { message: 'Task ' + (this.isCreate ? 'created.' : 'saved.') })
+
                 if(this.isCreate) {
                     this.$router.go(-1)
                 } else if(this.isEdit) {

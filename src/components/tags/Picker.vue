@@ -54,7 +54,9 @@ export default new Page('TagsPicker')
             }
         },
         async deleteTag(id) {
-            return await this.$store.dispatch('tags/remove', id)
+            const ret = await this.$store.dispatch('tags/remove', id)
+            this.$store.dispatch('events/success', { message: 'Tag deleted.', color: 'orange' })
+            return ret
         },
         tagCreated(tag) {
             this.tagClick(tag.id)

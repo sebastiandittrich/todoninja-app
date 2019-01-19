@@ -31,6 +31,7 @@ export default new Modal()
             this.tag.name = ''
             this.$emit('created', created)
             this.$emit('hide')
+            this.$store.dispatch('events/success', { message: 'Tag created.' })
         },
         afterEnter() {
             this.$refs.inputt.focus()

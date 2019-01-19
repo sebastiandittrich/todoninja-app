@@ -119,12 +119,27 @@
 /* Task List */
 .list-enter, .list-leave-to {
     opacity: 0;
-}
-
-.list-enter, .list-leave-to {
     transform: translateY(3em);
 }
 
 .list-leave-active {
+    position: absolute;
+}
+
+.list-left-enter, .list-left-leave-to {
+    opacity: 0;
+    transform: translateX(-3em);
+}
+
+.list-left-leave-active {
+    position: absolute;
+}
+
+.list-up-enter, .list-up-leave-to {
+    opacity: 0;
+    transform: translateY(-3em);
+}
+
+.list-left-up-active {
     position: absolute;
 }

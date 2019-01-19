@@ -37,6 +37,7 @@ export default new Modal()
             await this.task.remove()
             this.$emit('delete')
             this.$emit('hide')
+            this.$store.dispatch('events/success', { message: 'Task deleted', color: 'orange' })
         }
     })
     .vue()

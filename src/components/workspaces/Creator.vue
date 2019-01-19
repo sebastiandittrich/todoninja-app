@@ -17,11 +17,9 @@
 
 <script>
 import Modal from '@/assets/js/Modal'
-import loading from '@/assets/js/traits/loading'
 
 export default new Modal()
     .with('inputt')
-    .use(loading)
     .data(() => ({
         workspace: {
             name: ''
@@ -33,6 +31,7 @@ export default new Modal()
             this.workspace.name = ''
             this.$emit('created', created)
             this.$emit('hide')
+            this.$store.dispatch('events/success', { message: 'Workspace created.' })
         },
         afterEnter() {
             this.$refs.inputt.focus()

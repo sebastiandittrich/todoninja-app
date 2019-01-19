@@ -4,6 +4,7 @@
     <transition name="splashscreen"  appear>
       <splashscreen v-if="splashscreenVisible" class="absolute pin"></splashscreen>
     </transition>
+    <events-list class="absolute pin-t pin-x m-4 z-10"></events-list>
   </div>
 </template>
 
@@ -15,7 +16,7 @@ import '@/assets/css/transitions.css'
 import Page from '@/assets/js/Page'
 
 const test = new Page()
-  .with('Splashscreen')
+  .with('Splashscreen', 'events/List')
   .data(() =>({
     splashscreenVisible: true,
   }))

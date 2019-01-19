@@ -55,7 +55,8 @@ export default new Modal()
             this.$emit('hide')
         },
         async deleteWorkspace(id) {
-            return await this.$store.dispatch('workspaces/remove', id)
+            const ret = await this.$store.dispatch('workspaces/remove', id)
+            this.$store.dispatch('events/success', { message: 'Workspace deleted.', color: 'orange' })
         }
     })
     .vue()

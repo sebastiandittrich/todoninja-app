@@ -1,5 +1,5 @@
 import merge from 'deepmerge';
-import { mapActions, mapState, mapGetters } from 'vuex';
+import { mapActions, mapState, mapGetters, mapMutations } from 'vuex';
 
 export default class Trait {
   constructor() {
@@ -130,6 +130,14 @@ export default class Trait {
       actions = actions[0];
     }
     Object.assign(this.app.methods, mapActions(actions));
+    return this;
+  }
+
+  mutations(...mutations) {
+    if (typeof mutations[0] === 'object') {
+      mutations = mutations[0];
+    }
+    Object.assign(this.app.methods, mapMutations(mutations));
     return this;
   }
 
