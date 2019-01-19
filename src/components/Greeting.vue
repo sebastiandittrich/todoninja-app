@@ -19,6 +19,7 @@ export default new Page('Greeting')
       } else {
         result += 'Hello';
       }
+      if(this.$store.)
       result += '!';
       return result;
     },
