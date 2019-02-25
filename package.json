@@ -15,6 +15,7 @@
     "@saeris/vue-spinners": "^1.0.6",
     "@sentry/browser": "^4.5.2",
     "autosize": "^4.0.2",
+    "axios": "^0.18.0",
     "deepmerge": "^2.1.1",
     "feathers-authentication-client": "^0.3.3",
     "feathers-vuex": "^1.4.8",

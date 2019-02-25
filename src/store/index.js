@@ -77,6 +77,7 @@ export default new Vuex.Store({
     }),
     service('tags', { state, getters, mutations, actions }),
     service('workspaces', { state, getters, mutations, actions }),
+    service('push-subscriptions', { state, getters, mutations, actions }),
     service('users', { state, getters, mutations, actions }),
     // Setup the auth plugin.
     auth({ userService: 'users' }),

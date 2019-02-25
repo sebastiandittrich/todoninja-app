@@ -71,6 +71,9 @@ export default {
     todayMoment() {
         return this.today ? moment(this.today) : this.today
     },
+    doneMoment() {
+        return this.doneAt ? moment(this.doneAt) : this.doneAt
+    },
     humanDeadline() {
         return this.deadlineMoment() ? this.deadlineMoment().calendar(null, {
             sameDay: '[Today]',
