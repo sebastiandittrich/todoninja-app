@@ -40,10 +40,18 @@ self.addEventListener('install', function (evt) {
 // });
 
 self.addEventListener('push', function(event) {
-    console.log('push!')
-    console.log(data)
     const data = event.data.json()
     const title = data.title;
+
+    // Set link
+    data.data.link = `/#/${data.data.link.type}/${data.data.link.id}`
+
+    // Set Badge
+    data.badge = '/img/icons/badge-96x96.png'
+
+    // Set Icon
+    data.icon = '/img/icons/android-chrome-192x192.png'
+
     event.waitUntil(self.registration.showNotification(title, data));
 })
 

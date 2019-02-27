@@ -14,7 +14,6 @@ import '@/assets/css/main.css';
 import '@/assets/css/iconfont.css';
 import '@/assets/css/transitions.css'
 import Page from '@/assets/js/Page'
-import PushSubscriptionManager from '@/assets/js/managers/PushSubscriptionManager'
 
 const test = new Page()
   .with('Splashscreen', 'events/List')
@@ -35,7 +34,7 @@ const test = new Page()
       } catch(error) {
         this.splashscreenVisible = false
       }
-      await PushSubscriptionManager.initialize()
+      await this.$store.dispatch('push/initialize')
     }
   })
   .created(vue => {

@@ -7,9 +7,6 @@ import { initAuth } from 'feathers-vuex';
 import Page from './assets/js/Page';
 import VueTouch from 'vue-touch'
 import * as Sentry from '@sentry/browser'
-import PushSubscriptionManager from '@/assets/js/managers/PushSubscriptionManager'
-
-window.PushSubscriptionManager = PushSubscriptionManager
 
 Sentry.init({
   dsn: 'https://00c93f88d8b845e8a632ac75e906f86b@sentry.io/1320758',
