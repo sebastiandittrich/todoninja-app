@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="flex flex-row items-center justify-between" @click="showModal('state-picker', $event)">
+        <div class="flex flex-row items-center justify-between cursor-pointer select-none" @click="showModal('state-picker', $event)">
             <div class="flex flex-row items-center justify-start">
                 <span class="icon-presenter">
                     <i class="w-8 h-8 bg-blue rounded-full"></i>
@@ -35,7 +35,7 @@
         </div>
         <state-picker @change="$emit('change', $event)" v-model="value" :state="modalState('state-picker')" @hide="hideModal('state-picker')"/>
         <personpicker @input="$emit('change', $event)" v-model="value.waiting_for" :state="modalState('personpicker')" @hide="hideModal('personpicker')"></personpicker>
-        <datepicker @input="$emit('change', $event)" v-model="value.deadlineAsDate" :state="modalState('datepicker')" @hide="hideModal('datepicker')"></datepicker>
+        <datepicker @input="$emit('change', $event)" v-model="value.deadline" :state="modalState('datepicker')" @hide="hideModal('datepicker')"></datepicker>
     </div>
 </template> 
 

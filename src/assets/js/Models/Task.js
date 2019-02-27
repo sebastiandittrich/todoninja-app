@@ -74,6 +74,9 @@ export default {
     doneMoment() {
         return this.doneAt ? moment(this.doneAt) : this.doneAt
     },
+    remindAtMoment() {
+        return this.remindAt ? moment(this.remindAt) : this.remindAt
+    },
     humanDeadline() {
         return this.deadlineMoment() ? this.deadlineMoment().calendar(null, {
             sameDay: '[Today]',
@@ -82,6 +85,16 @@ export default {
             lastDay: '[Yesterday]',
             lastWeek: '[Last] dddd',
             sameElse: 'D. MMMM YYYY'
+        }) : null
+    },
+    humanRemindAt() {
+        return this.remindAtMoment() ? this.remindAtMoment().calendar(null, {
+            sameDay: '[Today] [at] H:mm A',
+            nextDay: '[Tomorrow] [at] H:mm A',
+            nextWeek: 'dddd [at] H:mm A',
+            lastDay: '[Yesterday] [at] H:mm A',
+            lastWeek: '[Last] dddd [at] H:mm A',
+            sameElse: 'D. MMMM YYYY [at] H:mm A'
         }) : null
     }
 }

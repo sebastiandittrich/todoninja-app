@@ -4,14 +4,14 @@
         <headline>At which day?</headline>
 
         <div class="mx-8">
-            <div v-for="option of options" :key="option.name" class="item" @click="optionClick(option)">
+            <div v-for="option of options" :key="option.name" class="item cursor-pointer select-none" @click="optionClick(option)">
                 <i class="mr-4" :class="option.icon"></i>
-                {{ option.name }} ({{ option.moment().format('dddd') }})
+                {{ option.name }} ({{ type == 'datetime' ? option.moment().format('dddd [at] H:mm A') : option.moment().format('dddd') }})
             </div>
-            <div class="mt-4 item" @click="showModal('datepicker')">
+            <div class="mt-4 item cursor-pointer select-none" @click="$refs.datetime.open($event)">
                 <i class="mr-4 feather icon-calendar"></i>
                 {{ pickdateText }}
-                <i v-if="value" @click.stop="deleteDate" class="feather icon-x ml-4 -mr-4"></i>
+                <i v-if="value" @click.stop="deleteDate" class="feather icon-x ml-4 -mr-4 cursor-pointer select-none"></i>
             </div>
             
         </div>
@@ -22,7 +22,7 @@
         </actions>
 
         <div slot="submodals">
-            <datepicker :value="value" @input="pickDate" @hide="hideModal('datepicker'); timeout(() => $emit('hide'), 150)" :state="modalState('datepicker')"></datepicker>
+            <datetime :type="type" input-class="hidden" auto ref="datetime" :value="value" @input="pickDate" @close="timeout(() => $emit('hide'), 150)"></datetime>
         </div>
 
     </modal>
@@ -31,16 +31,23 @@
 <script>
 import Modal from '@/assets/js/Modal'
 import hasModals from '@/assets/js/traits/hasModals'
+import {Datetime} from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
+
+Datetime.name = 'datetime'
 
 export default new Modal()
-    .use( hasModals({datepicker: 'DatepickerWrapper'}) )
+    .with(Datetime)
     .props({
-        value: Date,
-        default: null
+        value: String,
+        type: {
+            type: String,
+            default: 'date'
+        }
     })
     .methods({
         optionClick(option) {
-            this.$emit('input', option.moment().toDate())
+            this.$emit('input', option.moment().format())
             this.$emit('hide')
         },
         pickDate($event) {
@@ -66,14 +73,14 @@ export default new Modal()
                 name: 'Tomorrow',
                 icon: 'feather icon-chevron-right',
                 moment() {
-                    return moment().add(1, 'days')
+                    return moment().add(1, 'days').startOf('day').add(9, 'hours')
                 }
             },
             {
                 name: 'Next Week',
                 icon: 'feather icon-chevrons-right',
                 moment() {
-                    return moment().add(1, 'week').startOf('week')
+                    return moment().add(1, 'week').startOf('week').add(9, 'hours')
                 }
             },
         ]
@@ -83,6 +90,6 @@ export default new Modal()
 
 <style scoped>
 .item {
-    @apply text-lg text-grey-darker font-light rounded-lg px-4 pl-2 py-2 flex flex-row items-center justify-start cursor-pointer;
+    @apply text-lg text-grey-darker font-light rounded-lg px-4 pl-2 py-2 flex flex-row items-center justify-start cursor-pointer select-none;
 }
 </style>

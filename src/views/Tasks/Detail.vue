@@ -3,7 +3,7 @@
         <div class="bg-white">
 
             <!-- Save Button -->
-            <div v-show="isCreate || isEdit" @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide fixed pin-b pin-r m-8">
+            <div v-show="isCreate || isEdit" @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide fixed pin-b pin-r m-8 cursor-pointer select-none">
                 <i class="feather icon-check text-2xl mr-2"></i>
                 Save
             </div>
@@ -13,16 +13,16 @@
                 <!-- <div class="bg-blue-lightest absolute pin hidden md:block -z-10" style="transform: scaleX(2) translateX(-50%)"></div> -->
                 <div class="flex flex-row items-center justify-between mb-6 text-2xl">
                     <!-- Back button -->
-                    <i @click="$router.go(-1)" class="feather icon-chevron-left md:hidden"></i>
+                    <i @click="$router.go(-1)" class="feather icon-chevron-left md:hidden cursor-pointer select-none"></i>
                     <div class="hidden md:block"></div>
 
-                    <div class="flex flex-row items-center text-sm text-grey-darker cursor-pointer" @click="showModal('workspaces-picker', $event)">
+                    <div class="flex flex-row items-center text-sm text-grey-darker cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
                         <i class="feather icon-home mr-2 text-base"></i>
                         <span class="font-bold">{{ selectedWorkspaceName }}</span>
                         <i class="feather icon-chevron-down ml-2 text-base"></i>
                     </div>
                     <!-- Options Button -->
-                    <i :class="{'opacity-0': isCreate}" @click="!isCreate ? showModal('tasks-options', $event) : null" class="feather icon-more-vertical"></i>
+                    <i :class="{'opacity-0': isCreate}" @click="!isCreate ? showModal('tasks-options', $event) : null" class="feather icon-more-vertical cursor-pointer select-none"></i>
                 </div>
                 <div class="flex flex-row items-center">
                     <!-- State -->
@@ -42,8 +42,10 @@
                 <!-- Was today -->
 
                 <!-- State -->
-                <state-presenter @change="save()" v-model="task" class="z-10 mb-6"/>
-                <div class="font-bold text-sm mb-2">Description</div>
+                <state-presenter @change="save()" v-model="task" class="z-10"/>
+
+                <reminder-presenter class="mt-6" @change="save()" v-model="task"></reminder-presenter>
+                <div class="font-bold text-sm mb-2 mt-8">Description</div>
                 <textarea @input="setEdited" v-model="task.description" class="-z-10 w-full font-light text-lg focus:shadow-lg rounded-lg transition focus:p-2" rows="2" placeholder="Describe your task!"></textarea>
 
                 <div class="font-bold text-sm mb-2 mt-6">
@@ -75,7 +77,7 @@ export default new Page()
     //         el.setAttribute('v-on:input', 'log("test")')
     //     }
     // })
-    .with('inputt', 'tags/Picker', 'state/Presenter', 'done/Indicator', 'today/Indicator')
+    .with('inputt', 'tags/Picker', 'state/Presenter', 'done/Indicator', 'today/Indicator', 'reminder/Presenter')
     .use( hasModals({ 'workspaces-picker': 'workspaces/Picker', 'tasks-options': 'tasks/Options' }) )
 
     .getters({

@@ -9,7 +9,7 @@
 
         <actions>
             <cancel @click="hide"/>
-            <div @click="$emit('confirm', state.data); hide()">
+            <div @click="$emit('confirm', state.data); hide()" class="cursor-pointer select-none">
                 <slot name="confirm">
                     <action @click="$emit('confirm', state.data); hide()">{{ confirmtext }}</action>
                 </slot>

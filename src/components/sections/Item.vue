@@ -1,5 +1,5 @@
 <template>
-    <span @click="click" :class="{'router-link-active': isActive}" class="sections-item text-xl cursor-pointer py-2 flex flex-row items-center font-light text-grey-darkest transition">
+    <span @click="click" :class="{'router-link-active': isActive}" class="sections-item text-xl cursor-pointer select-none py-2 flex flex-row items-center font-light text-grey-darkest transition">
         <slot></slot>
     </span>
 </template>

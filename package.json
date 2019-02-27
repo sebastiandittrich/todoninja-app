@@ -21,6 +21,7 @@
     "feathers-vuex": "^1.4.8",
     "fuse.js": "^3.3.0",
     "lodash": "^4.17.11",
+    "luxon": "^1.11.3",
     "moment": "^2.22.2",
     "postcss-import": "^12.0.0",
     "register-service-worker": "^1.0.0",
@@ -28,12 +29,14 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue": "^2.5.17",
+    "vue-datetime": "^1.0.0-beta.10",
     "vue-flatpickr-component": "^8.0.0",
     "vue-router": "^3.0.1",
     "vue-spinner": "^1.0.3",
     "vue-touch": "^2.0.0-beta.4",
     "vuejs-datepicker": "^1.5.4",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "weekstart": "^1.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",

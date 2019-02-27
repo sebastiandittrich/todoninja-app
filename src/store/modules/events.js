@@ -1,3 +1,5 @@
+import uuid from 'uuid/v4'
+
 export default {
     namespaced: true,
     state: {

@@ -5,7 +5,7 @@
         </headline>
 
         <div class="mx-8 whitespace-no-wrap">
-            <div class="text-red-dark cursor-pointer" @click="showModal('confirmator')">
+            <div class="text-red-dark cursor-pointer select-none" @click="showModal('confirmator')">
                 <i class="feather icon-trash"></i> Delete Task
             </div>
         </div>

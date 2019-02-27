@@ -4,7 +4,6 @@ import feathersVuex from 'feathers-vuex';
 import feathersClient from '@/assets/js/FeathersClient';
 import Task from '@/assets/js/Models/Task'
 import { state, getters, mutations, actions } from '@/store/serviceextension'
-import uuid from 'uuid/v4'
 import events from '@/store/modules/events'
 import push from '@/store/modules/push'
 

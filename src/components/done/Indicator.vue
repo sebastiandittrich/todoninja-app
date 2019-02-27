@@ -1,5 +1,5 @@
 <template>
-    <div class="stacking" @click.stop="toggleState">
+    <div class="stacking cursor-pointer select-none" @click.stop="toggleState">
         <transition name="scale">
             <i v-if="!task.isDone()" key="undone" class="feather icon-circle text-grey-darker"></i>
             <i v-else key="done" class="feather icon-check-circle text-green"></i>

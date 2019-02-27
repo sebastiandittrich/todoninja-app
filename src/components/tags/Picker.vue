@@ -1,11 +1,11 @@
 <template>
     <div>
         <transition-group tag="div" name="list" class="flex flex-row items-center justify-start">
-            <div v-for="tag of tags" @click="tagClick(tag.id)" :key="tag.id" :class="remove ? 'bg-red border-none text-white' : (isActive(tag) ? 'border-blue text-blue' : 'border-grey text-grey')" class="whitespace-no-wrap transition rounded-full border py-1 px-4 mr-2">
+            <div v-for="tag of tags" @click="tagClick(tag.id)" :key="tag.id" :class="remove ? 'bg-red border-none text-white' : (isActive(tag) ? 'border-blue text-blue' : 'border-grey text-grey')" class="whitespace-no-wrap transition rounded-full border py-1 px-4 mr-2 cursor-pointer select-none">
                 <i v-if='remove' class="feather icon-trash text-red-lighter"></i>
                 {{ tag.name }}
             </div>
-            <div v-if="!remove && !hideAddTag" key="add" class="text-blue cursor-pointer flex flex-row items-center ml-2 pr-6 flex-no-wrap whitespace-no-wrap" @click="showModal('tags-creator', $event)">
+            <div v-if="!remove && !hideAddTag" key="add" class="text-blue cursor-pointer select-none flex flex-row items-center ml-2 pr-6 flex-no-wrap whitespace-no-wrap" @click="showModal('tags-creator', $event)">
                 <i class="feather icon-plus mr-2"></i>
                 Add tag
             </div>

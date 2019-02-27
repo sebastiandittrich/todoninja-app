@@ -5,11 +5,11 @@
         </headline>
 
         <div class="text-lg flex flex-col items-stretch px-4">
-            <div v-for="workspace of workspaces" :key="workspace.id" @click="workspaceClick(workspace.id)" class="rounded-lg px-4 py-2 flex flex-row items-center justify-start cursor-pointer" :class="value == workspace.id ? 'text-blue font-black' : 'font-light'">
+            <div v-for="workspace of workspaces" :key="workspace.id" @click="workspaceClick(workspace.id)" class="rounded-lg px-4 py-2 flex flex-row items-center justify-start cursor-pointer select-none" :class="value == workspace.id ? 'text-blue font-black' : 'font-light'">
                 <i class="feather icon-check mr-4" :class="value == workspace.id ? '' : 'opacity-0'"></i>
                 {{ workspace.name }}
-                <i v-if="value == workspace.id" class="feather icon-x float-right ml-auto text-sm text-grey" @click.stop="workspaceClick(null)"></i>
-                <i v-if="manage" @click="showModal('confirmator', { data: workspace.id })" class="feather icon-trash float-right ml-auto text-sm text-grey"></i>
+                <i v-if="value == workspace.id" class="feather icon-x float-right ml-auto text-sm text-grey cursor-pointer select-none" @click.stop="workspaceClick(null)"></i>
+                <i v-if="manage" @click="showModal('confirmator', { data: workspace.id })" class="feather icon-trash float-right ml-auto text-sm text-grey cursor-pointer select-none"></i>
             </div>
         </div>
 

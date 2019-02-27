@@ -5,7 +5,7 @@
 
         <div class="mx-8">
             <div class="text-lg flex flex-col items-stretch">
-                <div v-for="state of states" :key="state.state" @click="stateClick(state, $event)" :class="isActive(state) ? 'text-blue font-black' : 'font-light text-grey-darker'" class="rounded-lg px-4 py-2 flex flex-row items-center justify-start cursor-pointer">
+                <div v-for="state of states" :key="state.state" @click="stateClick(state, $event)" :class="isActive(state) ? 'text-blue font-black' : 'font-light text-grey-darker'" class="rounded-lg px-4 py-2 flex flex-row items-center justify-start cursor-pointer select-none">
                     <i class="mr-4" :class="{[state.icon]: true, 'text-grey-dark': !isActive(state)}"></i>
                     {{ state.name }}
                 </div>
@@ -17,7 +17,7 @@
         </actions>
 
         <div slot="submodals">
-            <datepicker v-model="value.deadlineAsDate" @hide="hideModal('datepicker')" :state="modalState('datepicker')"></datepicker>
+            <datepicker v-model="value.deadline" @hide="hideModal('datepicker')" :state="modalState('datepicker')"></datepicker>
             <personpicker v-model="value.waiting_for" @hide="hideModal('personpicker')" :state="modalState('personpicker')"></personpicker>
         </div>
 

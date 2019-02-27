@@ -4,7 +4,7 @@
             <!-- Header Bar -->
             <div>
                 <div class="p-4 flex flex-row items-center justify-start text-2xl mx-auto container">
-                    <i class="feather icon-arrow-left" @click="$router.back()"></i>
+                    <i class="feather icon-arrow-left cursor-pointer select-none" @click="$router.back()"></i>
                     <div class="ml-8">Settings</div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                         <div class="font-bold">
                             Workspaces
                         </div>
-                        <div class="text-blue font-light cursor-pointer" @click="showModal('workspaces-picker')">
+                        <div class="text-blue font-light cursor-pointer select-none" @click="showModal('workspaces-picker')">
                             Manage
                             <i class="feather icon-chevron-right"></i>
                         </div>
@@ -57,7 +57,7 @@
                         <div class="font-bold">
                             Tags
                         </div>
-                        <div class="font-light cursor-pointer" :class="tags_remove ? 'text-green' : 'text-blue'" @click="tags_remove = !tags_remove">
+                        <div class="font-light cursor-pointer select-none" :class="tags_remove ? 'text-green' : 'text-blue'" @click="tags_remove = !tags_remove">
                             <i v-if="tags_remove" class="feather icon-check"></i>
                             {{ tags_remove ? 'Done' : 'Delete some tags' }}
                             <i v-if="!tags_remove" class="feather icon-chevron-right"></i>
@@ -69,11 +69,21 @@
                 </div>
             </settings-card>
 
+            <settings-card title="Notifications" class="mt-8">
+                <div class="flex flex-row items-center justify-between">
+                    <div class="-mx-8 px-8 py-3">
+                        <div class="">Push Notifications</div>
+                        <div class="text-grey-dark text-sm">Push Notifications are turned {{ pushActivated ? 'on' : 'off' }} on this device</div>
+                    </div>
+                    <switchbox @input="pushClick" :value="pushActivated" :disabled="!pushAvailable"></switchbox>
+                </div>
+            </settings-card>
+
             <settings-card title="Info" class="mt-8">
                 <a target="_blank" href="https://gitlab.com/ninja-labs/todoninja-v2/blob/master/CHANGELOG.md">
                     <div class="-mx-8 px-8 py-3 active:bg-grey-lightest">Changelog</div>
                 </a>
-                <div class="-mx-8 px-8 py-3 cursor-pointer active:bg-grey-lightest">
+                <div class="-mx-8 px-8 py-3 cursor-pointer select-none active:bg-grey-lightest">
                     <div class="">Version</div>
                     <div class="text-grey-dark text-sm">You are using version {{ version }}</div>
                 </div>
@@ -88,17 +98,21 @@ import Page from '@/assets/js/Page'
 import hasModals from '@/assets/js/traits/hasModals'
 
 export default new Page()
-    .with('tags/Picker', 'settings/Card')
+    .with('tags/Picker', 'settings/Card', 'SwitchBox')
     .use( hasModals({ 'workspaces-picker': 'workspaces/Picker' }) )
     .state({
-        user: state => state.auth.user
+        user: state => state.auth.user,
+        pushActivated: state => state.push.activated,
+        pushAvailable: state => state.push.available,
     })
     .actions({
-        logout: 'auth/logout'
+        logout: 'auth/logout',
+        activatePush: 'push/activate',
+        deactivatePush: 'push/deactivate'
     })
     .getters({
         workspaces: 'workspaces/list',
-        tags: 'tags/list'
+        tags: 'tags/list',
     })
     .data(() => ({
         tags_remove: false,
@@ -106,12 +120,19 @@ export default new Page()
     .computed({
         version() {
             return JSON.parse(unescape(process.env.PACKAGE_JSON || '%7Bversion%3A0%7D')).version
-        }
+        },
     })
     .methods({
         async logoutClick() {
             await this.logout()
             window.location.reload()
+        },
+        async pushClick() {
+            if(this.pushActivated) {
+                return await this.deactivatePush()
+            } else {
+                return await this.activatePush()
+            }
         }
     })
     .vue()
