@@ -28,7 +28,7 @@
                 const list = [ ]
                 const now = moment()
 
-                list.push(this.findTasks().filter( task => task.isDo() || task.doneMoment().diff(now, 'seconds') < 5 ))
+                list.push(this.findTasks().filter( task => task.isDo() ))
 
                 return _.uniqBy(_.flatten(list), 'id')
             }
