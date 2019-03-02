@@ -7,21 +7,26 @@ import { initAuth } from 'feathers-vuex';
 import Page from './assets/js/Page';
 import VueTouch from 'vue-touch'
 import * as Sentry from '@sentry/browser'
+import Overdrive from 'vue-overdrive'
 
 if(window.location.href.includes('ref=makerads')) {
   window.location.href = 'https://todoninja.de/?ref=makerads'
 }
 
-Sentry.init({
-  dsn: 'https://00c93f88d8b845e8a632ac75e906f86b@sentry.io/1320758',
-  integrations: [new Sentry.Integrations.Vue({ Vue })],
-  environment: process.env.NODE_ENV,
-  release: JSON.parse(unescape(process.env.PACKAGE_JSON || '%7Bversion%3A0%7D')).version
-})
+if(process.env.NODE_ENV == 'production') {
+  console.log('sentry')
+  Sentry.init({
+    dsn: 'https://00c93f88d8b845e8a632ac75e906f86b@sentry.io/1320758',
+    integrations: [new Sentry.Integrations.Vue({ Vue })],
+    environment: process.env.NODE_ENV,
+    release: JSON.parse(unescape(process.env.PACKAGE_JSON || '%7Bversion%3A0%7D')).version
+  })
+}
 
 window.Vue = Vue
 
 Vue.use(VueTouch)
+Vue.use(Overdrive)
 
 Vue.config.productionTip = false;
 
