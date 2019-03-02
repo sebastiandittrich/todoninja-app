@@ -5,7 +5,7 @@
                 Workspaces
             </div>
             <div class="flex flex-col items-stretch justify-start">
-                <item v-for="workspace in workspaces" :key="workspace.id" @click="changeWorkspace(workspace.id)" :active="isWorkspaceActive(workspace)">
+                <item v-for="workspace in workspaces" :key="workspace.id" @click="changeWorkspace(workspace.id)" :active="isWorkspaceActive(workspace)" :color="workspace.color">
                     {{ workspace.name }}
                 </item>
             </div>
@@ -23,7 +23,7 @@ import Page from '@/assets/js/Page'
 export default new Page()
     .with('item:navigation/SidebarItem', 'filter/Picker')
     .getters({
-        workspaces: 'workspaces/list'
+        workspaces: 'workspaces/withStandard'
     })
     .data(() => ({
         
@@ -40,9 +40,6 @@ export default new Page()
     })
     .methods({
         isWorkspaceActive(workspace) {
-            if(this.activeWorkspace === null) {
-                return false
-            }
             return workspace.id === this.activeWorkspace
         },
         changeWorkspace(id) {

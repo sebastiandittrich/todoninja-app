@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import feathersVuex from 'feathers-vuex';
 import feathersClient from '@/assets/js/FeathersClient';
 import Task from '@/assets/js/Models/Task'
+import Workspace from '@/assets/js/Models/Workspace'
 import { state, getters, mutations, actions } from '@/store/serviceextension'
 import events from '@/store/modules/events'
 import push from '@/store/modules/push'
@@ -12,7 +13,7 @@ const { service, auth, FeathersVuex } = feathersVuex(feathersClient, { idField: 
 Vue.use(Vuex);
 Vue.use(FeathersVuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
 
   },
@@ -35,10 +36,31 @@ export default new Vuex.Store({
       actions,
     }),
     service('tags', { state, getters, mutations, actions }),
-    service('workspaces', { state, getters, mutations, actions }),
+    service('workspaces', {
+      instanceDefaults: Workspace,
+      state, getters: {
+      ...getters,
+      getStandard() {
+        return new Vue.$FeathersVuex.Workspace({ id: null, name: 'Standard', color: 'blue' })
+      },
+      withStandard(state, getters) {
+        return [ getters['getStandard'], ...getters['list'] ]
+      },
+      current(state, getters, rootState) {
+        if(!rootState.tasks.currentFilter.query || rootState.tasks.currentFilter.query.workspaceId === undefined) {
+          return undefined
+        }
+        if(rootState.tasks.currentFilter.query.workspaceId === null) {
+          return getters['getStandard']
+        }
+        return getters['get'](rootState.tasks.currentFilter.query.workspaceId)
+      }
+    }, mutations, actions }),
     service('push-subscriptions', { state, getters, mutations, actions }),
     service('users', { state, getters, mutations, actions }),
     // Setup the auth plugin.
     auth({ userService: 'users' }),
   ],
 });
+
+export default store

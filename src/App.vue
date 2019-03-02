@@ -35,6 +35,7 @@ const test = new Page()
         this.splashscreenVisible = false
       }
       await this.$store.dispatch('push/initialize')
+      this.$store.commit('tasks/setCurrentFilter', { path: 'query.workspaceId', value: null })
     }
   })
   .created(vue => {

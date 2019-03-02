@@ -18,7 +18,7 @@
 
                     <div class="flex flex-row items-center text-sm text-grey-darker cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
                         <i class="feather icon-home mr-2 text-base"></i>
-                        <span class="font-bold">{{ selectedWorkspaceName }}</span>
+                        <span class="font-bold">{{ currentWorkspace.name }}</span>
                         <i class="feather icon-chevron-down ml-2 text-base"></i>
                     </div>
                     <!-- Options Button -->
@@ -81,7 +81,8 @@ export default new Page()
     .use( hasModals({ 'workspaces-picker': 'workspaces/Picker', 'tasks-options': 'tasks/Options' }) )
 
     .getters({
-        getWorkspace: 'workspaces/get'
+        getWorkspace: 'workspaces/get',
+        currentWorkspace: 'workspaces/current'
     })
     .actions({
         getTask: 'tasks/get',
@@ -92,19 +93,10 @@ export default new Page()
         mode: null,
         edited: false,
         task: new (Vue.$FeathersVuex.Task)(),
-        selectedWorkspaceName: 'No workspace',
     }))
     .methods({
         setEdited() {
             this.edited = true
-        },
-        async updateWorkspaceName() {
-            if(!this.task.workspaceId) {
-                this.selectedWorkspaceName = 'No Workspace'
-            } else {
-                const workspace = this.getWorkspace(this.task.workspaceId) || (await this.loadWorkspace(this.task.workspaceId))
-                this.selectedWorkspaceName = workspace.name
-            }
         },
 
         async save({ explicit = false } = {}) {
@@ -161,7 +153,6 @@ export default new Page()
     })
     .watch('$route', 'fetchData')
     .watch('$route.params.id', 'afterEnter')
-    .watch('task.workspaceId', 'updateWorkspaceName')
 
     .vue()
 </script>
