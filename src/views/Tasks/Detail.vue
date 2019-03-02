@@ -160,6 +160,7 @@ export default new Page()
         vue.fetchData()
     })
     .watch('$route', 'fetchData')
+    .watch('$route.params.id', 'afterEnter')
     .watch('task.workspaceId', 'updateWorkspaceName')
 
     .vue()

@@ -26,7 +26,7 @@
 
       <navigation-bar class="md:hidden"></navigation-bar>
       <router-view class="fixed pin md:static z-10 md:z-10 overflow-x-hidden" style="grid-area: detail"></router-view>
-
+  
       <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="add-icon transition hidden md:flex fixed pin-r pin-b z-10 m-8" style="margin-right: calc(50% + 2rem); filter: drop-shadow(0px 10px 10px hsl(224, 28%, 38%));">
           <i class="feather icon-plus text-white p-3 rounded-full bg-blue"></i>
       </navigation-item>
