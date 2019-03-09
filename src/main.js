@@ -14,7 +14,6 @@ if(window.location.href.includes('ref=makerads')) {
 }
 
 if(process.env.NODE_ENV == 'production') {
-  console.log('sentry')
   Sentry.init({
     dsn: 'https://00c93f88d8b845e8a632ac75e906f86b@sentry.io/1320758',
     integrations: [new Sentry.Integrations.Vue({ Vue })],

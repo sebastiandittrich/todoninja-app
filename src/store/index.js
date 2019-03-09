@@ -47,15 +47,23 @@ const store = new Vuex.Store({
         return [ getters['getStandard'], ...getters['list'] ]
       },
       current(state, getters, rootState) {
-        if(!rootState.tasks.currentFilter.query || rootState.tasks.currentFilter.query.workspaceId === undefined) {
-          return undefined
-        }
-        if(rootState.tasks.currentFilter.query.workspaceId === null) {
+        if(!rootState.tasks.currentFilter.query || !rootState.tasks.currentFilter.query.workspaceId) {
           return getters['getStandard']
         }
         return getters['get'](rootState.tasks.currentFilter.query.workspaceId)
       }
-    }, mutations, actions }),
+    }, mutations: {
+      ...mutations,
+      setCurrent(state, current, rootState) {
+        current = current.id ? current.id : current
+
+        if(!rootState.tasks.currentFilter.query) {
+          rootState.tasks.currentFilter.query = { workspaceId: current }
+        } else {
+          rootState.tasks.currentFilter.query.workspaceId = current
+        }
+      },
+    }, actions }),
     service('push-subscriptions', { state, getters, mutations, actions }),
     service('users', { state, getters, mutations, actions }),
     // Setup the auth plugin.

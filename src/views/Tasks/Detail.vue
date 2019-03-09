@@ -18,7 +18,7 @@
 
                     <div class="flex flex-row items-center text-sm text-grey-darker cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
                         <i class="feather icon-home mr-2 text-base"></i>
-                        <span class="font-bold">{{ currentWorkspace.name }}</span>
+                        <span class="font-bold">{{ task.workspace.name }}</span>
                         <i class="feather icon-chevron-down ml-2 text-base"></i>
                     </div>
                     <!-- Options Button -->
@@ -132,7 +132,7 @@ export default new Page()
                 this.task = (await this.getTask(parseInt(this.$route.params.id)))
             } else {
                 this.mode = 'create'
-                this.task = new this.$FeathersVuex.Task()
+                this.task = new this.$FeathersVuex.Task({ workspaceId: this.currentWorkspace.id })
             }
         }
     })

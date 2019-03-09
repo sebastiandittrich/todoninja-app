@@ -14,6 +14,7 @@ import '@/assets/css/main.css';
 import '@/assets/css/iconfont.css';
 import '@/assets/css/transitions.css'
 import Page from '@/assets/js/Page'
+import * as Sentry from '@sentry/browser'
 
 const test = new Page()
   .with('Splashscreen', 'events/List')
@@ -22,9 +23,19 @@ const test = new Page()
   }))
   .methods({
     async fetchData() {
-        await this.$store.dispatch('tasks/findAll', { doneAt: null })
-        await this.$store.dispatch('workspaces/findAll')
-        await this.$store.dispatch('tags/findAll')
+      await this.$store.dispatch('tasks/findAll', { doneAt: null })
+      await this.$store.dispatch('workspaces/findAll')
+      await this.$store.dispatch('tags/findAll')
+    },
+    initSentry() {
+      Sentry.configureScope(scope => {
+        if(this.$store.state.auth.user) {
+          scope.setUser({
+            id: this.$store.state.auth.user.id,
+            name: this.$store.state.auth.user.name,
+          })
+        }
+      })
     },
     async boot() {
       try {
@@ -36,12 +47,18 @@ const test = new Page()
       }
       await this.$store.dispatch('push/initialize')
       this.$store.commit('tasks/setCurrentFilter', { path: 'query.workspaceId', value: null })
+
+      // Always do this last
+      this.initSentry()
     }
   })
   .created(vue => {
     vue.boot()
   })
-  .watch('$store.state.auth.user.id', 'fetchData')
+  .watch('$store.state.auth.user.id', function() {
+    this.fetchData()
+    this.initSentry()
+  })
   .vue()
 
 export default test

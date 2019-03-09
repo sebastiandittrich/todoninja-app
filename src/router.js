@@ -64,7 +64,7 @@ router.beforeEach(async (to, from, next) => {
   // Check if some of the matched routes have the "guest" meta field
   if(to.matched.some(route => route.meta.guest)) {
     if(to.matched.some(route => route.meta.guest == 'only')) {
-      if(store.state.auth.accesToken) {
+      if(store.state.auth.accessToken) {
         next('/')
       } else {
         store.dispatch('auth/authenticate')
@@ -75,7 +75,7 @@ router.beforeEach(async (to, from, next) => {
       next()
     }
   } else {
-    if(store.state.auth.accesToken) {
+    if(store.state.auth.accessToken) {
       next()
     } else {
       store.dispatch('auth/authenticate')

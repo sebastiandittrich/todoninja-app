@@ -29,7 +29,7 @@ export default new Page()
             this.$store.dispatch('tasks/findAll')
         },
         async updateTaskCount(length) {
-            const res = this.$store.dispatch('tasks/find', { query: { $limit: 0 } })
+            const res = this.$store.dispatch('tasks/find', { query: { $limit: 0, workspaceId: this.$store.getters['workspaces/current'].id } })
             console.log(res)
             this.moreTasksAvailable = (await res).total - length
         }
