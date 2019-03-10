@@ -1,7 +1,7 @@
 <template>
     <div :style="gradient" class="py-6 px-4 text-white text-center text-2xl font-light flex flex-col items-center justify-center overflow-hidden">
-        {{ greeting }}
-        <div v-if="isExtended" class="flex flex-row items-center text-sm text-grey-lighter cursor-pointer select-none mt-4" @click="showModal('workspaces-picker', $event)">
+        <span v-if="!isExtended">{{ greeting }}</span>
+        <div v-if="isExtended" class="flex flex-row items-center text-sm text-grey-lighter cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
             <i class="feather icon-home mr-2 text-base"></i>
             <span class="font-bold">{{ selectedWorkspace.name }}</span>
             <i class="feather icon-chevron-down ml-2 text-base"></i>

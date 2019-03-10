@@ -24,6 +24,15 @@ import State from '@/assets/js/State'
 
 export default new Page()
     .with('tags/Picker')
+    .props({
+        filters: {
+            type: Array,
+            default: () => []
+        }
+    })
+    .getters({
+        currentWorkspace: 'workspaces/current'
+    })
     .data(() => ({
         tags: [],
         states: [],
@@ -55,24 +64,14 @@ export default new Page()
             }
             return this.states.includes(task.state)
         },
-
-        updateFilterActive() {
-            const active = (value = true) => this.$store.commit('tasks/setCurrentFilter', { path: '$meta.filter.active', value })
-
-            if(this.tags.length > 0) {
-                return active()
-            }
-            if(this.states.length > 0) {
-                return active()
-            }
-
-            return active(false)
-        }
     })
-    .watch([ 'tags', 'states' ], 'updateFilterActive')
-    .created(vue => {
-        vue.$store.commit('tasks/addCurrentFilterFunction', vue.tagsFilter)
-        vue.$store.commit('tasks/addCurrentFilterFunction', vue.stateFilter)
+    .mounted(vue => {
+        vue.filters.push(vue.tagsFilter)
+        vue.filters.push(vue.stateFilter)
+    })
+    .watch('currentWorkspace.id', function() {
+        this.state = []
+        this.tags = []
     })
     .vue()
 </script>

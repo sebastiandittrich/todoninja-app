@@ -7,7 +7,6 @@ import merge from 'deepmerge'
 
 export default service('tasks', extend(
     findAll, 
-    filteredFind, 
     { 
         instanceDefaults: Task,
         getters: {

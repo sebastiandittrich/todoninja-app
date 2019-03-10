@@ -76,11 +76,11 @@ export default new Page('NavigationBar')
     })
     .methods({
         changeWorkspace(id) {
-            if(id != undefined) {
-                this.$store.commit('tasks/setCurrentFilter', { path: 'query.workspaceId', value: id})
-            } else {
-                this.$store.commit('tasks/removeCurrentFilter', { path: 'query.workspaceId' })
-            }
+            // if(id != undefined) {
+            //     this.$store.commit('tasks/setCurrentFilter', { path: 'query.workspaceId', value: id})
+            // } else {
+            //     this.$store.commit('tasks/removeCurrentFilter', { path: 'query.workspaceId' })
+            // }
         }
     })
     .created(vue => window.bar = vue)

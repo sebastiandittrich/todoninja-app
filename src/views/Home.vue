@@ -4,7 +4,7 @@
 
       <greeting ref="greeting" class="rounded-lg m-2 shadow-lg md:hidden"></greeting>
 
-      <sections-bar class="md:bg-blue-lightest md:p-4 md:pt-6" style="grid-area: sections"></sections-bar>
+      <sections-bar class="md:bg-blue-lightest m-6 md:m-0 md:p-4 md:pt-6" style="grid-area: sections"></sections-bar>
 
       <div class="hidden md:block overflow-hidden" style="grid-area: sidebar"><navigation-sidebar class="md:bg-blue-lightest"></navigation-sidebar></div>
 

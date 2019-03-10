@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row justify-around items-center p-8">
+    <div class="flex flex-row justify-around items-center">
         <sections-item link="do">
             <i class="transition feather icon-zap mr-2"></i>
             Do

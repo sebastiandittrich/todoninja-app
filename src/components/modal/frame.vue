@@ -50,7 +50,8 @@ export default new Page()
             const mintop = 5
             return {
                 top: Math.max(Math.min(this.state.position.y, maxtop), mintop) + 'px',
-                left: Math.max(Math.min(this.state.position.x - elementdims.width/2, maxleft), minleft) + 'px'
+                left: Math.max(Math.min(this.state.position.x - elementdims.width/2, maxleft), minleft) + 'px',
+                'max-width': '95%'
             }
         }
     })
