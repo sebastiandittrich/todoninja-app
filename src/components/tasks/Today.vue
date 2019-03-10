@@ -27,7 +27,7 @@
     export default new Page()
         .with('tasks/List', 'tasks/Placeholder')
         .getters({
-            _findTasks: 'tasks/filteredFind'
+            _findTasks: 'tasks/currentFind'
         })
         .methods({
             findTasks(...args) {

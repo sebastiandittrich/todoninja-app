@@ -18,7 +18,7 @@ export default new Page()
         moreTasksAvailable: true
     }))
     .getters({
-        findTasks: 'tasks/filteredFind'
+        findTasks: 'tasks/currentFind'
     })
     .computed({
         tasks() {

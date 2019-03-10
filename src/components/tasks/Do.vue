@@ -16,11 +16,11 @@
     export default new Page()
         .with('tasks/List', 'tasks/Placeholder')
         .getters({
-            filteredFind: 'tasks/filteredFind'
+            _find: 'tasks/currentFind'
         })
         .methods({
-            findTasks(query) {
-                return this.filteredFind({ query: { doneAt: null, ...query } }).data
+            find(query) {
+                return this._find({ query: { doneAt: null, ...query } }).data
             },
         })
         .computed({
@@ -28,7 +28,7 @@
                 const list = [ ]
                 const now = moment()
 
-                list.push(this.findTasks().filter( task => task.isDo() ))
+                list.push(this.find().filter( task => task.isDo() ))
 
                 return _.uniqBy(_.flatten(list), 'id')
             }

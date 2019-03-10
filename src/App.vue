@@ -22,11 +22,14 @@ const test = new Page()
     splashscreenVisible: true,
   }))
   .methods({
+    async fetchWorkspaceSpecific() {
+      await this.$store.dispatch('tasks/findAll', { doneAt: null, workspaceId: this.$store.getters['workspaces/current'].id })
+    },
     async fetchData() {
-      this.$store.dispatch('tasks/findAll', { doneAt: null })
-      this.$store.dispatch('tags/findAll')
-
       await this.$store.dispatch('workspaces/findAll')
+
+      await this.fetchWorkspaceSpecific()
+      this.$store.dispatch('tags/findAll')
     },
     initSentry() {
       Sentry.configureScope(scope => {
@@ -60,6 +63,7 @@ const test = new Page()
   .watch('$store.state.auth.user.id', function() {
     this.boot({ soft: true })
   })
+  .watch('$store.state.workspaces.currentId', 'fetchWorkspaceSpecific')
   .vue()
 
 export default test

@@ -3,11 +3,17 @@ import Task from '@/assets/js/Models/Task'
 import extend from '@/store/extend'
 import * as findAll from '@/store/extensions/find-all'
 import * as filteredFind from '@/store/extensions/filtered-find'
+import merge from 'deepmerge'
 
 export default service('tasks', extend(
     findAll, 
     filteredFind, 
     { 
         instanceDefaults: Task,
+        getters: {
+            currentFind(state, getters, rootState, rootGetters) {
+                return (query, ...args) => getters['find'](merge(query || {}, { query: { workspaceId: rootGetters['workspaces/current'].id } }), ...args)
+            }
+        }
     }
 ))
