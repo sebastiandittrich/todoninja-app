@@ -2,7 +2,7 @@
   <transition name="move-left">
     <div class="page">
 
-      <greeting ref="greeting" class="rounded-lg m-2 shadow-lg md:hidden"></greeting>
+      <greeting ref="greeting" class="rounded-lg m-2 md:hidden"></greeting>
 
       <sections-bar class="md:bg-blue-lightest m-6 md:m-0 md:p-4 md:pt-6" style="grid-area: sections"></sections-bar>
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <filter-bar v-if="filter" :filters="filters"></filter-bar>
+        <filter-bar v-if="filter" :filters="filters" :orderBy="orderBy"></filter-bar>
         <transition-group name="list" tag="div" class="mx-4">
             <tasks-item v-for="task in displayTasks" :task="task" :key="task.id"></tasks-item>
             <div key="loader" class="flex flex-row items-center justify-center w-full">
