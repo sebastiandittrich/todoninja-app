@@ -25,7 +25,7 @@ export default new Page()
     .data(() => ({
         tasksCount: null
     }))
-    .created(async vue => vue.tasksCount = (await vue.$store.dispatch('tasks/find', {query: { $limit: 0 }})).total)
+    .created(async vue => vue.tasksCount = (await vue.$store.dispatch('tasks/find', { query: { $limit: 0,workspaceId: vue.$store.getters['workspaces/current'].id } })).total)
     .vue()
 </script>
 

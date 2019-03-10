@@ -23,32 +23,17 @@ import Page from '@/assets/js/Page'
 export default new Page()
     .with('item:navigation/SidebarItem', 'filter/Picker')
     .getters({
-        workspaces: 'workspaces/withStandard'
+        workspaces: 'workspaces/withStandard',
+        activeWorkspace: 'workspaces/current',
+        changeWorkspace: 'workspaces/setCurrent'
     })
     .data(() => ({
         
     }))
-    .computed({
-        activeWorkspace() {
-            const filter = this.$store.state.tasks.currentFilter
-            if(filter && filter.query && filter.query.workspaceId) {
-                return filter.query.workspaceId
-            } else {
-                return null
-            }
-        },
-    })
     .methods({
         isWorkspaceActive(workspace) {
             return workspace.id === this.activeWorkspace
         },
-        changeWorkspace(id) {
-            if(!this.isWorkspaceActive({ id })) {
-                this.$store.commit('tasks/setCurrentFilter', { path: 'query.workspaceId', value: id})
-            } else {
-                this.$store.commit('tasks/removeCurrentFilter', { path: 'query.workspaceId' })
-            }
-        }
     })
     .vue()
 </script>

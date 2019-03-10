@@ -6,7 +6,7 @@
             <span class="font-bold">{{ selectedWorkspace.name }}</span>
             <i class="feather icon-chevron-down ml-2 text-base"></i>
         </div>
-        <workspaces-picker @hide="hideModal('workspaces-picker')" :state="modalState('workspaces-picker')" :value="selectedWorkspace.id" @input="$store.state.tasks.currentFilter.query.workspaceId = $event"></workspaces-picker>
+        <workspaces-picker @hide="hideModal('workspaces-picker')" :state="modalState('workspaces-picker')" :value="selectedWorkspace.id" @input="$store.commit('workspaces/setCurrent', $event, { root: true })"></workspaces-picker>
     </div>
 </template>
 

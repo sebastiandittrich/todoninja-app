@@ -1,7 +1,8 @@
 <template>
     <div class="flex flex-col">
         <tasks-list :tasks="tasks"></tasks-list>
-        <tasks-placeholder v-if="tasks.length < 1 && !moreTasksAvailable"></tasks-placeholder>
+        <tasks-placeholder v-if="tasks.length < 1 && !moreTasksAvailable">
+        </tasks-placeholder>
         <div v-if="moreTasksAvailable" class="button" @click="loadDoneClick">
             Load {{ moreTasksAvailable }} more tasks
         </div>

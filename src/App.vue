@@ -23,9 +23,10 @@ const test = new Page()
   }))
   .methods({
     async fetchData() {
-      await this.$store.dispatch('tasks/findAll', { doneAt: null })
+      this.$store.dispatch('tasks/findAll', { doneAt: null })
+      this.$store.dispatch('tags/findAll')
+
       await this.$store.dispatch('workspaces/findAll')
-      await this.$store.dispatch('tags/findAll')
     },
     initSentry() {
       Sentry.configureScope(scope => {
@@ -37,16 +38,17 @@ const test = new Page()
         }
       })
     },
-    async boot() {
+    async boot({ soft } = {}) {
       try {
-        await this.$store.dispatch('auth/authenticate')
-        this.fetchData()
+        if(!soft) {
+          await this.$store.dispatch('auth/authenticate')
+        }
+        await this.fetchData()
         this.splashscreenVisible = false
       } catch(error) {
         this.splashscreenVisible = false
       }
       await this.$store.dispatch('push/initialize')
-      this.$store.commit('tasks/setCurrentFilter', { path: 'query.workspaceId', value: null })
 
       // Always do this last
       this.initSentry()
@@ -56,8 +58,7 @@ const test = new Page()
     vue.boot()
   })
   .watch('$store.state.auth.user.id', function() {
-    this.fetchData()
-    this.initSentry()
+    this.boot({ soft: true })
   })
   .vue()
 

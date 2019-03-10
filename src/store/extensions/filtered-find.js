@@ -1,7 +1,7 @@
 import merge from 'deepmerge';
 
 export const state = {
-  currentFilter: {},
+  currentFilter: { query: { workspaceId: null } },
 }
 
 export const getters = {
@@ -83,20 +83,4 @@ export const mutations = {
   removeCurrentFilterFunction(state, $function) {
     state.$functions.splice(state.$functions.indexOf($function), 1)
   },
-}
-
-export const actions = {
-  async findAll({ dispatch }, options = {}) {
-    options = Object.assign({
-      $limit: 10,
-      $skip: 0,
-    }, options)
-
-    const countquery = await dispatch('find', { query: { ...options, $limit: 0 } })
-    const total = countquery.total
-
-    for(options.$skip; options.$skip < total; options.$skip = options.$skip + options.$limit) {
-      await dispatch('find', { query: { ...options } })
-    }
-  }
 }
