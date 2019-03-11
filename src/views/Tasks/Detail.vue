@@ -44,7 +44,7 @@
                 <!-- State -->
                 <state-presenter @change="save()" v-model="task" class="z-10"/>
 
-                <reminder-presenter class="mt-6" @change="save()" v-model="task"></reminder-presenter>
+                <reminder-presenter class="mt-6 w-full" @change="save()" v-model="task"></reminder-presenter>
                 <div class="font-bold text-sm mb-2 mt-8">Description</div>
                 <textarea @input="setEdited" v-model="task.description" class="-z-10 w-full font-light text-lg focus:shadow-lg rounded-lg transition focus:p-2" rows="2" placeholder="Describe your task!"></textarea>
 

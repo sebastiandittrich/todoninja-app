@@ -1,19 +1,22 @@
 <template>
     <div>
         <div class="flex flex-row items-center justify-between cursor-pointer select-none" @click="showModal('datepicker', $event)">
-            <div class="flex flex-row items-center justify-start">
-                <span class="icon-presenter">
-                    <i class="w-8 h-8 rounded-full" :class="value.remindAt ? 'bg-blue-lightest' : ''"></i>
-                    <i class="feather text-blue" :class="value.remindAt ? 'icon-bell' : 'icon-plus'"></i>
-                </span>
-                <div class="flex flex-col items-start justify-start ml-2">
-                    <div v-if="!value.remindAt" class="font-bold text-sm text-blue">
-                        Add Reminder
-                    </div>
-                    <div class="font-light">
-                        {{ value.humanRemindAt() }}
+            <div class="flex flex-row items-center justify-between w-full">
+                <div class="flex flex-row items-center justify-start">
+                    <span class="icon-presenter">
+                        <i class="w-8 h-8 rounded-full" :class="value.remindAt ? 'bg-blue-lightest' : ''"></i>
+                        <i class="feather text-blue" :class="value.remindAt ? 'icon-bell' : 'icon-plus'"></i>
+                    </span>
+                    <div class="flex flex-col items-start justify-start ml-2">
+                        <div v-if="!value.remindAt" class="font-bold text-sm text-blue">
+                            Add Reminder
+                        </div>
+                        <div class="font-light">
+                            {{ value.humanRemindAt() }}
+                        </div>
                     </div>
                 </div>
+                <div class="rounded-full bg-blue px-2 py-1 uppercase tracking-wide text-white font-bold text-xs">beta</div>
             </div>
             <i v-if="value.remindAt" class="feather icon-x text-grey-darker cursor-pointer select-none" @click.stop="remove"></i>
         </div>
