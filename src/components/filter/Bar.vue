@@ -1,8 +1,14 @@
 <template>
     <div>
-        <div class="flex flex-row justify-end items-center text-grey-dark px-4 mb-4 py-3">
-            <i class="feather icon-bar-chart-2 cursor-pointer" @click.stop="showModal('order-modal', $event)"></i>
-            <i class="feather icon-filter cursor-pointer ml-2" @click.stop="showModal('filter-modal', $event)"></i>
+        <div class="flex flex-row justify-between items-center text-grey-dark px-4 mb-4 py-3 font-bold tracking-wide text-xs uppercase">
+            <span @click.stop="showModal('order-modal', $event)" class="flex flex-row items-center">
+                <i class="feather icon-bar-chart-2 cursor-pointer mr-2 text-base"></i>
+                Order By
+            </span>
+            <span @click.stop="showModal('filter-modal', $event)" class="flex flex-row items-center">
+                Filter
+                <i class="feather icon-filter cursor-pointer ml-2 text-base"></i>
+            </span>
         </div>
         <filter-modal @hide="hideModal('filter-modal')" :state="modalState('filter-modal')" :filters="filters" ></filter-modal>
         <order-modal @hide="hideModal('order-modal')" :state="modalState('order-modal')" :orderBy="orderBy" ></order-modal>
