@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="py-4 px-6 flex flex-row items-center justify-between overflow-hidden border rounded-lg">
-      <span class="text-grey"><i class="feather icon-search mr-2"></i> Search for a task...</span>
+    <div class="py-4 px-6 mx-2 flex flex-row items-center justify-between overflow-hidden border rounded-lg shadow">
+      <span class="text-grey-darkest"><i class="feather icon-search mr-2"></i> Search for a task...</span>
       <div v-if="isExtended" :class="`text-${selectedWorkspace.getColor()}-darker`"  class="flex flex-row items-center text-sm cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
         <div :class="`h-3 w-3 mr-2 rounded-lg bg-${selectedWorkspace.getColor()}`"></div>
         <span class="font-bold">{{ selectedWorkspace.name }}</span>
