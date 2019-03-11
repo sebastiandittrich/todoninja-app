@@ -21,16 +21,19 @@ const router = new Router({
       name: 'Tasks',
       component: page('Home'),
       props: route => ({ view: route.query.view }),
+      meta: { showAddButton: true },
       children: [
         {
           path: 'create',
           name: 'Tasks.Create',
           component: page('Tasks.Detail'),
+          meta: { hideNavBar: true },
         },
         {
           path: ':id',
           name: 'Tasks.Detail',
           component: page('Tasks.Detail'),
+          meta: { hideNavBar: true },
         },
       ]
     },

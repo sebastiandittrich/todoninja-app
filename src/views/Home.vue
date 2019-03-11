@@ -1,5 +1,5 @@
 <template>
-  <transition name="move-left">
+  <transition name="opacity-slide-up">
     <div class="page">
 
       <greeting ref="greeting" class="rounded-lg m-2 md:hidden"></greeting>
@@ -23,12 +23,10 @@
           </transition>
         </div>
       </v-touch>
-
-      <navigation-bar class="md:hidden"></navigation-bar>
       <router-view class="fixed pin md:static z-10 md:z-10 overflow-x-hidden" style="grid-area: detail"></router-view>
   
-      <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="add-icon transition hidden md:flex fixed pin-r pin-b z-10 m-8" style="margin-right: calc(50% + 2rem); filter: drop-shadow(0px 10px 10px hsl(224, 28%, 38%));">
-          <i class="feather icon-plus text-white p-3 rounded-full bg-blue"></i>
+      <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="add-icon transition hidden md:flex fixed pin-r pin-b z-10 m-8">
+          <i class="feather icon-plus text-blue p-3 rounded-full bg-white shadow-lg"></i>
       </navigation-item>
 
     </div>
@@ -40,6 +38,8 @@
   .page
     display grid
     grid-template "search sections detail" auto "sidebar tasks detail" 1fr / 2fr 3fr 5fr
+  .add-icon
+    margin-right calc(50% + 2rem)
 </style>
 
 <script>

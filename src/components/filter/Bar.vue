@@ -1,7 +1,6 @@
 <template>
     <div>
-        <div class="flex flex-row justify-between items-center text-grey-dark px-4 mb-4 py-3 border rounded-lg">
-            <search-bar :filters="filters" class="mr-4"></search-bar>
+        <div class="flex flex-row justify-end items-center text-grey-dark px-4 mb-4 py-3">
             <i class="feather icon-bar-chart-2 cursor-pointer" @click.stop="showModal('order-modal', $event)"></i>
             <i class="feather icon-filter cursor-pointer ml-2" @click.stop="showModal('filter-modal', $event)"></i>
         </div>

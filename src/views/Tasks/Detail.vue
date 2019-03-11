@@ -16,8 +16,8 @@
                     <i @click="$router.go(-1)" class="feather icon-chevron-left md:hidden cursor-pointer select-none"></i>
                     <div class="hidden md:block"></div>
 
-                    <div class="flex flex-row items-center text-sm text-grey-darker cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
-                        <i class="feather icon-home mr-2 text-base"></i>
+                    <div :class="`text-${task.workspace.getColor()}-darker`"  class="flex flex-row items-center text-sm cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
+                        <div :class="`h-3 w-3 mr-2 rounded-lg bg-${task.workspace.getColor()}`"></div>
                         <span class="font-bold">{{ task.workspace.name }}</span>
                         <i class="feather icon-chevron-down ml-2 text-base"></i>
                     </div>

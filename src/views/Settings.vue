@@ -1,5 +1,5 @@
 <template>
-    <transition name="slide-right">
+    <transition name="opacity-slide-up">
         <div class="bg-grey-lighter">
             <!-- Header Bar -->
             <div>

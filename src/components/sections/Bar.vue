@@ -1,15 +1,15 @@
 <template>
     <div class="flex flex-row justify-around items-center">
         <sections-item link="do">
-            <i class="transition feather icon-zap mr-2"></i>
+            <i slot="icon" class="feather icon-zap mr-2"></i>
             Do
         </sections-item>
         <sections-item link="today">
-            <i class="transition feather icon-sun mr-2"></i>
+            <i slot="icon" class="feather icon-sun mr-2"></i>
             Today
         </sections-item>
         <sections-item link="all">
-            <i class="transition feather icon-list mr-2"></i>
+            <i slot="icon" class="feather icon-list mr-2"></i>
             All
         </sections-item>
     </div>

@@ -5,6 +5,9 @@
       <splashscreen v-if="splashscreenVisible" class="absolute pin"></splashscreen>
     </transition>
     <events-list class="absolute pin-t pin-x m-4 z-10"></events-list>
+    <transition name="opacity-slide-up">
+      <navigation-bar v-if="showNavBar" :showAddButton="showAddButton" class="md:hidden z-10"></navigation-bar>
+    </transition>
   </div>
 </template>
 
@@ -17,7 +20,7 @@ import Page from '@/assets/js/Page'
 import * as Sentry from '@sentry/browser'
 
 const test = new Page()
-  .with('Splashscreen', 'events/List')
+  .with('Splashscreen', 'events/List', 'navigation/Bar')
   .data(() =>({
     splashscreenVisible: true,
   }))
@@ -55,6 +58,14 @@ const test = new Page()
 
       // Always do this last
       this.initSentry()
+    }
+  })
+  .computed({
+    showAddButton() {
+      return this.$route.meta.showAddButton == true
+    },
+    showNavBar() {
+      return !this.$route.meta.hideNavBar
     }
   })
   .created(vue => {

@@ -1,5 +1,8 @@
 <template>
-    <span @click="click" :class="{'router-link-active': isActive}" class="sections-item text-xl cursor-pointer select-none py-2 flex flex-row items-center font-light text-grey-darkest transition">
+    <span @click="click" :class="{'text-blue': isActive, 'text-grey': !isActive}" class="tracking-wide font-bold transition px-4 py-2 flex flex-row items-center">
+        <div :class="{ 'opacity-0': !isActive }" :style="{ transform: !isActive ? 'translateX(25%)' : '' }" class="text-blue transition">
+            <slot name="icon"></slot>
+        </div>
         <slot></slot>
     </span>
 </template>

@@ -1,13 +1,15 @@
 <template>
-    <div :style="gradient" class="py-6 px-4 text-white text-center text-2xl font-light flex flex-col items-center justify-center overflow-hidden">
-        <span v-if="!isExtended">{{ greeting }}</span>
-        <div v-if="isExtended" class="flex flex-row items-center text-sm text-grey-lighter cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
-            <i class="feather icon-home mr-2 text-base"></i>
-            <span class="font-bold">{{ selectedWorkspace.name }}</span>
-            <i class="feather icon-chevron-down ml-2 text-base"></i>
-        </div>
-        <workspaces-picker @hide="hideModal('workspaces-picker')" :state="modalState('workspaces-picker')" :value="selectedWorkspace.id" @input="$store.commit('workspaces/setCurrent', $event, { root: true })"></workspaces-picker>
+  <div>
+    <div class="py-4 px-6 flex flex-row items-center justify-between overflow-hidden border rounded-lg">
+      <span class="text-grey"><i class="feather icon-search mr-2"></i> Search for a task...</span>
+      <div v-if="isExtended" :class="`text-${selectedWorkspace.getColor()}-darker`"  class="flex flex-row items-center text-sm cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
+        <div :class="`h-3 w-3 mr-2 rounded-lg bg-${selectedWorkspace.getColor()}`"></div>
+        <span class="font-bold">{{ selectedWorkspace.name }}</span>
+        <i class="feather icon-chevron-down ml-2 text-base"></i>
+      </div>
     </div>
+    <workspaces-picker @hide="hideModal('workspaces-picker')" :state="modalState('workspaces-picker')" :value="selectedWorkspace.id" @input="$store.commit('workspaces/setCurrent', $event, { root: true })"></workspaces-picker>
+  </div>
 </template>
 
 <script>
