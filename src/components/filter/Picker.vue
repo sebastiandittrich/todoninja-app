@@ -66,6 +66,8 @@ export default new Page()
         },
     })
     .mounted(vue => {
+        vue.tagsFilter.written_name = 'tags'
+        vue.stateFilter.written_name = 'state'
         vue.filters.push(vue.tagsFilter)
         vue.filters.push(vue.stateFilter)
     })

@@ -1,6 +1,6 @@
 <template>
-    <span @click="click" :class="{'text-blue': isActive, 'text-grey': !isActive}" class="tracking-wide font-bold transition px-4 py-2 flex flex-row items-center">
-        <div :class="{ 'opacity-0': !isActive }" :style="{ transform: !isActive ? 'translateX(25%)' : '' }" class="text-blue transition">
+    <span @click="click" :class="{'text-blue font-bold': isActive, 'text-grey-darkest border-transparent': !isActive}" class="transition px-4 py-2 flex flex-row items-center cursor-pointer select-none">
+        <div :class="{ 'opacity-0': !isActive }" :style="{ transform: !isActive ? 'translateX(25%)' : '' }" class="text-blue transition mr-2">
             <slot name="icon"></slot>
         </div>
         <slot></slot>
@@ -12,7 +12,7 @@ import Page from '@/assets/js/Page';
 
 export default new Page('SectionsItem')
   .props({
-      link: String
+      link: String,
   })
   .methods({
       click() {

@@ -13,7 +13,7 @@
                 <!-- <div class="bg-blue-lightest absolute pin hidden md:block -z-10" style="transform: scaleX(2) translateX(-50%)"></div> -->
                 <div class="flex flex-row items-center justify-between mb-6 text-2xl">
                     <!-- Back button -->
-                    <i @click="$router.go(-1)" class="feather icon-chevron-left md:hidden cursor-pointer select-none"></i>
+                    <i @click="$router.go(-1)" class="feather icon-chevron-left lg:hidden cursor-pointer select-none"></i>
                     <div class="hidden md:block"></div>
 
                     <div :class="`text-${task.workspace.getColor()}-darker`"  class="flex flex-row items-center text-sm cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">

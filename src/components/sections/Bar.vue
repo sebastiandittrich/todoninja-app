@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row justify-around items-center">
+    <div class="flex flex-row lg:flex-col justify-around lg:justify-start items-center lg:items-start">
         <sections-item link="do">
             <i slot="icon" class="feather icon-zap mr-2"></i>
             Do

@@ -119,7 +119,6 @@
 /* Task List */
 .list-enter, .list-leave-to {
     opacity: 0;
-    transform: translateY(3em);
 }
 
 .list-leave-active {
@@ -128,7 +127,6 @@
 
 .list-left-enter, .list-left-leave-to {
     opacity: 0;
-    transform: translateX(-3em);
 }
 
 .list-left-leave-active {
@@ -137,7 +135,6 @@
 
 .list-up-enter, .list-up-leave-to {
     opacity: 0;
-    transform: translateY(-3em);
 }
 
 .list-left-up-active {

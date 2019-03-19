@@ -1,12 +1,12 @@
 <template>
-  <div id="app" class="pb-32 bg-white absolute pin md:-z-20">
-    <router-view v-if="!splashscreenVisible" class="absolute pin md:-z-20"/>
+  <div id="app" class="pb-32 bg-white absolute pin lg:-z-20">
+    <router-view v-if="!splashscreenVisible" class="absolute pin lg:-z-20"/>
     <transition name="splashscreen"  appear>
       <splashscreen v-if="splashscreenVisible" class="absolute pin"></splashscreen>
     </transition>
     <events-list class="absolute pin-t pin-x m-4 z-10"></events-list>
     <transition name="opacity-slide-up">
-      <navigation-bar v-if="showNavBar" :showAddButton="showAddButton" class="md:hidden z-10"></navigation-bar>
+      <navigation-bar v-if="showNavBar" :showAddButton="showAddButton" class="lg:hidden z-10"></navigation-bar>
     </transition>
   </div>
 </template>
@@ -65,7 +65,7 @@ const test = new Page()
       return this.$route.meta.showAddButton == true
     },
     showNavBar() {
-      return !this.$route.meta.hideNavBar
+      return !this.$route.meta.hideNavBar && this.$store.getters['modals/open'] <= 0
     }
   })
   .created(vue => {

@@ -14,6 +14,7 @@
 import Page from '@/assets/js/Page'
 import loading from '@/assets/js/traits/loading'
 import _ from 'lodash'
+import OrderBy from '@/assets/js/OrderBy'
 
 export default new Page()
   .with('tasks/Item', 'filter/Bar')
@@ -31,7 +32,7 @@ export default new Page()
   .data(() => ({
       filters: [],
       orderBy: {
-          properties: ['updatedAt'],
+          properties: [ OrderBy.filter(order => order.written_name == 'Newest')[0].name ],
           directions: ['desc']
       }
   }))

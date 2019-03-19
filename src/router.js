@@ -44,6 +44,13 @@ const router = new Router({
     },
 
     {
+      path: '/search',
+      name: 'Search',
+      component: page('Search'),
+      props: true
+    },
+
+    {
       path: '/login',
       name: 'login',
       meta: { guest: 'only' },

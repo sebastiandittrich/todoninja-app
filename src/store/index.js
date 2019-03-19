@@ -8,11 +8,6 @@ Vue.use(Vuex);
 Vue.use(FeathersVuex);
 
 export default new Vuex.Store({
-  mutations: {
-    setCurrentWorkspace() {
-      console.log('yeah!')
-    }
-  },
   modules,
   plugins,
 });

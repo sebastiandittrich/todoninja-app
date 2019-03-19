@@ -1,57 +1,165 @@
 <template>
   <transition name="opacity-slide-up">
-    <div class="page">
+    <div class="">
 
-      <greeting ref="greeting" class="rounded-lg m-2 md:hidden"></greeting>
+      <!-- Normal Page -->
+      <div class="overflow-hidden hidden lg:flex flex-row items-stretch justify-stretch h-full">
 
-      <sections-bar class="md:bg-blue-lightest m-6 md:m-0 md:p-4 md:pt-6" style="grid-area: sections"></sections-bar>
+        <div class="flex flex-col items-stretch justify-between w-1/6 border-r">
+          <div class="flex flex-col">
 
-      <div class="hidden md:block overflow-hidden" style="grid-area: sidebar"><navigation-sidebar class="md:bg-blue-lightest"></navigation-sidebar></div>
+            <!-- Search Bar -->
+            <greeting class="overflow-hidden"></greeting>
 
-      <div class="hidden md:block" style="grid-area: search"><search-bar class="bg-blue-lightest pl-6 h-full" ></search-bar></div>
+            <!-- Sections -->
+            <div class="mx-4 mt-8">
+              <div class="text-grey font-bold tracking-wide text-xs uppercase ml-12 mb-2">
+                Sections
+              </div>
+              <sections-bar></sections-bar>
+            </div>
 
+            <!-- Workspaces -->
+            <div class="mx-4 mt-8">
+              <div class="text-grey font-bold tracking-wide text-xs uppercase ml-12 mb-2">
+                Workspaces
+              </div>
+              <div class="flex flex-col items-start justify-start">
+                <div v-for="workspace of workspaces" :key="workspace.id" @click="setWorkspace(workspace)" :class="{ 'text-blue font-bold': isActiveWorkspace(workspace), 'text-grey-darkest': !isActiveWorkspace(workspace) }" class="px-4 py-2 cursor-pointer select-none flex flex-row items-center transition">
+                  <i :class="{ 'opacity-0': !isActiveWorkspace(workspace) }" :style="{ transform: !isActiveWorkspace(workspace) ? 'translateX(25%)' : '' }" class="text-blue feather icon-home transition mr-4"></i>
+                  <span>{{ workspace.name }}</span>
+                </div>
+              </div>
+            </div>
 
-      <v-touch @swipe="listSwipe" :swipe-options="{direction: 'horizontal'}" style="grid-area: tasks" class="relative overflow-auto">
-        <div class="hidden md:block p-2 mb-6 sticky pin-t pin-x" style="background: linear-gradient(hsl(224, 15%, 90%) 47%, white 46%)">
-          <greeting class="rounded-lg shadow-md"></greeting>
+          </div>
+
+          <!-- Navigation -->
+          <div class="flex flex-col items-stretch justify-start text-grey-darkest mb-8">
+            <div class="mx-6 cursor-pointer select-none" @click="$router.push('/settings')">
+              <i class="feather icon-settings mr-4"></i>
+              Settings
+            </div>
+          </div>
+
         </div>
-        <div class="stacking overflow-hidden mx-2">
-          <transition :name="transition">
-            <keep-alive>
-              <component :is="this.TaskListView" class="pb-32"></component>
-            </keep-alive>
-          </transition>
+
+        <div class="flex flex-col items-stretch justify-start overflow-auto transition" :class="isDetailActive ? 'w-1/2' : 'w-5/6'">
+          <!-- <div class="bg-red p-8">
+            <div class="mb-8">
+              Top bar
+            </div>
+            <div>
+              down bar
+            </div>
+          </div>
+          <div class="bg-green p-16 h-full">
+            Tasks
+          </div> -->
+
+          <!-- Top Bar -->
+          <div class="  flex-col items-stretch justify-start border-b">
+
+            <div class="mx-8 mt-8 mb-3 text-sm flex flex-row items-center">
+              <div class="text-blue font-bold">Todoninja</div>
+              <div class="text-blue font-bold mx-2">-</div>
+              <div class="text-grey"> Todo PWA</div> 
+            </div>
+
+            <transition name="opacity" mode="out-in">
+              <div :key="workspace.id" class="text-5xl m-8 mt-0 flex flex-row items-center justify-start">
+                <i class="feather icon-home text-3xl mr-4 rounded-lg p-2" :class="`bg-${workspace.getColor()}-lightest text-${workspace.getColor()}`"></i>
+                {{ workspace.name }}
+              </div>
+            </transition>
+
+            <div class="flex flex-row items-stretch justify-start self-start -mb-px mx-8 mt-2">
+              <div :class="!isInbox ? 'border-blue' : 'border-transparent'" class="border-b-3 flex flex-row items-center pb-6 cursor-pointer select-none">
+                <div :class="!isInbox ? '' : 'opacity-50'" class="rounded-full bg-blue-lightest text-blue px-2 py-1 mr-2 font-bold text-xs">
+                  {{ tasksCount }}
+                </div>
+                <div :class="!isInbox ? 'font-bold' : ''">
+                  Tasks
+                </div>
+              </div>
+
+              <div :class="isInbox ? 'border-blue' : 'border-transparent'" class="border-b-3 flex flex-row items-center pb-6 cursor-pointer select-none ml-12">
+                <div :class="isInbox ? '' : 'opacity-50'" class="rounded-full bg-blue-lightest text-blue px-2 py-1 mr-2 font-bold text-xs">
+                  {{ 0 }}
+                </div>
+                <div :class="isInbox ? 'font-bold' : 'text-grey'">
+                  Inbox
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task List -->
+          <div class="">
+            <transition :name="transition">
+              <keep-alive>
+                <component :is="this.TaskListView" class="pb-32 pt-6 px-6 overflow-auto"></component>
+              </keep-alive>
+            </transition>
+          </div>
         </div>
-      </v-touch>
-      <router-view class="fixed pin md:static z-10 md:z-10 overflow-x-hidden" style="grid-area: detail"></router-view>
-  
-      <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="add-icon transition hidden md:flex fixed pin-r pin-b z-10 m-8">
-          <i class="feather icon-plus text-blue p-3 rounded-full bg-white shadow-lg"></i>
-      </navigation-item>
+
+        <router-view class="transition" :class="isDetailActive ? 'w-2/6' : 'w-0'"></router-view>
+
+        <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="transition hidden md:flex fixed pin-r pin-b z-10 m-8">
+            <i class="feather icon-plus text-blue p-3 rounded-full bg-white shadow-lg mr-4 text-2xl"></i>
+        </navigation-item>
+
+      </div>
+
+      <!-- Mobile Page ------------------------------------------------------------------------------- -->
+      <div class="lg:hidden">
+
+        <greeting class="rounded-lg m-2 mx-4 overflow-hidden shadow"></greeting>
+
+        <sections-bar class="m-6 mb-10"></sections-bar>
+
+        <v-touch @swipe="listSwipe" :swipe-options="{direction: 'horizontal'}" class="relative overflow-auto">
+          <div class="stacking overflow-hidden mx-2">
+            <transition :name="transition">
+              <keep-alive>
+                <component :is="this.TaskListView" class="pb-32"></component>
+              </keep-alive>
+            </transition>
+          </div>
+        </v-touch>
+        <router-view class="fixed pin z-10 overflow-x-hidden"></router-view>
+
+      </div>
 
     </div>
   </transition>
 </template>
 
 <style lang="stylus" scoped>
-@screen md
-  .page
-    display grid
-    grid-template "search sections detail" auto "sidebar tasks detail" 1fr / 2fr 3fr 5fr
-  .add-icon
-    margin-right calc(50% + 2rem)
+
 </style>
 
 <script>
 import Page from '@/assets/js/Page';
+// import hasModals from '@/assets/js/traits/hasModals'
 
 export default new Page()
 
-  .with('Greeting', 'sections/Bar', 'tasks/List', 'navigation/Bar', 'navigation/Item', 'navigation/Sidebar', 'tasks/Do', 'tasks/Today', 'tasks/All', 'search/Bar')
+  .with('Greeting', 'sections/Bar', 'tasks/List', 'navigation/Bar', 'navigation/Item', 'navigation/Sidebar', 'tasks/Do', 'tasks/Today', 'tasks/All')
 
   .data(() => ({
     transition: 'opacity-slide-right'
   }))
+
+  .getters({
+    workspace: 'workspaces/current',
+    workspaces: 'workspaces/withStandard'
+  })
+
+  .mutations({
+    setWorkspace: 'workspaces/setCurrent'
+  })
 
   .props({ view: { type: String, default: 'do', } })
   .computed({
@@ -65,10 +173,23 @@ export default new Page()
       } else {
         return 'tasks-do'
       }
+    },
+    isInbox() {
+      return false
+    },
+    tasksCount() {
+      return this.$store.getters['tasks/currentFind']().data.length
+    },
+    isDetailActive() {
+      return [ 'Tasks.Create', 'Tasks.Detail' ].includes(this.$route.name)
     }
   })
 
   .methods({
+    isActiveWorkspace(workspace) {
+      return workspace.id === this.workspace.id
+    },
+
     listSwipe({ direction }) {
       direction = direction == 2 ? 'left' : (direction == 4 ? 'right' : 'other')
       let name = null

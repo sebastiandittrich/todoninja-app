@@ -10,20 +10,14 @@
 <script>
 import Page from '@/assets/js/Page'
 import State from '@/assets/js/State'
+import OrderBy from '@/assets/js/OrderBy'
 
 export default new Page()
     .props({
         orderBy: Object
     })
     .data(() => ({
-        properties: [
-            { name: 'updatedAt', written_name: 'Last Updated', direction: 'desc' },
-            { name: task => task.title.toLowerCase(), written_name: 'Alphabetically', direction: 'asc' },
-            { name: task => task.createdAt, written_name: 'Oldest', direction: 'asc' },
-            { name: task => task.createdAt, written_name: 'Newest', direction: 'desc' },
-            { name: 'todayAt', written_name: 'Today first', direction: 'desc' },
-            { name: 'state', written_name: 'State', direction: 'desc' },
-        ]
+        properties: OrderBy
     }))
     .methods({
         propertyClick(property) {
