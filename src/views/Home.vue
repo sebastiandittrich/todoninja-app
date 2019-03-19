@@ -44,7 +44,7 @@
 
         </div>
 
-        <div class="flex flex-col items-stretch justify-start overflow-auto transition" :class="isDetailActive ? 'w-1/2' : 'w-5/6'">
+        <div class="flex flex-col items-stretch justify-start overflow-auto" :class="isDetailActive ? 'w-1/2' : 'w-5/6'">
           <!-- <div class="bg-red p-8">
             <div class="mb-8">
               Top bar
@@ -104,7 +104,7 @@
           </div>
         </div>
 
-        <router-view class="transition" :class="isDetailActive ? 'w-2/6' : 'w-0'"></router-view>
+        <router-view :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l"></router-view>
 
         <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="transition hidden md:flex fixed pin-r pin-b z-10 m-8">
             <i class="feather icon-plus text-blue p-3 rounded-full bg-white shadow-lg mr-4 text-2xl"></i>
