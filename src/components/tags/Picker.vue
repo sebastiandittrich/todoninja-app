@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="horizontal-scrolling">
         <transition-group tag="div" name="list" class="flex flex-row items-center justify-start">
             <div v-for="tag of tags" @click="tagClick(tag.id)" :key="tag.id" :class="remove ? 'bg-red border-none text-white' : (isActive(tag) ? 'border-blue text-blue' : 'border-grey text-grey')" class="whitespace-no-wrap transition rounded-full border py-1 px-4 mr-2 cursor-pointer select-none">
                 <i v-if='remove' class="feather icon-trash text-red-lighter"></i>

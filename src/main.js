@@ -8,6 +8,8 @@ import Page from './assets/js/Page';
 import VueTouch from 'vue-touch'
 import * as Sentry from '@sentry/browser'
 import Overdrive from 'vue-overdrive'
+import 'jquery'
+import 'jquery-mousewheel'
 
 if(window.location.href.includes('ref=makerads')) {
   window.location.href = 'https://todoninja.de/?ref=makerads'

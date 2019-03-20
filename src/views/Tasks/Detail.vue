@@ -53,7 +53,7 @@
                 </div>
 
                 <!-- Tags -->
-                <tags-picker @input="save()" class="-mx-6 px-6 overflow-x-auto" v-model="task.tags"></tags-picker>
+                <tags-picker @input="save()" class="-mx-6 px-6" v-model="task.tags"></tags-picker>
 
             </div>
 

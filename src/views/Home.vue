@@ -44,7 +44,7 @@
 
         </div>
 
-        <div class="flex flex-col items-stretch justify-start overflow-auto" :class="isDetailActive ? 'w-1/2' : 'w-5/6'">
+        <div class="flex flex-col items-stretch justify-start overflow-auto relative" :class="isDetailActive ? 'w-1/2' : 'w-5/6'">
           <!-- <div class="bg-red p-8">
             <div class="mb-8">
               Top bar
@@ -95,42 +95,41 @@
           </div>
 
           <!-- Task List -->
-          <div class="">
+          <div class="stacking overflow-hidden">
             <transition :name="transition">
               <keep-alive>
                 <component :is="this.TaskListView" class="pb-32 pt-6 px-6 overflow-auto"></component>
               </keep-alive>
             </transition>
           </div>
+
+          <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="transition hidden md:flex fixed pin-r pin-b z-10 m-8">
+            <i class="feather icon-plus text-blue p-3 rounded-full bg-white shadow-lg mr-4 text-2xl"></i>
+          </navigation-item>
         </div>
 
         <router-view :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l"></router-view>
 
-        <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="transition hidden md:flex fixed pin-r pin-b z-10 m-8">
-            <i class="feather icon-plus text-blue p-3 rounded-full bg-white shadow-lg mr-4 text-2xl"></i>
-        </navigation-item>
-
       </div>
 
       <!-- Mobile Page ------------------------------------------------------------------------------- -->
-      <div class="lg:hidden">
+      <v-touch @swipe="listSwipe" :swipe-options="{direction: 'horizontal'}" class="lg:hidden min-h-full">
 
         <greeting class="rounded-lg m-2 mx-4 overflow-hidden shadow"></greeting>
 
         <sections-bar class="m-6 mb-10"></sections-bar>
 
-        <v-touch @swipe="listSwipe" :swipe-options="{direction: 'horizontal'}" class="relative overflow-auto">
-          <div class="stacking overflow-hidden mx-2">
-            <transition :name="transition">
-              <keep-alive>
-                <component :is="this.TaskListView" class="pb-32"></component>
-              </keep-alive>
-            </transition>
-          </div>
-        </v-touch>
+        <div class="stacking overflow-hidden mx-2">
+          <transition :name="transition">
+            <keep-alive>
+              <component :is="this.TaskListView" class="pb-32"></component>
+            </keep-alive>
+          </transition>
+        </div>
+        
         <router-view class="fixed pin z-10 overflow-x-hidden"></router-view>
 
-      </div>
+      </v-touch>
 
     </div>
   </transition>

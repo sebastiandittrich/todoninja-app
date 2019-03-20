@@ -43,7 +43,7 @@
                             <i class="feather icon-chevron-right"></i>
                         </div>
                     </div>
-                    <div class="flex flex-row items-center justify-start mt-4 overflow-x-auto pb-2 -mx-8">
+                    <div class="flex flex-row items-center justify-start mt-4 horizontal-scrolling pb-2 -mx-8">
                         <div v-for="workspace of workspaces" :key="workspace.id" class="rounded-lg p-2 border-grey-lighter border-2 ml-8 -mr-6 whitespace-no-wrap">
                             {{ workspace.name }}
                         </div>
@@ -63,8 +63,8 @@
                             <i v-if="!tags_remove" class="feather icon-chevron-right"></i>
                         </div>
                     </div>
-                    <div class="overflow-x-auto mt-4 -mx-8">
-                        <tags-picker :value="[]" class="ml-8" :remove="tags_remove"></tags-picker>
+                    <div class="mt-4 -mx-8">
+                        <tags-picker :value="[]" class="pl-8" :remove="tags_remove"></tags-picker>
                     </div>
                 </div>
             </settings-card>

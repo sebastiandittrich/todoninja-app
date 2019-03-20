@@ -45,6 +45,9 @@ const test = new Page()
       })
     },
     async boot({ soft } = {}) {
+      if(!soft) {
+        this.bootUI()
+      }
       try {
         if(!soft) {
           await this.$store.dispatch('auth/authenticate')
@@ -58,6 +61,14 @@ const test = new Page()
 
       // Always do this last
       this.initSentry()
+    },
+
+    bootUI() {
+      $("body").on('mousewheel', '.horizontal-scrolling', function(event) {
+        this.scrollLeft = this.scrollLeft + event.originalEvent.deltaY
+
+        event.preventDefault();
+      });
     }
   })
   .computed({
