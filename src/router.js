@@ -28,12 +28,14 @@ const router = new Router({
           name: 'Tasks.Create',
           component: page('Tasks.Detail'),
           meta: { hideNavBar: true },
+          props: route => ({ id: null }),
         },
         {
           path: ':id',
           name: 'Tasks.Detail',
           component: page('Tasks.Detail'),
           meta: { hideNavBar: true },
+          props: route => ({ id: parseInt(route.params.id) }),
         },
       ]
     },
@@ -44,10 +46,10 @@ const router = new Router({
     },
 
     {
-      path: '/search',
+      path: '/search/:query?',
       name: 'Search',
       component: page('Search'),
-      props: true
+      props: route => ({ query: decodeURIComponent(route.params.query || '') })
     },
 
     {

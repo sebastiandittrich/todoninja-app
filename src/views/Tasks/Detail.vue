@@ -94,6 +94,12 @@ export default new Page()
         edited: false,
         task: new (Vue.$FeathersVuex.Task)(),
     }))
+    .props({
+        id: {
+            type: Number,
+            default: null
+        }
+    })
     .methods({
         setEdited() {
             this.edited = true
@@ -127,9 +133,9 @@ export default new Page()
         },
 
         async fetchData() {
-            if(!isNaN(this.$route.params.id) && Number.isInteger(parseInt(this.$route.params.id))) {
+            if(!isNaN(this.id) && Number.isInteger(parseInt(this.id))) {
                 this.mode = 'view'
-                this.task = (await this.getTask(parseInt(this.$route.params.id)))
+                this.task = (await this.getTask(parseInt(this.id)))
             } else {
                 this.mode = 'create'
                 this.task = new this.$FeathersVuex.Task({ workspaceId: this.currentWorkspace.id })
@@ -151,8 +157,10 @@ export default new Page()
     .created(vue => {
         vue.fetchData()
     })
-    .watch('$route', 'fetchData')
-    .watch('$route.params.id', 'afterEnter')
+    .watch('id', function() {
+        this.fetchData()
+        this.afterEnter()
+    })
 
     .vue()
 </script>
