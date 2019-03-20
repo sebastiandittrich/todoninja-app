@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="flex flex-row items-center justify-between cursor-pointer select-none" @click="showModal('datepicker', $event)">
+        <div class="flex flex-row items-center justify-between cursor-pointer select-none" @click="showDatepicker">
             <div class="flex flex-row items-center justify-between w-full">
                 <div class="flex flex-row items-center justify-start">
                     <span class="icon-presenter">
@@ -21,6 +21,7 @@
             <i v-if="value.remindAt" class="feather icon-x text-grey-darker cursor-pointer select-none" @click.stop="remove"></i>
         </div>
         <datepicker @input="$emit('change', $event)" type="datetime" v-model="value.remindAt" :state="modalState('datepicker')" @hide="hideModal('datepicker')"></datepicker>
+        <push-modal :state="modalState('push-modal')" @hide="hideModal('push-modal')"></push-modal>
     </div>
 </template> 
 
@@ -42,8 +43,10 @@
 <script>
 import Page from '@/assets/js/Page'
 import hasModals from '@/assets/js/traits/hasModals'
+import requiresPush from '@/assets/js/traits/requires-push'
 
 export default new Page()
+    .use( requiresPush )
     .props({
         value: Object
     })
@@ -51,6 +54,10 @@ export default new Page()
         remove() {
             this.value.remindAt = null
             this.$emit('change')
+        },
+        async showDatepicker($event) {
+            await this.requirePush()
+            this.showModal('datepicker', $event)
         }
     })
     .use( hasModals({ 'datepicker': 'datepicker' }) )

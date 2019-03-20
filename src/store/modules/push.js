@@ -5,7 +5,9 @@ export default {
         pushManager: null,
         available: false,
         activated: false,
-        vapidPublicKey: 'BEVgPD-nE5y91D9BVik6b4l6ENl49ElA2qamVCi-bMFVkepvUnBdKqNkkYqmlg-pHLHkGVRyjx0W0eZbBsZlxLw'
+        permission: null,
+        vapidPublicKey: 'BEVgPD-nE5y91D9BVik6b4l6ENl49ElA2qamVCi-bMFVkepvUnBdKqNkkYqmlg-pHLHkGVRyjx0W0eZbBsZlxLw',
+        dontask: false,
     },
     getters: {
         vapidPublicKey(state) {
@@ -22,6 +24,9 @@ export default {
                 return outputArray
             }
             return urlBase64ToUint8Array(state.vapidPublicKey)
+        },
+        shouldAsk(state) {
+            return !state.dontask
         }
     },
     mutations: {
@@ -38,6 +43,12 @@ export default {
         setActivated(state, activated) {
             state.activated = activated
         },
+        setPermission(state, permission) {
+            state.permission = permission
+        },
+        neverAskAgain(state) {
+            state.dontask = true
+        }
     },
     actions: {
     
@@ -68,6 +79,8 @@ export default {
                 })
                 await dispatch('sendToServer')
                 await dispatch('initialize')
+            } else {
+                throw new Error('Push is not supported')
             }
             
         },
@@ -86,6 +99,10 @@ export default {
             commit('setPushManager', serviceworker.pushManager)
             const subscription = await serviceworker.pushManager.getSubscription()
             commit('setAvailable', true)
+
+            // if(serviceworker.pushManager.permissionState) {
+            //     commit('setPermission', await subscription.pushManager.permissionState({ userVisibleOnly: true }))
+            // }
 
             if(subscription) {
                 commit('setSubscription', subscription)

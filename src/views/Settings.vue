@@ -70,13 +70,7 @@
             </settings-card>
 
             <settings-card title="Notifications" class="mt-8">
-                <div class="flex flex-row items-center justify-between">
-                    <div class="-mx-8 px-8 py-3">
-                        <div class="">Push Notifications</div>
-                        <div class="text-grey-dark text-sm">Push Notifications are turned {{ pushActivated ? 'on' : 'off' }} on this device</div>
-                    </div>
-                    <switchbox @input="pushClick" :value="pushActivated" :disabled="!pushAvailable"></switchbox>
-                </div>
+                <push-toggle></push-toggle>
             </settings-card>
 
             <settings-card title="Info" class="mt-8">
@@ -98,17 +92,13 @@ import Page from '@/assets/js/Page'
 import hasModals from '@/assets/js/traits/hasModals'
 
 export default new Page()
-    .with('tags/Picker', 'settings/Card', 'SwitchBox')
+    .with('tags/Picker', 'settings/Card', 'push/Toggle')
     .use( hasModals({ 'workspaces-picker': 'workspaces/Picker' }) )
     .state({
         user: state => state.auth.user,
-        pushActivated: state => state.push.activated,
-        pushAvailable: state => state.push.available,
     })
     .actions({
         logout: 'auth/logout',
-        activatePush: 'push/activate',
-        deactivatePush: 'push/deactivate'
     })
     .getters({
         workspaces: 'workspaces/list',
@@ -127,13 +117,6 @@ export default new Page()
             await this.logout()
             window.location.reload()
         },
-        async pushClick() {
-            if(this.pushActivated) {
-                return await this.deactivatePush()
-            } else {
-                return await this.activatePush()
-            }
-        }
     })
     .vue()
 </script>

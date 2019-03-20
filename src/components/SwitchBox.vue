@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <input @input="$emit('input', value)" :value="value" type="checkbox" style="display: none" :name="$options._scopeId" :id="$options._scopeId" :disabled="disabled">
-        <label :for="$options._scopeId" class="toggle"><span></span></label>
+    <div @click="$emit('click', $event)">
+        <input :checked="value" type="checkbox" style="display: none" :name="$options._scopeId" :id="$options._scopeId" :disabled="disabled">
+        <span :for="$options._scopeId" class="toggle"><span></span></span>
     </div>
 </template>
 
