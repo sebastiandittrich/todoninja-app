@@ -43,7 +43,17 @@ export default new Modal()
         }
     })
     .getters({
-        workspaces: 'workspaces/withStandard'
+        standard_workspaces: 'workspaces/withStandard',
+        manage_workspaces: 'workspaces/list'
+    })
+    .computed({
+        workspaces() {
+            if(this.manage) {
+                return this.manage_workspaces
+            } else {
+                return this.standard_workspaces
+            }
+        }
     })
     .methods({
         workspaceClick(id) {
