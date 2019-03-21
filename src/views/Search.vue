@@ -10,11 +10,15 @@
             </div>
             <div class="container mx-auto stacking">
                 <transition name="opacity-slide-up">
-                    <tasks-list v-if="query.length > 0" class="mt-8" :tasks="tasks"></tasks-list>
-                    <tasks-placeholder v-else image="/img/search.svg">
+                    <tasks-placeholder v-if="query.length <= 0" image="/img/search.svg">
                         Find any task you need.
                         <div slot="subtitle">Enter a search term to get started!</div>
                     </tasks-placeholder>
+                    <tasks-placeholder v-else-if="tasks.length <= 0" image="/img/empty.svg">
+                        Nothing found :(
+                        <div slot="subtitle">Try to find a better search term!</div>
+                    </tasks-placeholder>
+                    <tasks-list v-else class="mt-8" :tasks="tasks"></tasks-list>
                 </transition>
             </div>
         </div>
