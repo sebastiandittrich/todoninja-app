@@ -11,13 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Task reminders are finally here! (marked as beta)
 ### Changed
  - A better UI with cleaner navigation.
- - The search bar is now located at the top of the screen.
- - Filters are now per list, not globally.
+   - The search bar is now located at the top of the screen.
+   - Filters are now per list, not globally.
  - A workspace is now required when creating a task.
  - Last used workspace is now automatically restored from last session.
 ### Fixed
  - New task title input field is now focused when creating a new task while in detail view.
  - Horizontal scroll bars are now looking better on desktop.
+### Removed
+ - The cool greeting on the top of the screen... But now there is a search bar :)
 
 ## [1.2.2] - 2019-02-28
 ### Fixed
