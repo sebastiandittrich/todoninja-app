@@ -126,6 +126,7 @@
 }
 
 .list-left-enter, .list-left-leave-to {
+    transform: translateX(-3em);
     opacity: 0;
 }
 
@@ -134,6 +135,7 @@
 }
 
 .list-up-enter, .list-up-leave-to {
+    transform: translateY(-3em);
     opacity: 0;
 }
 
