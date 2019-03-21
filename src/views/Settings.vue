@@ -73,7 +73,7 @@
                 <push-toggle></push-toggle>
             </settings-card>
 
-            <settings-card title="Info" class="mt-8">
+            <settings-card title="Info" class="mt-8 mb-32">
                 <a target="_blank" href="https://gitlab.com/ninja-labs/todoninja-v2/blob/master/CHANGELOG.md">
                     <div class="-mx-8 px-8 py-3 active:bg-grey-lightest">Changelog</div>
                 </a>

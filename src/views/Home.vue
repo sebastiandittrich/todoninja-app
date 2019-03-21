@@ -103,7 +103,7 @@
             </transition>
           </div>
 
-          <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="transition hidden md:flex fixed pin-r pin-b z-10 m-8">
+          <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="transition hidden md:flex absolute pin-r pin-b z-10 m-8">
             <i class="feather icon-plus text-blue p-3 rounded-full bg-white shadow-lg mr-4 text-2xl"></i>
           </navigation-item>
         </div>
