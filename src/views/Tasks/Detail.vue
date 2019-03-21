@@ -14,7 +14,7 @@
                 <div class="flex flex-row items-center justify-between mb-6 text-2xl">
                     <!-- Back button -->
                     <i @click="$router.go(-1)" class="feather icon-chevron-left lg:hidden cursor-pointer select-none"></i>
-                    <div class="hidden md:block"></div>
+                    <i @click="$router.replace('/tasks')" class="feather icon-x hidden lg:block cursor-pointer select-none"></i>
 
                     <div :class="`text-${task.workspace.getColor()}-darker`"  class="flex flex-row items-center text-sm cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
                         <div :class="`h-3 w-3 mr-2 rounded-lg bg-${task.workspace.getColor()}`"></div>
