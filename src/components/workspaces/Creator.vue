@@ -1,7 +1,7 @@
 <template>
     <modal :state="state" @hide="hide" @after-enter="afterEnter">
         <headline>
-            Create workspace
+            {{ this.edit ? 'Edit' : 'Create' }} workspace
         </headline>
 
         <div class="mx-8 flex flex-row items-center">
@@ -11,7 +11,7 @@
 
         <actions>
             <cancel @click="hide"></cancel>
-            <action @click="createWorkspaceClick"> Create <i class="feather icon-check ml-2"></i> </action>
+            <action @click="createWorkspaceClick"> {{ this.edit ? 'Save' : 'Create' }} <i class="feather icon-check ml-2"></i> </action>
         </actions>
 
         <div slot="submodals">
@@ -26,22 +26,46 @@ import hasModals from '@/assets/js/traits/hasModals'
 
 export default new Modal()
     .with('inputt')
+    .props({
+        edit: {
+            type: Boolean,
+            default: false,
+        }
+    })
     .use( hasModals({ colorpicker: 'colorpicker' }) )
     .data(() => ({
         workspace: null
     }))
     .methods({
         async createWorkspaceClick() {
-            const created = await this.$store.dispatch('workspaces/create', this.workspace)
+            const created = await this.workspace.save()
             this.workspace = new this.$FeathersVuex.Workspace()
-            this.$emit('created', created)
-            this.$emit('hide')
-            this.$store.dispatch('events/success', { message: 'Workspace created.' })
+            if(this.edit) {
+                this.$emit('updated', created)
+            } else {
+                this.$emit('created', created)
+            }
+
+            this.hide()
+
+            if(this.edit) {
+                this.$store.dispatch('events/success', { message: 'Workspace saved.' })
+            } else {
+                this.$store.dispatch('events/success', { message: 'Workspace created.' })
+            }
         },
         afterEnter() {
             this.$refs.inputt.focus()
         }
     })
-    .created(vue => vue.workspace = new vue.$FeathersVuex.Workspace())
+    .watch('state.data', function() {
+        if(this.edit) {
+            this.workspace = this.state.data.clone()
+        }
+    })
+    .created(vue => {
+        vue.workspace = new vue.$FeathersVuex.Workspace()
+        console.log('created')
+    })
     .vue()
 </script>

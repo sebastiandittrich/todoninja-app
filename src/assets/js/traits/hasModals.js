@@ -1,12 +1,16 @@
 import Trait from "../Trait";
 
-export default function(modalsargs) {
+export default function(modalsargs, more = []) {
     const trait = new Trait()
     const modals = {}
 
     for(const modalname in modalsargs) {
         trait.with(modalname + ':' + modalsargs[modalname])
 
+        modals[modalname] = { show: false, position: {x: 0, y: 0}, unwatchers: [] }
+    }
+
+    for(const modalname of more) {
         modals[modalname] = { show: false, position: {x: 0, y: 0}, unwatchers: [] }
     }
 
@@ -22,7 +26,8 @@ export default function(modalsargs) {
         },
         async showModal(name, $event = {}) {
             return new Promise((resolve) => {
-                this.modals[name].data = $event.data
+                this.$set(this.modals[name], 'data', $event.data)
+                // this.modals[name].data = $event.data
                 this.modals[name].position.x = $event.clientX
                 this.modals[name].position.y = $event.clientY
                 this.modals[name].show = true

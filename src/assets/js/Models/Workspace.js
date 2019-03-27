@@ -1,3 +1,7 @@
+const readable = {
+    yellow: 'dark'
+}
+
 export default {
     color: 'blue',
 
@@ -6,5 +10,12 @@ export default {
             return 'blue'
         }
         return this.color
+    },
+
+    readableColor() {
+        if(typeof readable[this.getColor()] == 'string') {
+            return this.getColor() + '-' + readable[this.getColor()]
+        }
+        return this.getColor()
     }
 }
