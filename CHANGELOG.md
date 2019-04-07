@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Upcoming
+## [1.3.0] - 2019-04-07
 ### Added
  - Workspaces can now have a color.
  - You can now order lists by something.
@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
    - Filters are now per list, not globally.
  - A workspace is now required when creating a task.
  - Last used workspace is now automatically restored from last session.
+ - The search experience has been improved.
 ### Fixed
  - New task title input field is now focused when creating a new task while in detail view.
  - Horizontal scroll bars are now looking better on desktop.
