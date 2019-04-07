@@ -16,56 +16,22 @@ self.addEventListener('install', function (evt) {
 });
 
 
-// //allow sw to control of current page
-// self.addEventListener('activate', function (event) {
-//     // event.waitUntil(self.registration.showNotification('Test', {
-//     //     body: 'Yay it works.',
-//     //     icon: 'images/icon.png',
-//     //     badge: 'images/badge.png'
-//     // }))
-//     console.log('[ServiceWorker] Claiming clients for current page');
-//     return self.clients.claim();
+//allow sw to control of current page
+self.addEventListener('activate', function (event) {
+    console.log('[ServiceWorker] Claiming clients for current page');
+    return self.clients.claim();
+});
 
-// });
-
-// self.addEventListener('fetch', function(evt) {
-//     var url = evt.request.url
-//     if(!url.includes('api.todoninja.de')) {
-//         console.log('The service worker is serving the asset.'+ evt.request.url);
-//         evt.respondWith(fromCache(evt.request).catch(function() {return fromServer(evt.request)}));
-//         evt.waitUntil(update(evt.request));
-//     } else {
-//         console.log('[Service Worker] Not serving asset ' + url)
-//     }
-// });
-
-self.addEventListener('push', function(event) {
-    const data = event.data.json()
-    const title = data.title;
-
-    // Set link
-    data.data.link = `/#/${data.data.link.type}/${data.data.link.id}`
-
-    // Set Badge
-    data.badge = '/img/icons/badge-96x96.png'
-
-    // Set Icon
-    data.icon = '/img/icons/android-chrome-192x192.png'
-
-    event.waitUntil(self.registration.showNotification(title, data));
-})
-
-self.addEventListener('notificationclick', function(event) {
-    console.log('[Service Worker] Notification click Received.');
-    
-  
-    event.waitUntil(
-        clients.openWindow(event.notification.data.link)
-    );
-  
-    event.notification.close();
-  });
-
+self.addEventListener('fetch', function(evt) {
+    // var url = evt.request.url
+    // if(!url.includes('api.todoninja.de')) {
+    //     console.log('The service worker is serving the asset. ' + evt.request.url);
+    //     evt.respondWith(fromCache(evt.request).catch(function() {return fromServer(evt.request)}));
+    //     evt.waitUntil(update(evt.request));
+    // } else {
+    //     console.log('[Service Worker] Not serving asset ' + url)
+    // }
+});
 
 // function precache() {
 //     return caches.open(CACHE).then(function (cache) {
@@ -98,3 +64,32 @@ self.addEventListener('notificationclick', function(event) {
 //     //this is the fallback if it is not in the cahche to go to the server and get it
 //     return fetch(request).then(function (response) { return response })
 // }
+
+//  Notifications setup
+
+self.addEventListener('push', function(event) {
+    const data = event.data.json()
+    const title = data.title;
+
+    // Set link
+    data.data.link = `/#/${data.data.link.type}/${data.data.link.id}`
+
+    // Set Badge
+    data.badge = '/img/icons/badge-96x96.png'
+
+    // Set Icon
+    data.icon = '/img/icons/android-chrome-192x192.png'
+
+    event.waitUntil(self.registration.showNotification(title, data));
+})
+
+self.addEventListener('notificationclick', function(event) {
+    console.log('[Service Worker] Notification click Received.');
+    
+  
+    event.waitUntil(
+        clients.openWindow(event.notification.data.link)
+    );
+  
+    event.notification.close();
+  });
