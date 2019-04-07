@@ -5,7 +5,7 @@
         </headline>
 
         <div class="mx-8 flex flex-row items-center">
-            <div @click="showModal('colorpicker', $event)" class="h-8 w-8 rounded-full mr-4" :class="'bg-' + workspace.color"></div>
+            <div @click="showModal('colorpicker', $event)" class="h-8 w-8 rounded-full mr-4" :class="'bg-' + workspace.getColor()"></div>
             <inputt placeholder="Choose a name" ref="inputt" type="text" v-model="workspace.name"></inputt>
         </div>
 
