@@ -8,7 +8,7 @@
                     <i v-if="query.length > 0" @click="setQuery(''); focus()" class="feather icon-x text-grey-darker cursor-pointer"></i>
                 </div>
             </div>
-            <div class="container mx-auto stacking">
+            <div class="container mx-auto stacking pb-32">
                 <transition name="opacity-slide-up">
                     <tasks-placeholder v-if="query.length <= 0" image="/img/search.svg">
                         Find any task you need.
@@ -18,7 +18,20 @@
                         Nothing found :(
                         <div slot="subtitle">Try to find a better search term!</div>
                     </tasks-placeholder>
-                    <tasks-list v-else class="mt-8" :tasks="tasks"></tasks-list>
+                    <transition-group v-else name="list">
+                        <div v-for="workspaceId of groups" :key="workspaceId || 'null'">
+                            <div class="mx-4 mt-8 mb-4 font-bold flex flex-row items-center justify-between" :class="`text-${workspace(workspaceId).readableColor()}`">
+                                <div>
+                                    <i class="feather icon-home mr-2"></i>
+                                    {{ workspace(workspaceId).name }}
+                                </div>
+                                <div v-if="currentWorkspace.id === workspaceId" class="font-light ml-2">
+                                    (Current)
+                                </div>
+                            </div>
+                            <tasks-list :filter="false" :tasks="grouped[workspaceId]"></tasks-list>
+                        </div>
+                    </transition-group>
                 </transition>
             </div>
         </div>
@@ -28,11 +41,13 @@
 <script>
 import Page from '@/assets/js/Page'
 import Fuse from 'fuse.js'
+import _ from 'lodash'
 
 export default new Page()
     .with('inputt', 'tasks/List', 'tasks/Placeholder')
     .data(() => ({
-        fuse: null
+        fuse: null,
+        fetched: []
     }))
     .props({
         query: {
@@ -41,7 +56,12 @@ export default new Page()
         }
     })
     .getters({
-        _tasks: 'tasks/list'
+        _tasks: 'tasks/list',
+        workspace: 'workspaces/getWithStandard',
+        currentWorkspace: 'workspaces/current',
+    })
+    .actions({
+        find: 'tasks/find',
     })
     .methods({
         focus() {
@@ -56,20 +76,43 @@ export default new Page()
         },
         setQuery(query) {
             this.$router.replace('/search/' + encodeURIComponent(query))
+        },
+        async fetchFromServer() {
+            console.log()
+            if(!this.query || this.query.trim().length < 1) {
+                return this.fetched = []
+            }
+
+            const likequery = '%' + this.query.split('').join('%') + '%'
+
+            this.fetched = (await this.find({ query: { title: { $like: likequery } }, pagination: false })).data
         }
     })
     .computed({
         tasks() {
+            console.log(this.fetched)
             if(!this.fuse) {
-                return this._tasks
+                return _.uniqBy([...this._tasks, ...this.fetched], 'id')
             }
-            return this.fuse.search(this.query)
+            return _.uniqBy([...this.fuse.search(this.query), ...this.fetched], 'id')
+        },
+
+        grouped() {
+            return _.groupBy(this.tasks, task => task.workspace.id)
+        },
+
+        groups() {
+            // Object.keys returns an array of strings
+            const groupnames = Object.keys(this.grouped).map(id => id === 'null' ? null : Number(id))
+            return _.orderBy(groupnames, [ id => id === this.currentWorkspace.id ? 0 : 1 ])
         }
     })
     .created(vue => {
         vue.initFuse()
         vue.focus()
+        vue.fetchFromServer()
     })
+    .watch('query', 'fetchFromServer')
     .vue()
 </script>
 

@@ -4,7 +4,7 @@
         <tasks-placeholder v-if="tasks.length < 1 && !moreTasksAvailable">
         </tasks-placeholder>
         <div v-if="moreTasksAvailable" class="button" @click="loadDoneClick">
-            Load {{ moreTasksAvailable }} more tasks
+            Load {{ moreTasksAvailable }} done tasks
         </div>
     </div>
 </template>

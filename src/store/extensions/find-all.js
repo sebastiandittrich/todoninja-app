@@ -7,9 +7,12 @@ export const actions = {
   
       const countquery = await dispatch('find', { query: { ...options, $limit: 0 } })
       const total = countquery.total
+      let result = []
   
       for(options.$skip; options.$skip < total; options.$skip = options.$skip + options.$limit) {
-        await dispatch('find', { query: { ...options } })
+        result = [ ...result, ...(await dispatch('find', { query: { ...options } })).data ]
       }
+
+      return result
     }
   }

@@ -55,13 +55,13 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      meta: { guest: 'only' },
+      meta: { guest: 'only', hideNavBar: true },
       component: page('Login'),
     },
     {
       path: '/register',
       name: 'register',
-      meta: { guest: 'only' },
+      meta: { guest: 'only', hideNavBar: true },
       component: page('Register'),
     },
     {

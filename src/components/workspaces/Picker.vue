@@ -5,7 +5,7 @@
         </headline>
 
         <transition-group name="list" class="text-lg flex flex-col items-stretch px-4 text-black">
-            <div v-for="workspace of workspaces" :key="workspace.id" @click="workspaceClick(workspace.id)" class="rounded-lg px-4 py-2 flex flex-row items-center justify-start cursor-pointer select-none" :class="value == workspace.id ? `text-${workspace.readableColor()} font-black` : 'font-light'">
+            <div v-for="workspace of workspaces" :key="workspace.id || 'null'" @click="workspaceClick(workspace.id)" class="rounded-lg px-4 py-2 flex flex-row items-center justify-start cursor-pointer select-none" :class="value == workspace.id ? `text-${workspace.readableColor()} font-black` : 'font-light'">
                 <i class="feather rounded-full text-xs icon-check mr-4" :class="{ [`bg-${workspace.readableColor()} text-white p-1`]: value == workspace.id, [`opacity-50 text-transparent p-0 border-4 border-white bg-${workspace.readableColor()}`]: value != workspace.id}"></i>
                 {{ workspace.name }}
                 <i v-if="value == workspace.id" class="feather icon-x float-right ml-auto text-sm text-grey cursor-pointer select-none" @click.stop="workspaceClick(null)"></i>
