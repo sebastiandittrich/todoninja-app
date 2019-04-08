@@ -17,6 +17,15 @@ export default new Page()
     .methods({
         toggleState() {
             this.task.toggleState()
+            this.$store.dispatch('events/success', { 
+                message: 'Task ' + (this.task.isDone() ? 'done' : 'undone'),
+                actions: [
+                    {
+                        name: 'undo',
+                        click: () => this.task.toggleState(),
+                    }
+                ]
+            })
             this.$emit('change')
         }
     })

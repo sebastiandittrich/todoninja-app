@@ -16,7 +16,8 @@ export default {
           message: '',
           icon: '',
           color: 'blue',
-          duration: 5
+          duration: 5,
+          actions: []
         }, event, { show: true, id: uuid() })
 
         state.all.push(event)
