@@ -1,13 +1,21 @@
 <template>
-    <div @click="$emit('click', $event)">
+    <div @click="$emit('click', $event)" class="stacking">
         <input :checked="value" type="checkbox" style="display: none" :name="$options._scopeId" :id="$options._scopeId" :disabled="disabled">
-        <span :for="$options._scopeId" class="toggle"><span></span></span>
+        <span :class="{ 'opacity-25': loading }" :for="$options._scopeId" class="toggle"><span></span></span>
+
+        <Loader :loading="loading" color="#45547c" ></Loader>
     </div>
 </template>
 
 <script>
 import Page from '@/assets/js/Page'
+import loading from '@/assets/js/traits/loading'
+import Loader from 'vue-spinner/src/ClipLoader.vue';
+
+Loader.name = 'Loader'
+
 export default new Page()
+    .with(Loader)
     .props({
         disabled: {
             type: Boolean,
@@ -16,6 +24,10 @@ export default new Page()
         value: {
             type: Boolean,
             default: false
+        },
+        loading: {
+            type: Boolean,
+            default: false,
         }
     })
     .vue()

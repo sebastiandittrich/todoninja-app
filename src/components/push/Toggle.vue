@@ -11,15 +11,17 @@
                 </span>
             </div>
         </div>
-        <switchbox @click="pushClick" :value="pushActivated" :disabled="!pushAvailable"></switchbox>
+        <switchbox @click="pushClick" :value="pushActivated" :disabled="!pushAvailable" :loading="loading"></switchbox>
     </div>
 </template>
 
 <script>
 import Page from '@/assets/js/Page'
+import loading from '@/assets/js/traits/loading'
 
 export default new Page()
     .with('SwitchBox')
+    .use(loading)
     .actions({
         activatePush: 'push/activate',
         deactivatePush: 'push/deactivate'
@@ -31,10 +33,10 @@ export default new Page()
     .methods({
         async pushClick() {
             if(this.pushActivated) {
-                return await this.deactivatePush()
+                return await this.load(this.deactivatePush)
             } else {
                 try {
-                    await this.activatePush()
+                    await this.load(this.activatePush)
                     this.$emit('activate')
                     this.$store.dispatch('events/success', { message: 'Push Notifications Activated' })
                 } catch(error) {
