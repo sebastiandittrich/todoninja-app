@@ -26,7 +26,7 @@
               </div>
               <div class="flex flex-col items-start justify-start">
                 <div v-for="workspace of workspaces" :key="workspace.id" @click="setWorkspace(workspace)" :class="{ 'text-blue font-bold': isActiveWorkspace(workspace), 'text-grey-darkest': !isActiveWorkspace(workspace) }" class="px-4 py-2 cursor-pointer select-none flex flex-row items-center transition">
-                  <i :class="{ 'opacity-0': !isActiveWorkspace(workspace) }" :style="{ transform: !isActiveWorkspace(workspace) ? 'translateX(25%)' : '' }" class="text-blue feather icon-home transition mr-4"></i>
+                  <i :class="{ [workspace.getIcon()]: true, 'opacity-0': !isActiveWorkspace(workspace) }" :style="{ transform: !isActiveWorkspace(workspace) ? 'translateX(25%)' : '' }" class="text-blue feather transition mr-4"></i>
                   <span>{{ workspace.name }}</span>
                 </div>
               </div>
@@ -45,17 +45,6 @@
         </div>
 
         <div class="flex flex-col items-stretch justify-start overflow-auto relative" :class="isDetailActive ? 'w-1/2' : 'w-5/6'">
-          <!-- <div class="bg-red p-8">
-            <div class="mb-8">
-              Top bar
-            </div>
-            <div>
-              down bar
-            </div>
-          </div>
-          <div class="bg-green p-16 h-full">
-            Tasks
-          </div> -->
 
           <!-- Top Bar -->
           <div class="  flex-col items-stretch justify-start border-b">
@@ -68,7 +57,7 @@
 
             <transition name="opacity" mode="out-in">
               <div :key="workspace.id" class="text-5xl m-8 mt-0 flex flex-row items-center justify-start">
-                <i class="feather icon-home text-3xl mr-4 rounded-lg p-2" :class="`bg-${workspace.getColor()}-lightest text-${workspace.getColor()}`"></i>
+                <i class="feather text-3xl mr-4 rounded-lg p-2" :class="{ [workspace.getIcon()]: true, [`bg-${workspace.getColor()}-lightest text-${workspace.getColor()}`]: !workspace.isInbox(), 'border-2 border-grey': workspace.isInbox() }"></i>
                 {{ workspace.name }}
               </div>
             </transition>
@@ -83,14 +72,14 @@
                 </div>
               </div>
 
-              <div :class="isInbox ? 'border-blue' : 'border-transparent'" class="border-b-3 flex flex-row items-center pb-6 cursor-pointer select-none ml-12">
+              <!-- <div :class="isInbox ? 'border-blue' : 'border-transparent'" class="border-b-3 flex flex-row items-center pb-6 cursor-pointer select-none ml-12">
                 <div :class="isInbox ? '' : 'opacity-50'" class="rounded-full bg-blue-lightest text-blue px-2 py-1 mr-2 font-bold text-xs">
                   {{ 0 }}
                 </div>
                 <div :class="isInbox ? 'font-bold' : 'text-grey'">
                   Inbox
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
 
@@ -115,7 +104,7 @@
       <!-- Mobile Page ------------------------------------------------------------------------------- -->
       <v-touch @swipe="listSwipe" :swipe-options="{direction: 'horizontal'}" class="lg:hidden min-h-full">
 
-        <greeting class="rounded-lg m-2 mx-4 overflow-hidden shadow"></greeting>
+        <greeting :class="{ 'border': workspace.isInbox() }" class="rounded-lg m-2 mx-4 overflow-hidden shadow"></greeting>
 
         <sections-bar class="m-6 mb-10"></sections-bar>
 

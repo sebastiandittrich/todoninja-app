@@ -22,7 +22,7 @@
                         <div v-for="workspaceId of groups" :key="workspaceId || 'null'">
                             <div class="mx-4 mt-8 mb-4 font-bold flex flex-row items-center justify-between" :class="`text-${workspace(workspaceId).readableColor()}`">
                                 <div>
-                                    <i class="feather icon-home mr-2"></i>
+                                    <i class="feather mr-2" :class="workspace(workspaceId).getIcon()"></i>
                                     {{ workspace(workspaceId).name }}
                                 </div>
                                 <div v-if="currentWorkspace.id === workspaceId" class="font-light ml-2">

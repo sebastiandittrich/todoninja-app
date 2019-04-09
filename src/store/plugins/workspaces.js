@@ -7,7 +7,7 @@ export default service('workspaces', {
     instanceDefaults: Workspace,
     getters: {
         getStandard() {
-            return new Vue.$FeathersVuex.Workspace({ id: null, name: 'Standard', color: 'blue' })
+            return new Vue.$FeathersVuex.Workspace({ id: null, name: 'Inbox', color: 'blue' })
         },
         withStandard(state, getters) {
             return [ getters['getStandard'], ...getters['list'] ]
