@@ -1,6 +1,6 @@
 <template>
     <transition name="opacity-slide-up">
-        <div class="bg-grey-lighter">
+        <div class="bg-grey-lighter overflow-auto">
             <!-- Header Bar -->
             <div>
                 <div class="p-4 flex flex-row items-center justify-start text-2xl mx-auto container">
@@ -73,7 +73,7 @@
                 <push-toggle></push-toggle>
             </settings-card>
 
-            <settings-card title="Info" class="mt-8 mb-32">
+            <settings-card title="Info" class="mt-8">
                 <a target="_blank" href="https://gitlab.com/ninja-labs/todoninja-v2/blob/master/CHANGELOG.md">
                     <div class="-mx-8 px-8 py-3 active:bg-grey-lightest">Changelog</div>
                 </a>
@@ -81,6 +81,13 @@
                     <div class="">Version</div>
                     <div class="text-grey-dark text-sm">You are using version {{ version }}</div>
                 </div>
+            </settings-card>
+
+            <settings-card title="About" class="mt-8 mb-32">
+                <a target="_blank" href="https://owner.todoninja.de" class="block -mx-8 px-8 py-3 cursor-pointer select-none active:bg-grey-lightest">
+                    <div class="">Sebastian Dittrich</div>
+                    <div class="text-grey-dark text-sm">The developer of this application</div>
+                </a>
             </settings-card>
 
         </div>
