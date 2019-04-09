@@ -4,7 +4,7 @@
             <!-- Header Bar -->
             <div>
                 <div class="p-4 flex flex-row items-center justify-start text-2xl mx-auto container">
-                    <i class="feather icon-settings"></i>
+                    <i @click="$router.back()" class="feather icon-arrow-left cursor-pointer select-none"></i>
                     <div class="ml-8">Settings</div>
                 </div>
             </div>
