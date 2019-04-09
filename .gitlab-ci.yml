@@ -37,7 +37,9 @@ deploy:
   stage: deploy
   environment: production
   only:
-    - tags
+    - /^(?'MAJOR'0|(?:[1-9]\d*))\.(?'MINOR'0|(?:[1-9]\d*))\.(?'PATCH'0|(?:[1-9]\d*))/
+  except: 
+    - branches
   variables:
     GIT_STRATEGY: none
   script:
@@ -52,7 +54,7 @@ deploy_beta:
   stage: deploy
   environment: beta
   only:
-    - master
+    - tags
   variables:
     GIT_STRATEGY: none
   script:
