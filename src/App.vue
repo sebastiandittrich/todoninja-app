@@ -1,6 +1,6 @@
 <template>
-  <div id="app" class="pb-32 bg-white absolute pin lg:-z-20">
-    <router-view v-if="!splashscreenVisible" class="absolute pin lg:-z-20"/>
+  <div id="app" class="bg-white absolute pin lg:-z-20">
+    <router-view v-if="!splashscreenVisible" class="h-full lg:-z-20"/>
     <transition name="splashscreen"  appear>
       <splashscreen v-if="splashscreenVisible" class="absolute pin"></splashscreen>
     </transition>
@@ -46,7 +46,7 @@ const test = new Page()
     },
     async boot({ soft } = {}) {
       if(!soft) {
-        this.bootUI()
+        await this.bootUI()
       }
       try {
         if(!soft) {
@@ -56,6 +56,10 @@ const test = new Page()
         this.splashscreenVisible = false
       } catch(error) {
         this.splashscreenVisible = false
+      }
+      // Check for tutorial
+      if(this.$store.state.auth.accessToken && this.$store.getters['tutorial/done'] == false) {
+        this.$router.replace('/tutorial')
       }
       await this.$store.dispatch('push/initialize')
 

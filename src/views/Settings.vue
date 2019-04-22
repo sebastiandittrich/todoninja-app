@@ -122,6 +122,7 @@ export default new Page()
     .methods({
         async logoutClick() {
             await this.logout()
+            localStorage.clear()
             window.location.reload()
         },
     })

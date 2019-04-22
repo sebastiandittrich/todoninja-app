@@ -53,6 +53,13 @@ const router = new Router({
     },
 
     {
+      path: '/tutorial',
+      name: 'Tutorial',
+      component: page('Tutorial'),
+      meta: { hideNavBar: true }
+    },
+
+    {
       path: '/login',
       name: 'login',
       meta: { guest: 'only', hideNavBar: true },
