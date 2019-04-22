@@ -65,7 +65,6 @@ export default new Modal()
     })
     .created(vue => {
         vue.workspace = new vue.$FeathersVuex.Workspace()
-        console.log('created')
     })
     .vue()
 </script>

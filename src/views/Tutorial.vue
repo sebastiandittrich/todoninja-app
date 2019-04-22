@@ -17,8 +17,6 @@ const steps = [ 'welcome', 'inboxintro', 'workspacesintro', 'states', 'do', 'pos
 
 const components = steps.map(step => `${step}:tutorial/${step}`)
 
-console.log(components)
-
 export default new Page()
     .with(...components)
     .data(() => ({
