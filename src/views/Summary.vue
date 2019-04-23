@@ -1,6 +1,10 @@
 <template>
     <transition name="opacity-slide-up">
         <div class="pb-32">
+            <div class="p-4 hidden lg:flex flex-row items-center justify-start text-2xl mx-auto container">
+                <i @click="$router.back()" class="feather icon-arrow-left cursor-pointer select-none"></i>
+                <div class="ml-8">Summary</div>
+            </div>
 
             <div class="flex flex-col items-center justify-center p-8">
                 <div class="text-grey-dark font-bold tracking-wide uppercase text-xs mb-8">
@@ -13,7 +17,7 @@
                 Last month
             </div>
 
-            <transition-group tag="div" name="list" class="flex-col items-stretch rounded-lg border mx-4">
+            <transition-group tag="div" name="list" class="flex-col items-stretch rounded-lg border mx-4 container mx-auto">
                 <div v-for="week of weeks.slice(1)" :key="week.number" class="flex flex-row items-center p-4">
                     <progress-circle :basecolor="relationColor(week.relation)" :completed="week.relation >= 1" :data="week.data" :total="{ name: 'Created', value: week.total }" :radius="50" :stroke="8"></progress-circle>
                     <div class="ml-4">

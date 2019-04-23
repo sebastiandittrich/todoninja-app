@@ -36,6 +36,10 @@
 
           <!-- Navigation -->
           <div class="flex flex-col items-stretch justify-start text-grey-darkest mb-8">
+            <div class="mx-6 cursor-pointer select-none mb-8" @click="$router.push('/summary')">
+              <i class="feather icon-pie-chart mr-4"></i>
+              Summary
+            </div>
             <div class="mx-6 cursor-pointer select-none" @click="$router.push('/settings')">
               <i class="feather icon-settings mr-4"></i>
               Settings
