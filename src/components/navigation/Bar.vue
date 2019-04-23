@@ -6,8 +6,8 @@
             </navigation-item>
         </transition>
         <div class="bg-white flex flex-row justify-around items-center text-xl px-2 py-3 text-grey rounded-t-lg nav-bar">
-            <navigation-item>
-                <i class="feather icon-inbox"></i>
+            <navigation-item link="summary">
+                <i class="feather icon-pie-chart"></i>
             </navigation-item>
             <navigation-item link="/tasks">
                 <i class="feather icon-list"></i>
