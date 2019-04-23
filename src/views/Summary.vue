@@ -57,7 +57,7 @@ export default new Page()
         },
 
         async fetchData() {
-            for(let week = 0; week < 50; week++) {
+            for(let week = 0; week < 5; week++) {
                 this.weeks.push(await this.fetchWeek(week))
             }
         },
