@@ -1,12 +1,12 @@
 <template>
   <div id="app" class="bg-white absolute pin lg:-z-20">
     <router-view v-if="!splashscreenVisible" class="h-full lg:-z-20"/>
-    <transition name="splashscreen"  appear>
+    <transition name="splashscreen" appear>
       <splashscreen v-if="splashscreenVisible" class="absolute pin"></splashscreen>
     </transition>
     <events-list class="fixed pin-t pin-x m-4 z-10"></events-list>
     <transition name="opacity-slide-up">
-      <navigation-bar v-if="showNavBar" :showAddButton="showAddButton" class="lg:hidden z-10"></navigation-bar>
+      <navigation-bar v-if="showNavBar && !splashscreenVisible" :showAddButton="showAddButton" class="lg:hidden z-10"></navigation-bar>
     </transition>
   </div>
 </template>
