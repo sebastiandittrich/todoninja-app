@@ -176,7 +176,7 @@ export default class Trait {
 
     // Component name is given
     else {
-      const componentname = { from_path: component.path.toLowerCase().replace('/', '-'), given: component.name }
+      const componentname = { from_path: component.path.toLowerCase().replace(/\//g, '-'), given: component.name }
 
       this.app.components[componentname.given || componentname.from_path] = this.loadComponent(component.path);
     }
