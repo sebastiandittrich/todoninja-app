@@ -6,7 +6,7 @@
                 <div class="text-grey-dark font-bold tracking-wide uppercase text-xs mb-8">
                     Current week
                 </div>
-                <progress-circle :basecolor="relationColor(weeks[0] ? weeks[0].relation : 1)" :data="weeks[0] ? weeks[0].data : []" :total="{ name: 'Created', value: weeks[0] ? weeks[0].total : 0 }" legend></progress-circle>
+                <progress-circle :radius="130" :completed="weeks[0] && weeks[0].relation >= 1" :basecolor="relationColor(weeks[0] ? weeks[0].relation : 1)" :data="weeks[0] ? weeks[0].data : []" :total="{ name: 'Created', value: weeks[0] ? weeks[0].total : 0 }" legend></progress-circle>
             </div>
 
             <div class="text-center text-grey-dark font-bold tracking-wide uppercase text-xs mb-8 mt-16">
@@ -15,7 +15,7 @@
 
             <transition-group tag="div" name="list" class="flex-col items-stretch rounded-lg border mx-4">
                 <div v-for="week of weeks.slice(1)" :key="week.number" class="flex flex-row items-center p-4">
-                    <progress-circle :basecolor="relationColor(week.relation)" :data="week.data" :total="{ name: 'Created', value: week.total }" :radius="50" :stroke="8"></progress-circle>
+                    <progress-circle :basecolor="relationColor(week.relation)" :completed="week.relation >= 1" :data="week.data" :total="{ name: 'Created', value: week.total }" :radius="50" :stroke="8"></progress-circle>
                     <div class="ml-4">
                         <div class="font-bold text-black">
                             {{ week.from.format('wo') }} Week of Year
@@ -57,7 +57,7 @@ export default new Page()
         },
 
         async fetchData() {
-            for(let week = 0; week < 5; week++) {
+            for(let week = 0; week < 50; week++) {
                 this.weeks.push(await this.fetchWeek(week))
             }
         },

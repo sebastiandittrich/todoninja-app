@@ -1,9 +1,16 @@
 <template>
     <div class="flex flex-row items-center justify-around">
-        <svg class="progress" :width="radius" :height="radius" :viewBox="`0 0 ${radius} ${radius}`">
-            <circle class="progress__meter" :cx="circlePos" :cy="circlePos" :r="innerRadius" :stroke-width="stroke" :style="{ stroke: totalcolor() }" />
-            <circle v-for="section of ordered" :key="section.name" class="progress__value" :cx="circlePos" :cy="circlePos" :r="innerRadius" :stroke-width="stroke" :style="{ strokeDasharray: circumference, strokeDashoffset: offset(section), stroke: color(section) }" />
-        </svg>
+        <div class="stacking">
+            <svg class="progress" :width="radius" :height="radius" :viewBox="`0 0 ${radius} ${radius}`">
+                <circle class="progress__meter" :cx="circlePos" :cy="circlePos" :r="innerRadius" :stroke-width="stroke" :style="{ stroke: totalcolor() }" />
+                <circle v-for="section of ordered" :key="section.name" class="progress__value" :cx="circlePos" :cy="circlePos" :r="innerRadius" :stroke-width="stroke" :style="{ strokeDasharray: circumference, strokeDashoffset: offset(section), stroke: color(section) }" />
+            </svg>
+            <transition name="opacity">
+                <div v-if="completed" class="flex flex-row items-center justify-center">
+                    <i class="feather icon-check" :style="{ 'font-size': innerRadius * (2/3) + 'px' }" :class="'text-' + basecolor"></i>
+                </div>
+            </transition>
+        </div>
         <transition-group v-if="legend" name="list" class="font-xs text-grey-dark ml-8">
             <div v-for="section of [ ...ordered.slice().reverse(), total ]" :key="section.name" class="flex flex-row mt-2">
                 <div class="rounded-full w-4 h-4 mr-2" :style="{ background: color(section) || totalcolor() }"></div> {{ section.name }} (<span class="text-black font-bold">{{ section.value }}</span>) 
@@ -64,6 +71,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        completed: {
+            type: Boolean,
+            default: false
+        },
         radius: {
             type: Number,
             default: 170
@@ -77,7 +88,7 @@ export default {
         offset (section) {
             const value = this.ordered.slice(this.ordered.indexOf(section)).reduce((added, section) => added + section.value, 0 )
             const progress = value / this.steps
-            const dashoffset = this.circumference * (1 - progress)
+            const dashoffset = this.circumference * Math.max(0, 1 - progress)
         
             return dashoffset
         },
