@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col items-center justify-center h-full text-center text-3xl font-light text-grey-darkest">
-        Welcome back {{ user.name.split(' ')[0] }}!
+        Welcome back {{ user && user.name && user.name.split(' ')[0] }}!
         <i class="feather icon-loader mt-16"></i>
     </div>
 </template>
