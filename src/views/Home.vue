@@ -155,7 +155,7 @@ export default new Page()
 
   .props({ view: { type: String, default: 'do', } })
   .computed({
-    TaskListView() {      
+    TaskListView() {
       if(this.view == 'do') {
         return 'tasks-do'
       } else if(this.view == 'today') {
