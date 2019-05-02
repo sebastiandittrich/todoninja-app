@@ -32,8 +32,8 @@ export default new Page()
   .data(() => ({
       filters: [],
       orderBy: {
-          properties: [ OrderBy.filter(order => order.written_name == 'Newest')[0].name ],
-          directions: ['desc']
+          properties: [ OrderBy.filter(order => order.written_name == 'Open/Done')[0].name, OrderBy.filter(order => order.written_name == 'Newest')[0].name ],
+          directions: ['asc', 'desc']
       }
   }))
   .getters({taskList: 'tasks/list'})

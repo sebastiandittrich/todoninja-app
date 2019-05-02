@@ -5,4 +5,5 @@ export default [
     { name: task => task.createdAt, written_name: 'Newest', direction: 'desc' },
     { name: 'todayAt', written_name: 'Today first', direction: 'desc' },
     { name: 'state', written_name: 'State', direction: 'desc' },
+    { name: task => task.isDone(), written_name: 'Open/Done', direction: 'asc' }
 ]
