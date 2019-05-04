@@ -133,28 +133,36 @@
 </style>
 
 <script>
-import Page from '@/assets/js/Page';
-// import hasModals from '@/assets/js/traits/hasModals'
+import store from '@/mixins/store'
 
-export default new Page()
+import Greeting from '@c/Greeting'
+import SectionsBar from '@c/sections/Bar'
+import TasksList from '@c/tasks/List'
+import NavigationBar from '@c/navigation/Bar'
+import NavigationItem from '@c/navigation/Item'
+import NavigationSidebar from '@c/navigation/Sidebar'
+import TasksDo from '@c/tasks/Do'
+import TasksToday from '@c/tasks/Today'
+import TasksAll from '@c/tasks/All'
 
-  .with('Greeting', 'sections/Bar', 'tasks/List', 'navigation/Bar', 'navigation/Item', 'navigation/Sidebar', 'tasks/Do', 'tasks/Today', 'tasks/All')
-
-  .data(() => ({
+export default {
+  components: { Greeting, SectionsBar, TasksList, NavigationBar, NavigationItem, NavigationSidebar, TasksDo, TasksToday, TasksToday },
+  mixins: [ 
+    store({ 
+      getters: {
+        workspace: 'workspaces/current',
+        workspaces: 'workspaces/withStandard'
+      },
+      mutations: {
+        setWorkspace: 'workspaces/setCurrent'
+      }
+    })
+  ],
+  data: () => ({
     transition: 'opacity-slide-right'
-  }))
-
-  .getters({
-    workspace: 'workspaces/current',
-    workspaces: 'workspaces/withStandard'
-  })
-
-  .mutations({
-    setWorkspace: 'workspaces/setCurrent'
-  })
-
-  .props({ view: { type: String, default: 'do', } })
-  .computed({
+  }),
+  props: { view: { type: String, default: 'do', } },
+  computed: {
     TaskListView() {
       if(this.view == 'do') {
         return 'tasks-do'
@@ -175,9 +183,9 @@ export default new Page()
     isDetailActive() {
       return [ 'Tasks.Create', 'Tasks.Detail' ].includes(this.$route.name)
     }
-  })
+  },
 
-  .methods({
+  methods: {
     isActiveWorkspace(workspace) {
       return workspace.id === this.workspace.id
     },
@@ -201,20 +209,22 @@ export default new Page()
         this.$router.replace({ ...this.$route, query: { ...this.$route.query, view: name }})
       }
     }
-  })
+  },
 
-  .watch('$route', function(to, from) {
-    if(from.query.view == 'do') {
-      this.transition = 'opacity-slide-left'
-    } else if(from.query.view == 'all') {
-      this.transition = 'opacity-slide-right'
-    } else if(from.query.view == 'today') {
-      if(to.query.view == 'do') {
-        this.transition = 'opacity-slide-right'
-      } else if(to.query.view == 'all') {
+  watch: {
+    '$route': function(to, from) {
+      if(from.query.view == 'do') {
         this.transition = 'opacity-slide-left'
+      } else if(from.query.view == 'all') {
+        this.transition = 'opacity-slide-right'
+      } else if(from.query.view == 'today') {
+        if(to.query.view == 'do') {
+          this.transition = 'opacity-slide-right'
+        } else if(to.query.view == 'all') {
+          this.transition = 'opacity-slide-left'
+        }
       }
     }
-  })
-  .vue();
+  }
+}
 </script>

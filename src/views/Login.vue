@@ -38,26 +38,28 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page';
-import form from '@/assets/js/traits/form';
+import form from '@/mixins/form';
+import store from '@/mixins/store'
 
-const t = new Page()
-  .use(form)
-  .actions({
-    authenticate: 'auth/authenticate',
-  })
-  .data(() => ({
+export default {
+  mixins: [
+    form,
+    store({
+      actions: {
+        authenticate: 'auth/authenticate'
+      } 
+    })
+  ],
+  data: () => ({
     email: '',
     password: '',
-  }))
-  .methods({
+  }),
+  methods: {
     submitForm() {
       this.load(() => this.authenticate({ email: this.email, password: this.password, strategy: 'local' }))
         .then(() => this.$router.push('/'))
         .catch(this.showError);
     },
-  })
-  .vue();
-
-export default t;
+  }
+}
 </script>

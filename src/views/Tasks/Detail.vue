@@ -74,40 +74,46 @@
 
 <script>
 import Page from '@/assets/js/Page'
-import hasModals from '@/assets/js/traits/hasModals'
+import hasModals from '@/mixins/hasModals'
+import store from '@/mixins/store'
 import Vue from 'vue'
 
-export default new Page()
-    // .directive('autosave', {
-    //     inserted(el) {
-    //         console.log('inserted')
-    //         el.setAttribute('v-on:input', 'log("test")')
-    //     }
-    // })
-    .with('inputt', 'tags/Picker', 'state/Presenter', 'done/Indicator', 'today/Indicator', 'reminder/Presenter')
-    .use( hasModals({ 'workspaces-picker': 'workspaces/Picker', 'tasks-options': 'tasks/Options' }) )
+import Inputt from '@c/inputt'
+import TagsPicker from '@c/tags/Picker'
+import StatePresenter from '@c/state/Presenter'
+import DoneIndicator from '@c/done/Indicator'
+import TodayIndicator from '@c/today/Indicator'
+import ReminderPresenter from '@c/reminder/Presenter'
+import WorkspacesPicker from '@c/workspaces/Picker'
+import TasksOptions from '@c/tasks/Options'
 
-    .getters({
-        getWorkspace: 'workspaces/get',
-        currentWorkspace: 'workspaces/current'
-    })
-    .actions({
-        getTask: 'tasks/get',
-        loadWorkspace: 'workspaces/get'
-    })
-
-    .data(() =>({
+export default {
+    components: { Inputt, TagsPicker, StatePresenter, DoneIndicator, TodayIndicator, ReminderPresenter },
+    mixins : [ 
+        hasModals({ WorkspacesPicker, TasksOptions }),
+        store({
+            getters: {
+                getWorkspace: 'workspaces/get',
+                currentWorkspace: 'workspaces/current'
+            },
+            actions: {
+                getTask: 'tasks/get',
+                loadWorkspace: 'workspaces/get'
+            }
+        })
+    ],
+    data: () =>({
         mode: null,
         edited: false,
         task: new (Vue.$FeathersVuex.Task)(),
-    }))
-    .props({
+    }),
+    props: {
         id: {
             type: Number,
             default: null
         }
-    })
-    .methods({
+    },
+    methods: {
         setEdited() {
             this.edited = true
         },
@@ -148,8 +154,8 @@ export default new Page()
                 this.task = new this.$FeathersVuex.Task({ workspaceId: this.currentWorkspace.id })
             }
         }
-    })
-    .computed({
+    },
+    computed: {
         isView() {
             return this.mode == 'view'
         },
@@ -159,15 +165,103 @@ export default new Page()
         isEdit() {
             return this.isView ? this.edited : false
         }
-    })
-
-    .created(vue => {
-        vue.fetchData()
-    })
-    .watch('id', function() {
+    },
+    created() {
         this.fetchData()
-        this.afterEnter()
-    })
+    },
+    watch: {
+        id: function() {
+            this.fetchData()
+            this.afterEnter()
+        }
+    }
+}
 
-    .vue()
+// export default new Page()
+//     .with('inputt', 'tags/Picker', 'state/Presenter', 'done/Indicator', 'today/Indicator', 'reminder/Presenter')
+//     .use( hasModals({ 'workspaces-picker': 'workspaces/Picker', 'tasks-options': 'tasks/Options' }) )
+
+//     .getters({
+//         getWorkspace: 'workspaces/get',
+//         currentWorkspace: 'workspaces/current'
+//     })
+//     .actions({
+//         getTask: 'tasks/get',
+//         loadWorkspace: 'workspaces/get'
+//     })
+
+//     .data(() =>({
+//         mode: null,
+//         edited: false,
+//         task: new (Vue.$FeathersVuex.Task)(),
+//     }))
+//     .props({
+//         id: {
+//             type: Number,
+//             default: null
+//         }
+//     })
+//     .methods({
+//         setEdited() {
+//             this.edited = true
+//         },
+
+//         async save({ explicit = false } = {}) {
+//             // If save is triggered by a change event on a component and 
+//             // task is in create mode, don't save the task, so the page 
+//             // will not close unexpected.
+//             // 
+//             // If the user explicitly saves the task, 
+//             // the page will close
+//             if( !(this.isCreate && !explicit) ) {
+
+//                 await this.task.save()
+
+//                 if(explicit) this.$store.dispatch('events/success', { message: 'Task ' + (this.isCreate ? 'created.' : 'saved.') })
+
+//                 if(this.isCreate) {
+//                     this.$router.go(-1)
+//                 } else if(this.isEdit) {
+//                     this.edited = false
+//                 }
+
+//             }
+//         },
+//         afterEnter() {
+//             if(this.isCreate) {
+//                 this.$refs.inputt.focus()
+//             }
+//         },
+
+//         async fetchData() {
+//             if(!isNaN(this.id) && Number.isInteger(parseInt(this.id))) {
+//                 this.mode = 'view'
+//                 this.task = (await this.getTask(parseInt(this.id)))
+//             } else {
+//                 this.mode = 'create'
+//                 this.task = new this.$FeathersVuex.Task({ workspaceId: this.currentWorkspace.id })
+//             }
+//         }
+//     })
+//     .computed({
+//         isView() {
+//             return this.mode == 'view'
+//         },
+//         isCreate() {
+//             return this.mode == 'create'
+//         },
+//         isEdit() {
+//             return this.isView ? this.edited : false
+//         }
+//     })
+
+//     .created(vue => {
+//         vue.fetchData()
+//     })
+//     .watch('id', function() {
+//         this.fetchData()
+//         this.afterEnter()
+//     })
+
+//     .vue()
 </script>

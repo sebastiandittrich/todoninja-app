@@ -13,8 +13,7 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page';
-
-export default new Page()
-  .vue();
+export default {
+  
+}
 </script>

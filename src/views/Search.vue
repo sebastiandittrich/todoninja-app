@@ -39,31 +39,41 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
 import Fuse from 'fuse.js'
 import _ from 'lodash'
+import store from '@/mixins/store'
 
-export default new Page()
-    .with('inputt', 'tasks/List', 'tasks/Placeholder')
-    .data(() => ({
+import Inputt from '@c/inputt'
+import TasksList from '@c/tasks/List'
+import TasksPlaceholder from '@c/tasks/Placeholder'
+
+export default {
+    mixins: [ 
+        store({
+            getters: {
+                _tasks: 'tasks/list',
+                workspace: 'workspaces/getWithStandard',
+                currentWorkspace: 'workspaces/current',
+            },
+            actions: {
+                find: 'tasks/find',
+            }
+        })
+    ],
+    components: {
+        Inputt, TasksList, TasksPlaceholder,
+    },
+    data: () => ({
         fuse: null,
         fetched: []
-    }))
-    .props({
+    }),
+    props: {
         query: {
             type: String,
             default: ''
         }
-    })
-    .getters({
-        _tasks: 'tasks/list',
-        workspace: 'workspaces/getWithStandard',
-        currentWorkspace: 'workspaces/current',
-    })
-    .actions({
-        find: 'tasks/find',
-    })
-    .methods({
+    },
+    methods: {
         focus() {
             if(this.$refs.searchinputt) {
                 this.$refs.searchinputt.focus()
@@ -78,7 +88,6 @@ export default new Page()
             this.$router.replace('/search/' + encodeURIComponent(query))
         },
         async fetchFromServer() {
-            console.log()
             if(!this.query || this.query.trim().length < 1) {
                 return this.fetched = []
             }
@@ -87,10 +96,9 @@ export default new Page()
 
             this.fetched = (await this.find({ query: { title: { $like: likequery } }, pagination: false })).data
         }
-    })
-    .computed({
+    },
+    computed: {
         tasks() {
-            console.log(this.fetched)
             if(!this.fuse) {
                 return _.uniqBy([...this._tasks, ...this.fetched], 'id')
             }
@@ -106,16 +114,14 @@ export default new Page()
             const groupnames = Object.keys(this.grouped).map(id => id === 'null' ? null : Number(id))
             return _.orderBy(groupnames, [ id => id === this.currentWorkspace.id ? 0 : 1 ])
         }
-    })
-    .created(vue => {
-        vue.initFuse()
-        vue.focus()
-        vue.fetchFromServer()
-    })
-    .watch('query', 'fetchFromServer')
-    .vue()
+    },
+    created() {
+        this.initFuse()
+        this.focus()
+        this.fetchFromServer()
+    },
+    watch: {
+        query: 'fetchFromServer',
+    }
+}
 </script>
-
-<style>
-
-</style>

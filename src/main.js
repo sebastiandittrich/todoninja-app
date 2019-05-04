@@ -8,8 +8,10 @@ import Page from './assets/js/Page';
 import VueTouch from 'vue-touch'
 import * as Sentry from '@sentry/browser'
 import Overdrive from 'vue-overdrive'
+import log from '@/mixins/log'
 import 'jquery'
 import 'jquery-mousewheel'
+import { mapActions } from 'vuex';
 
 if(window.location.href.includes('ref=makerads')) {
   window.location.href = 'https://todoninja.de/?ref=makerads'
@@ -24,19 +26,19 @@ if(process.env.NODE_ENV == 'production') {
   })
 }
 
-window.Vue = Vue
-
 Vue.use(VueTouch)
 Vue.use(Overdrive)
 
 Vue.config.productionTip = false;
 
-window.initAuth = initAuth;
-window.store = store;
-window.Page = Page
-
 window.vue = new Vue({
   router,
   store,
+  mixins: [ log ],
   render: h => h(App),
 }).$mount('#app');
+
+window.Vue = Vue
+window.initAuth = initAuth;
+window.store = store;
+window.Page = Page

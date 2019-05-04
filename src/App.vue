@@ -16,15 +16,18 @@ import '@/assets/css/micon.min.css'
 import '@/assets/css/main.css';
 import '@/assets/css/iconfont.css';
 import '@/assets/css/transitions.css'
-import Page from '@/assets/js/Page'
 import * as Sentry from '@sentry/browser'
 
-const test = new Page()
-  .with('Splashscreen', 'events/List', 'navigation/Bar')
-  .data(() =>({
+import Splashscreen from '@c/Splashscreen'
+import EventsList from '@c/events/List'
+import NavigationBar from '@c/navigation/Bar'
+
+export default {
+  components: { Splashscreen, EventsList, NavigationBar },
+  data: () => ({
     splashscreenVisible: true,
-  }))
-  .methods({
+  }),
+  methods: {
     async fetchWorkspaceSpecific() {
       await this.$store.dispatch('tasks/findAll', { doneAt: null, workspaceId: this.$store.getters['workspaces/current'].id })
     },
@@ -74,23 +77,23 @@ const test = new Page()
         event.preventDefault();
       });
     }
-  })
-  .computed({
+  },
+  computed: {
     showAddButton() {
       return this.$route.meta.showAddButton == true
     },
     showNavBar() {
       return !this.$route.meta.hideNavBar && this.$store.getters['modals/open'] <= 0
     }
-  })
-  .created(vue => {
-    vue.boot()
-  })
-  .watch('$store.state.auth.user.id', function() {
-    this.boot({ soft: true })
-  })
-  .watch('$store.state.workspaces.currentId', 'fetchWorkspaceSpecific')
-  .vue()
-
-export default test
+  },
+  created() {
+    this.boot()
+  },
+  watch: {
+    '$store.state.auth.user.id': function() {
+      this.boot({ soft: true })
+    },
+    '$store.state.workspaces.currentId': 'fetchWorkspaceSpecific'
+  }
+}
 </script>

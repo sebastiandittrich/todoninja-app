@@ -95,38 +95,47 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
-import hasModals from '@/assets/js/traits/hasModals'
+import hasModals from '@/mixins/hasModals'
+import store from '@/mixins/store'
 
-export default new Page()
-    .with('tags/Picker', 'settings/Card', 'push/Toggle')
-    .use( hasModals({ 'workspaces-picker': 'workspaces/Picker' }) )
-    .state({
-        user: state => state.auth.user,
-    })
-    .actions({
-        logout: 'auth/logout',
-    })
-    .getters({
-        workspaces: 'workspaces/list',
-        tags: 'tags/list',
-    })
-    .data(() => ({
+import TagsPicker from '@c/tags/Picker'
+import SettingsCard from '@c/settings/Card'
+import PushToggle from '@c/push/Toggle'
+import WorkspacesPicker from '@c/workspaces/Picker'
+
+export default {
+    components: { TagsPicker, SettingsCard, PushToggle },
+    mixins: [
+        hasModals({ WorkspacesPicker }),
+        store({
+            state: {
+                user: state => state.auth.user,
+            },
+            actions: {
+                logout: 'auth/logout',
+            },
+            getters: {
+                workspaces: 'workspaces/list',
+                tags: 'tags/list',
+            },
+        })
+    ],
+    data: () => ({
         tags_remove: false,
-    }))
-    .computed({
+    }),
+    computed: {
         version() {
             return JSON.parse(unescape(process.env.PACKAGE_JSON || '%7Bversion%3A0%7D')).version
         },
-    })
-    .methods({
+    },
+    methods: {
         async logoutClick() {
             await this.logout()
             localStorage.clear()
             window.location.reload()
         },
-    })
-    .vue()
+    }
+}
 </script>
 
 <style>

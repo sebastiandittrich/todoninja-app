@@ -39,21 +39,25 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page';
-import form from '@/assets/js/traits/form';
+import form from '@/mixins/form'
+import store from '@/mixins/store'
 
-export default new Page('Register')
-  .use(form)
-  .actions({
-    create: 'users/create',
-    authenticate: 'auth/authenticate',
-  })
-  .data(() => ({
+export default {
+  mixins: [ 
+    form,  
+    store({
+      actions: {
+        create: 'users/create',
+        authenticate: 'auth/authenticate',
+      }
+    })
+  ],
+  data: () => ({
     name: '',
     email: '',
     password: '',
-  }))
-  .methods({
+  }),
+  methods: {
     submitForm() {
       this.load(async () => {
         await this.create({ email: this.email, password: this.password, name: this.name });
@@ -63,6 +67,6 @@ export default new Page('Register')
         .then(() => this.$router.push('/'))
         .catch(this.showError);
     },
-  })
-  .vue();
+  }
+}
 </script>

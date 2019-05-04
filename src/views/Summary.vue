@@ -32,19 +32,19 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
 import State from '@/assets/js/State'
-import InfiniteLoading from 'vue-infinite-loading';
 import _ from 'lodash'
 
-InfiniteLoading.name = "infinite-loading"
+import SummaryWeekList from '@c/summary/week/List'
+import ProgressCircle from '@c/progress/Circle'
+import InfiniteLoading from 'vue-infinite-loading'
 
-export default new Page()
-    .with('summary/week/List', 'progress/Circle', InfiniteLoading)
-    .data(() => ({
+export default {
+    components: { SummaryWeekList, ProgressCircle, InfiniteLoading },
+    data: () => ({
         weeks: [],
         nextweek: 0,
-    }))
+    })
     .computed({
         years() {
             const grouped = _.groupBy(this.weeks.slice(1), week => week.to.year())
@@ -87,5 +87,5 @@ export default new Page()
     .mounted(vue => {
         vue.fetchData()
     })
-    .vue()
+}
 </script>
