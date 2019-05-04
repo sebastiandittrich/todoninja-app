@@ -11,31 +11,34 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
+import store from '@/mixins/store'
 
 const steps = [ 'welcome', 'inboxintro', 'workspacesintro', 'states', 'do', 'postponed', 'calendar', 'waiting', 'ready' ]
+const components = steps.reduce((components, step) => ({ ...components, [step]: () => import(`@c/tutorial/${step}`) }), {})
 
-const components = steps.map(step => `${step}:tutorial/${step}`)
-
-export default new Page()
-    .with(...components)
-    .data(() => ({
+export default {
+    components: { ...components },
+    mixins: [
+        store({
+            mutations: {
+                _next: 'tutorial/next',
+                _previous: 'tutorial/previous',
+                _done: 'tutorial/skip',
+            },
+            getters: {
+                step: 'tutorial/step'
+            },
+        })
+    ],
+    data: () => ({
         steps,
-    }))
-    .mutations({
-        _next: 'tutorial/next',
-        _previous: 'tutorial/previous',
-        _done: 'tutorial/skip',
-    })
-    .getters({
-        step: 'tutorial/step'
-    })
-    .computed({
+    }),
+    computed: {
         currentStep() {
             return this.steps[this.step]
         }
-    })
-    .methods({
+    },
+    methods: {
         next() {
             if(this.step + 1 < this.steps.length) {
                 this._next()
@@ -52,8 +55,8 @@ export default new Page()
             this._done()
             this.$router.replace('/')
         }
-    })
-    .vue()
+    }
+}
 </script>
 
 <style>

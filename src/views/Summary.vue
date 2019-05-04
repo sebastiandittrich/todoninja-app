@@ -44,14 +44,14 @@ export default {
     data: () => ({
         weeks: [],
         nextweek: 0,
-    })
-    .computed({
+    }),
+    computed: {
         years() {
             const grouped = _.groupBy(this.weeks.slice(1), week => week.to.year())
             return _.orderBy(Object.keys(grouped).map(year => ({ year, weeks: grouped[year] })), 'year', 'desc')
         }
-    })
-    .methods({
+    },
+    methods: {
         async fetchWeek(week) {
             const from = moment().weekday( -(week * 7) )
             const to = moment().weekday( -(week * 7) + 7 )
@@ -83,9 +83,9 @@ export default {
         moment(...args) {
             return moment(...args)
         }
-    })
-    .mounted(vue => {
-        vue.fetchData()
-    })
+    },
+    mounted() {
+        this.fetchData()
+    }
 }
 </script>
