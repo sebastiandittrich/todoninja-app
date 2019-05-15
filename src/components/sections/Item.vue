@@ -1,6 +1,6 @@
 <template>
-    <span @click="click" :class="{'text-blue font-bold': isActive, 'text-grey-darkest border-transparent': !isActive}" class="transition px-4 py-2 flex flex-row items-center cursor-pointer select-none">
-        <div :class="{ 'opacity-0': !isActive }" :style="{ transform: !isActive ? 'translateX(25%)' : '' }" class="text-blue transition mr-2">
+    <span @click="click" :class="{'text-blue dark:text-blue-light font-bold': isActive, 'text-grey-darkest dark:text-grey border-transparent': !isActive}" class="transition px-4 py-2 flex flex-row items-center cursor-pointer select-none">
+        <div :class="{ 'opacity-0': !isActive }" :style="{ transform: !isActive ? 'translateX(25%)' : '' }" class="transition mr-2">
             <slot name="icon"></slot>
         </div>
         <slot></slot>

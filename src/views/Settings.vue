@@ -69,6 +69,10 @@
                 </div>
             </settings-card>
 
+            <settings-card title="Design" class="mt-8">
+                <switchbox :value="dark" @click="setDark(!dark)"></switchbox>
+            </settings-card>
+
             <settings-card title="Notifications" class="mt-8">
                 <push-toggle></push-toggle>
             </settings-card>
@@ -99,7 +103,7 @@ import Page from '@/assets/js/Page'
 import hasModals from '@/assets/js/traits/hasModals'
 
 export default new Page()
-    .with('tags/Picker', 'settings/Card', 'push/Toggle')
+    .with('tags/Picker', 'settings/Card', 'push/Toggle', 'SwitchBox')
     .use( hasModals({ 'workspaces-picker': 'workspaces/Picker' }) )
     .state({
         user: state => state.auth.user,
@@ -107,9 +111,13 @@ export default new Page()
     .actions({
         logout: 'auth/logout',
     })
+    .mutations({
+        setDark: 'darkmode/setDark'
+    })
     .getters({
         workspaces: 'workspaces/list',
         tags: 'tags/list',
+        dark: 'darkmode/isOn'
     })
     .data(() => ({
         tags_remove: false,

@@ -14,6 +14,10 @@
         @apply text-blue;
     }
 
+    #app.dark .router-link.router-link-active {
+         @apply text-blue-light
+    }
+
     .router-link-active .indicator {
         transform: translateY(50%)
     }

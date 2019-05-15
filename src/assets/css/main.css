@@ -44,6 +44,10 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
+#app.dark {
+    @apply bg-black
+}
+
 * {
     -webkit-tap-highlight-color: transparent;
 }
@@ -79,9 +83,15 @@ button:focus {
 .button {
     @apply cursor-pointer select-none text-blue font-bold self-center mt-8 bg-blue-lightest px-8 py-4 rounded-lg inline-block transition;
 }
+#app.dark .button {
+    @apply bg-blue-darkest text-blue-light
+}
 .button-secondary {
     @apply button;
     @apply bg-transparent font-normal border border-grey-darker text-grey-darker;
+}
+#app.dark .button-secondary {
+    @apply border-grey-light text-grey-light;
 }
 .button-secondary:hover {
     @apply button-hover bg-grey-darker text-white;

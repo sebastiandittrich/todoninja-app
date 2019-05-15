@@ -3,11 +3,11 @@
         <div class="flex flex-row items-center justify-start">
             <done-indicator @change="save" :task="task" class="text-xl mr-4"></done-indicator>
             <div>
-                <div class="font-bold text-xl transition" :class="task.isDone() ? 'text-grey-darker' : ''">
+                <div class="dark:text-white font-bold text-xl transition" :class="task.isDone() ? 'text-grey-darker' : ''">
                     {{ task.title }}
                 </div>
                 <transition name="expand">
-                    <div class="text-sm font-light text-grey-darker flex flex-row items-center flex-no-wrap info overflow-hidden" v-if="!task.isDone()">
+                    <div class="text-sm font-light text-grey-darker dark:text-grey flex flex-row items-center flex-no-wrap info overflow-hidden" v-if="!task.isDone()">
                         <div>
                             {{ States.states.filter(state => state.state == task.state)[0].name }}
                         </div>

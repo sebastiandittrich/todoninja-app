@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="bg-white absolute inset-0 lg:-z-20">
+  <div id="app" :class="dark ? 'dark' : ''" class="bg-white dark:bg-black absolute inset-0 lg:-z-20">
     <router-view v-if="!splashscreenVisible" class="h-full lg:-z-20"/>
     <transition name="splashscreen" appear>
       <splashscreen v-if="splashscreenVisible" class="absolute inset-0"></splashscreen>
@@ -24,6 +24,7 @@ const test = new Page()
   .data(() =>({
     splashscreenVisible: true,
   }))
+  .getters({ dark: 'darkmode/isOn' })
   .methods({
     async fetchWorkspaceSpecific() {
       await this.$store.dispatch('tasks/findAll', { doneAt: null, workspaceId: this.$store.getters['workspaces/current'].id })

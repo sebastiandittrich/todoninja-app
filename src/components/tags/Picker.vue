@@ -2,14 +2,14 @@
     <div>
         <transition-group tag="div" name="list" class="flex flex-row items-center justify-start flex-wrap -mt-2">
             <div v-for="tag of tags" @click="tagClick(tag.id)" :key="tag.id">
-                <transition-group name="list" tag="div" :class="remove ? 'bg-red border-none text-white' : (isActive(tag) ? 'bg-blue-lightest font-bold text-blue border-none' : 'text-grey')" class="whitespace-no-wrap rounded-full border py-1 px-4 mr-2 mt-2 cursor-pointer select-none flex flex-row items-center transition">
+                <transition-group name="list" tag="div" :class="remove ? 'bg-red border-none text-white' : (isActive(tag) ? 'bg-blue-lightest dark:bg-blue-light dark:text-blue-darker font-bold text-blue border-none' : 'text-grey dark:border-grey-darker dark:text-grey-darker')" class="whitespace-no-wrap rounded-full border py-1 px-4 mr-2 mt-2 cursor-pointer select-none flex flex-row items-center transition">
                     <i v-if='remove' key="delete" class="feather icon-trash text-red-lighter"></i>
                     <i v-else-if="!isActive(tag)" key="add" class="feather icon-plus -ml-2 mr-2"></i>
                     <div key="name">{{ tag.name }}</div>
                     <i v-if="isActive(tag)" key="add" class="feather icon-x -mr-2 ml-2"></i>
                 </transition-group>
             </div>
-            <div v-if="!remove && !hideAddTag" key="add" class="text-blue cursor-pointer select-none flex flex-row items-center ml-2 mt-2 pr-6 flex-no-wrap whitespace-no-wrap" @click="showModal('tags-creator', $event)">
+            <div v-if="!remove && !hideAddTag" key="add" class="text-blue dark:text-blue-light cursor-pointer select-none flex flex-row items-center ml-2 mt-2 pr-6 flex-no-wrap whitespace-no-wrap" @click="showModal('tags-creator', $event)">
                 <i class="feather icon-plus mr-2"></i>
                 Add tag
             </div>

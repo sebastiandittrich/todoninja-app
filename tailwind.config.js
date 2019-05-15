@@ -2,7 +2,12 @@ const { colors } = require('tailwindcss/defaultTheme')
 
 module.exports = {
     variants: {
-        backgroundColor: [ "responsive", "hover", "focus", "active" ],
+        backgroundColor: [ "responsive", "hover", "focus", "active", "dark" ],
+        borderColor: ['responsive', 'hover', 'focus', 'dark'],
+        borderStyle: ['responsive', 'dark'],
+        textColor: ['responsive', 'hover', 'focus', 'dark'],
+        boxShadow: ['responsive', 'hover', 'focus', 'dark'],
+        opacity: ['responsive', 'dark'],
         container: [ "responsive" ],
         height: [ "responsive", "group-hover" ],
         margin: [ "responsive", "focus" ],
@@ -44,6 +49,7 @@ module.exports = {
         colors: {
             transparent: 'transparent',
 
+            'black-deep': '#000000',
             black: '#22292f',
             'grey-darkest': '#3d4852',
             'grey-darker': '#606f7b',
@@ -127,7 +133,16 @@ module.exports = {
             'pink-lighter': '#ffbbca',
             'pink-lightest': '#ffebef',
         },
-    }
+    },
+    plugins: [
+        function({ addVariant, e }) {
+            addVariant('dark', ({ modifySelectors, separator }) => {
+                modifySelectors(({ className }) => {
+                    return `#app.dark .${e(`dark${separator}${className}`)}`
+                })
+            })
+        }
+    ]
 }
 
 //  "experiments": {
