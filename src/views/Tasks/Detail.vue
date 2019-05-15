@@ -9,7 +9,7 @@
             </div>
 
             <!-- Header Part -->
-            <div class="p-6 relative" :class="task.workspace.isInbox() ? 'inbox-pattern border-b' : 'bg-blue-lightest'">
+            <div class="p-6 relative" :class="task.workspace.isInbox() ? 'inbox-pattern border-b border-grey-light' : 'bg-blue-lightest'">
                 <div class="flex flex-row items-center justify-between mb-6 text-2xl">
                     <!-- Back button -->
                     <i @click="$router.go(-1)" class="feather icon-chevron-left lg:hidden cursor-pointer select-none"></i>
@@ -24,15 +24,15 @@
                     <!-- Options Button -->
                     <i :class="{'opacity-0': isCreate}" @click="!isCreate ? showModal('tasks-options', $event) : null" class="feather icon-more-vertical cursor-pointer select-none"></i>
                 </div>
-                <div class="flex flex-row items-center">
+                <div class="flex flex-row items-center justify-center">
                     <!-- State -->
-                    <done-indicator @change="save()" :task="task" class="text-2xl mr-6"></done-indicator>
+                    <done-indicator @change="save()" :task="task" class="text-2xl mr-6 float-left"></done-indicator>
 
                     <!-- Title -->
-                    <inputt @press-enter="save({ explicit: true })" ref="inputt" @input="setEdited" iclass="font-bold text-2xl border-none" v-model="task.title" placeholder="My new task" type="text" class="w-full"></inputt>
+                    <inputt @press-enter="save({ explicit: true })" ref="inputt" @input="setEdited" iclass="font-bold text-2xl border-none w-full" v-model="task.title" placeholder="My new task" type="text"></inputt>
 
                     <!-- Today -->
-                    <today-indicator @change="save()" :task="task" class="text-2xl ml-6" darker></today-indicator>
+                    <today-indicator @change="save()" :task="task" class="text-2xl ml-6 float-right" darker></today-indicator>
                 </div>
             </div>
 

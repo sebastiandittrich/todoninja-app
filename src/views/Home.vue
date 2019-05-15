@@ -108,7 +108,7 @@
       <!-- Mobile Page ------------------------------------------------------------------------------- -->
       <v-touch @swipe="listSwipe" :swipe-options="{direction: 'horizontal'}" class="lg:hidden min-h-full">
 
-        <greeting :class="{ 'border': workspace.isInbox() }" class="rounded-lg m-2 mx-4 overflow-hidden shadow"></greeting>
+        <greeting :class="{ 'border border-grey-light': workspace.isInbox() }" class="rounded-lg m-2 mx-4 overflow-hidden shadow"></greeting>
 
         <sections-bar class="m-6 mb-10"></sections-bar>
 

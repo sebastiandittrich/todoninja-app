@@ -39,7 +39,8 @@
 
 <script>
 import _ from 'lodash'
-import { colors } from '@/../tailwind.js'
+import { theme } from '@/../tailwind.config.js'
+const colors = theme.colors
 
 const shades = [
         [ ],
