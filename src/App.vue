@@ -1,12 +1,12 @@
 <template>
-  <div id="app" class="pb-32 bg-white absolute inset-0 lg:-z-20">
-    <router-view v-if="!splashscreenVisible" class="absolute inset-0 lg:-z-20"/>
-    <transition name="splashscreen"  appear>
+  <div id="app" class="bg-white absolute inset-0 lg:-z-20">
+    <router-view v-if="!splashscreenVisible" class="h-full lg:-z-20"/>
+    <transition name="splashscreen" appear>
       <splashscreen v-if="splashscreenVisible" class="absolute inset-0"></splashscreen>
     </transition>
     <events-list class="fixed top-0 inset-x-0 m-4 z-10"></events-list>
     <transition name="opacity-slide-up">
-      <navigation-bar v-if="showNavBar" :showAddButton="showAddButton" class="lg:hidden z-10"></navigation-bar>
+      <navigation-bar v-if="showNavBar && !splashscreenVisible" :showAddButton="showAddButton" class="lg:hidden z-10"></navigation-bar>
     </transition>
   </div>
 </template>
@@ -46,7 +46,7 @@ const test = new Page()
     },
     async boot({ soft } = {}) {
       if(!soft) {
-        this.bootUI()
+        await this.bootUI()
       }
       try {
         if(!soft) {
@@ -56,6 +56,10 @@ const test = new Page()
         this.splashscreenVisible = false
       } catch(error) {
         this.splashscreenVisible = false
+      }
+      // Check for tutorial
+      if(this.$store.state.auth.accessToken && this.$store.getters['tutorial/done'] == false) {
+        this.$router.replace('/tutorial')
       }
       await this.$store.dispatch('push/initialize')
 
