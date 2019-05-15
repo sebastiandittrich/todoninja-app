@@ -3,20 +3,20 @@
         <div class="bg-white">
 
             <!-- Save Button -->
-            <div v-show="isCreate || isEdit" @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide fixed pin-b pin-r m-8 cursor-pointer select-none">
+            <div v-show="isCreate || isEdit" @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide fixed bottom-0 right-0 m-8 cursor-pointer select-none">
                 <i class="feather icon-check text-2xl mr-2"></i>
                 Save
             </div>
 
             <!-- Header Part -->
             <div class="bg-blue-lightest p-6 relative">
-                <!-- <div class="bg-blue-lightest absolute pin hidden md:block -z-10" style="transform: scaleX(2) translateX(-50%)"></div> -->
+                <!-- <div class="bg-blue-lightest absolute inset-0 hidden md:block -z-10" style="transform: scaleX(2) translateX(-50%)"></div> -->
                 <div class="flex flex-row items-center justify-between mb-6 text-2xl">
                     <!-- Back button -->
                     <i @click="$router.go(-1)" class="feather icon-chevron-left lg:hidden cursor-pointer select-none"></i>
                     <i @click="$router.replace('/tasks')" class="feather icon-x hidden lg:block cursor-pointer select-none"></i>
 
-                    <div :class="`text-${task.workspace.getColor()}-darker`"  class="flex flex-row items-center text-sm cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
+                    <div :class="`text-${task.workspace.getColor()}-darker`" class="flex flex-row items-center text-sm cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
                         <div :class="`h-3 w-3 mr-2 rounded-lg bg-${task.workspace.getColor()}`"></div>
                         <span class="font-bold">{{ task.workspace.name }}</span>
                         <i class="feather icon-chevron-down ml-2 text-base"></i>

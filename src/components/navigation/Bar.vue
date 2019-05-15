@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed pin-b pin-x flex flex-col items-stretch">
+    <div class="fixed bottom-0 inset-x-0 flex flex-col items-stretch">
         <transition name="opacity-slide-up">
             <navigation-item v-if="showAddButton" link="/tasks/create" class="self-end m-8 z-10">
                 <i class="feather icon-plus text-2xl text-blue p-3 rounded-full bg-white shadow-lg"></i>

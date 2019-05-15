@@ -15,7 +15,9 @@
 <script>
 import Page from '@/assets/js/Page';
 import hasModals from '@/assets/js/traits/hasModals'
-import { colors } from '@/../tailwind.js'
+import { theme } from '@/../tailwind.config.js'
+
+const colors = theme.colors
 
 export default new Page('Greeting')
   .use( hasModals({ 'workspaces-picker': 'workspaces/Picker' }) )

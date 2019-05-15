@@ -1,7 +1,7 @@
 <template>
     <div>
-        <greeting class="absolute pin"></greeting>
-        <div class="absolute pin flex flex-row items-end justify-center">
+        <greeting class="absolute inset-0"></greeting>
+        <div class="absolute inset-0 flex flex-row items-end justify-center">
             <Loader color="#ffffff" class="mb-16"></Loader>
         </div>
     </div>

@@ -30,6 +30,7 @@
     "socket.io-client": "^2.1.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "tailwindcss": "^1.0.1",
     "vue": "^2.5.17",
     "vue-datetime": "^1.0.0-beta.10",
     "vue-flatpickr-component": "^8.0.0",
@@ -49,7 +50,6 @@
     "@vue/cli-plugin-pwa": "^3.0.1",
     "@vue/cli-service": "^3.5.3",
     "@vue/eslint-config-airbnb": "^3.0.1",
-    "tailwindcss": "^0.6.5",
     "vue-template-compiler": "^2.5.17",
     "webpack-cli": "^3.3.0"
   },
@@ -71,7 +71,7 @@
     "plugins": {
       "postcss-import": {},
       "autoprefixer": {},
-      "tailwindcss": "tailwind.js"
+      "tailwindcss": "tailwind.config.js"
     }
   },
   "browserslist": [
