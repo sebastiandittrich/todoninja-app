@@ -16,17 +16,17 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
-
-export default new Page()
-    .props({
+export default {
+    props: {
         image: String,
-    })
-    .data(() => ({
+    },
+    data: () => ({
         tasksCount: null
-    }))
-    .created(async vue => vue.tasksCount = (await vue.$store.dispatch('tasks/find', { query: { $limit: 0,workspaceId: vue.$store.getters['workspaces/current'].id } })).total)
-    .vue()
+    }),
+    async created() {
+        this.tasksCount = (await vue.$store.dispatch('tasks/find', { query: { $limit: 0, workspaceId: this.$store.getters['workspaces/current'].id } })).total
+    }
+}
 </script>
 
 <style>

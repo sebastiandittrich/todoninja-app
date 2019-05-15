@@ -21,18 +21,22 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
-import hasModals from '@/assets/js/traits/hasModals'
+import hasModals from '@/mixins/hasModals'
 import OrderBy from '@/assets/js/OrderBy'
 
-export default new Page()
-  .use( hasModals({ 'filter-modal': 'filter/Modal', 'order-modal': 'order/Modal' }) )
-  .props({
-      filters: Array,
-      orderBy: Object,
-  })
-  .data(() => ({
-      detailedOrderBy: OrderBy
-  }))
-  .vue();
+import FilterModal from '@c/filter/Modal'
+import OrderModal from '@c/order/Modal'
+
+export default {
+    mixins: [
+        hasModals({ FilterModal, OrderModal })
+    ],
+    props: {
+        filters: Array,
+        orderBy: Object,
+    },
+    data: () => ({
+        detailedOrderBy: OrderBy
+    })
+}
 </script>

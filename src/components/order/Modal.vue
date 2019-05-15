@@ -15,14 +15,17 @@
 </template>
 
 <script>
-import Modal from '@/assets/js/Modal'
+import isModal from '@/mixins/isModal'
 
-export default new Modal()
-    .with('order/Picker')
-    .props({
+import OrderPicker from '@c/order/Picker'
+
+export default {
+    components: { OrderPicker },
+    mixins: [ isModal ],
+    props: {
         orderBy: Object
-    })
-    .vue()
+    }
+}
 </script>
 
 <style>

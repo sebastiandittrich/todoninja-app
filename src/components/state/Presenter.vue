@@ -55,22 +55,25 @@
 
 
 <script>
-import Page from '@/assets/js/Page'
-import hasModals from '@/assets/js/traits/hasModals'
+import hasModals from '@/mixins/hasModals'
 import State from '@/assets/js/State'
 
-export default new Page()
-    .props({
+import StatePicker from '@c/state/Picker'
+import Personpicker from '@c/personpicker'
+import Datepicker from '@c/datepicker'
+
+export default {
+    mixins: [ hasModals({ StatePicker, Personpicker, Datepicker }) ],
+    props: {
         value: Object
-    })
-    .data(() => ({
+    },
+    data: () => ({
         states: State.states,
-    }))
-    .computed({
+    }),
+    computed: {
         activeState() {
             return this.states.filter(state => this.value.state == state.state)[0]
         },
-    })
-    .use( hasModals({ 'state-picker': 'state/Picker', 'personpicker': 'personpicker', 'datepicker': 'datepicker' }) )
-    .vue()
+    }
+}
 </script>

@@ -6,15 +6,12 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
-
-export default new Page()
-    .props({
+export default {
+    props: {
         title: {
             type: String,
             default: ''
         }
-    })
-    .vue()
-
+    }
+}
 </script>

@@ -26,17 +26,17 @@
 </style>
 
 <script>
-import Page from '@/assets/js/Page'
-import hasModals from '@/assets/js/traits/hasModals'
 import _ from 'lodash'
 
-export default new Page('NavigationBar')
-    .with('navigation/Item')
-    .props({
+import NavigationItem from '@c/navigation/Item'
+
+export default {
+    components: { NavigationItem },
+    props: {
         showAddButton: {
             type: Boolean,
             default: true
         }
-    })
-    .vue()
+    }
+}
 </script>

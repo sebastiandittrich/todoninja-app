@@ -24,26 +24,37 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
-import hasModals from '@/assets/js/traits/hasModals'
+import hasModals from '@/mixins/hasModals'
+import store from '@/mixins/store'
 import _ from 'lodash'
 
-export default new Page('TagsPicker')
-    .props({
+import TagsCreator from '@c/tags/Creator'
+import Confirmator from '@c/confirmator'
+
+export default {
+    mixins: [
+        hasModals({ TagsCreator, Confirmator }),
+        store({
+            getters: {
+                tags_list: 'tags/list',
+                getTag: 'tags/get'
+            },
+        })
+    ],
+    props: {
         value: Array,
         // Is remove mode
         remove: Boolean,
-        hideAddTag: { type: Boolean, default: false }
-    })
-    .use( hasModals({ 'tags-creator': 'tags/Creator', 'confirmator': 'confirmator' }) )
-    .getters({
-        tags_list: 'tags/list',
-        getTag: 'tags/get'
-    })
-    .data(() => ({
+        hideAddTag: { type: Boolean, default: false },
+        activeFirst: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data: () => ({
         show_tags_creator: false,
-    }))
-    .methods({
+    }),
+    methods: {
         isActive(tag) {
             return this.value.includes(tag.id)
         },
@@ -66,11 +77,11 @@ export default new Page('TagsPicker')
         tagCreated(tag) {
             this.tagClick(tag.id)
         }
-    })
-    .computed({
+    },
+    computed: {
         tags() {
-            return _.orderBy(this.tags_list, this.isActive, 'desc')
+            return this.activeFirst ? _.orderBy(this.tags_list, this.isActive, 'desc') : this.tags_list
         }
-    })
-    .vue()
+    }
+}
 </script>

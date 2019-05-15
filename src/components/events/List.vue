@@ -10,8 +10,9 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
-import loading from '@/assets/js/traits/loading'
+import loading from '@/mixins/loading'
+import store from '@/mixins/store'
+import sameWatcher from '@/mixins/sameWatcher'
 
 const services = ['tasks', 'workspaces', 'tags', 'users']
 const actions = [ 'Find', 'Create', 'Get', 'Patch', 'Remove', 'Update' ]
@@ -25,22 +26,30 @@ for(let service of services) {
     }
 }
 
-export default new Page()
-    .use( loading )
-    .getters({ events: 'events/list' })
-    .actions({ addError: 'events/error' })
-    .watch(errors, function(to, from) {
-        if(to) {
-            this.addError({
-                message: 'Something went wrong.',
-            })
-        }
-    })
-    .data(() => ({
+export default {
+    mixins: [
+        loading,
+        store({
+            getters: {
+                events: 'events/list'
+            },
+            actions: {
+                addError: 'events/error'
+            }
+        }),
+        sameWatcher(errors, function(to, from) {
+            if(to) {
+                this.addError({
+                    message: 'Something went wrong.',
+                })
+            }
+        })
+    ],
+    data: () => ({
         _timeout: null,
         isLoading: false
-    }))
-    .methods({
+    }),
+    methods: {
         actionPending(service, action) {
             return this.$store.state[service]['is' + action + 'Pending']
         },
@@ -56,8 +65,8 @@ export default new Page()
             await action.click()
             event.show = false
         }
-    })
-    .computed({
+    },
+    computed: {
         isPending() {
             for(let service of services) {
                 if(this.servicePending(service)) {
@@ -66,20 +75,22 @@ export default new Page()
             }
             return false
         },
-    })
-    .watch('isPending', function(newval) {
-        if(newval) {
-            this._timeout = setTimeout(() => {
-                if(this.isPending) {
-                    this.isLoading = true
-                }
-            }, 500)
-        } else {
-            clearTimeout(this._timeout)
-            this.isLoading = false
+    },
+    watch: {
+        isPending: function(newval) {
+            if(newval) {
+                this._timeout = setTimeout(() => {
+                    if(this.isPending) {
+                        this.isLoading = true
+                    }
+                }, 500)
+            } else {
+                clearTimeout(this._timeout)
+                this.isLoading = false
+            }
         }
-    })
-    .vue()
+    }
+}
 </script>
 
 <style>

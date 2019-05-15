@@ -8,13 +8,11 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
-
-export default new Page()
-    .props({
+export default {
+    props: {
         task: Object
-    })
-    .methods({
+    },
+    methods: {
         toggleState() {
             this.task.toggleState()
             this.$store.dispatch('events/success', { 
@@ -28,7 +26,6 @@ export default new Page()
             })
             this.$emit('change')
         }
-    })
-    .vue()
-
+    }
+}
 </script>

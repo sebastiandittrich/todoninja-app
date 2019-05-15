@@ -16,16 +16,19 @@
 </template>
 
 <script>
-import Modal from '@/assets/js/Modal'
+import isModal from '@/mixins/isModal'
 
-export default new Modal()
-    .with('inputt')
-    .data(() => ({
+import Inputt from '@c/inputt'
+
+export default {
+    mixins: [ isModal ],
+    components: { Inputt },
+    data: () => ({
         tag: {
             name: ''
         },
-    }))
-    .methods({
+    }),
+    methods: {
         async createClick() {
             const created = await this.$store.dispatch('tags/create', this.tag)
             this.tag.name = ''
@@ -36,6 +39,6 @@ export default new Modal()
         afterEnter() {
             this.$refs.inputt.focus()
         }
-    })
-    .vue()
+    }
+}
 </script>

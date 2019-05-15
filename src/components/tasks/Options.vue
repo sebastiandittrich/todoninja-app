@@ -24,21 +24,23 @@
 </template>
 
 <script>
-import Modal from '@/assets/js/Modal'
-import hasModals from '@/assets/js/traits/hasModals'
+import isModal from '@/mixins/isModal'
+import hasModals from '@/mixins/hasModals'
 
-export default new Modal()
-    .use( hasModals({ confirmator: 'confirmator' }) )
-    .props({
+import Confirmator from '@c/confirmator'
+
+export default {
+    mixins: [ isModal, hasModals({ Confirmator }) ],
+    props: {
         task: Object
-    })
-    .methods({
+    },
+    methods: {
         async remove() {
             await this.task.remove()
             this.$emit('delete')
             this.$emit('hide')
             this.$store.dispatch('events/success', { message: 'Task deleted', color: 'orange' })
         }
-    })
-    .vue()
+    }
+}
 </script>

@@ -15,14 +15,17 @@
 </template>
 
 <script>
-import Modal from '@/assets/js/Modal'
+import isModal from '@/mixins/isModal'
 
-export default new Modal()
-    .with('filter/Picker')
-    .props({
+import FilterPicker from '@c/filter/Picker'
+
+export default {
+    components: { FilterPicker },
+    mixins: [ isModal ],
+    props: {
         filters: Array
-    })
-    .vue()
+    },
+}
 </script>
 
 <style>

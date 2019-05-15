@@ -146,7 +146,7 @@ import TasksToday from '@c/tasks/Today'
 import TasksAll from '@c/tasks/All'
 
 export default {
-  components: { Greeting, SectionsBar, TasksList, NavigationBar, NavigationItem, NavigationSidebar, TasksDo, TasksToday, TasksToday },
+  components: { Greeting, SectionsBar, TasksList, NavigationBar, NavigationItem, NavigationSidebar, TasksDo, TasksToday, TasksAll },
   mixins: [ 
     store({ 
       getters: {
@@ -213,7 +213,7 @@ export default {
 
   watch: {
     '$route': function(to, from) {
-      if(from.query.view == 'do') {
+      if(from.query.view == 'do' || from.query.view == undefined) {
         this.transition = 'opacity-slide-left'
       } else if(from.query.view == 'all') {
         this.transition = 'opacity-slide-right'

@@ -25,19 +25,22 @@
 </template>
 
 <script>
-import Modal from '@/assets/js/Modal'
 import State from '@/assets/js/State'
-import hasModals from '@/assets/js/traits/hasModals'
+import isModal from '@/mixins/isModal'
+import hasModals from '@/mixins/hasModals'
 
-export default new Modal()
-    .use( hasModals({ 'datepicker': 'datepicker', 'personpicker': 'personpicker' }) )
-    .props({
+import Datepicker from '@c/datepicker'
+import Personpicker from '@c/personpicker'
+
+export default {
+    mixins: [ isModal, hasModals({ Datepicker, Personpicker }) ],
+    props: {
         value: Object
-    })
-    .data(() => ({
+    },
+    data: () => ({
         states: State.states
-    }))
-    .methods({
+    }),
+    methods: {
         async stateClick(state, $event) {
             // Just do if state has changed
             if(state.state != this.value.state) {
@@ -61,6 +64,6 @@ export default new Modal()
         isActive(state) {
             return this.value.state == state.state
         }
-    })
-    .vue()
+    },
+}
 </script>

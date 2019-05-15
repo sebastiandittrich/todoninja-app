@@ -41,16 +41,17 @@
 
 
 <script>
-import Page from '@/assets/js/Page'
-import hasModals from '@/assets/js/traits/hasModals'
-import requiresPush from '@/assets/js/traits/requires-push'
+import hasModals from '@/mixins/hasModals'
+import requiresPush from '@/mixins/requires-push'
 
-export default new Page()
-    .use( requiresPush )
-    .props({
+import Datepicker from '@c/datepicker'
+
+export default {
+    mixins: [ hasModals({ Datepicker }), requiresPush ],
+    props: {
         value: Object
-    })
-    .methods({
+    },
+    methods: {
         remove() {
             this.value.remindAt = null
             this.$emit('change')
@@ -59,7 +60,6 @@ export default new Page()
             await this.requirePush()
             this.showModal('datepicker', $event)
         }
-    })
-    .use( hasModals({ 'datepicker': 'datepicker' }) )
-    .vue()
+    },
+}
 </script>

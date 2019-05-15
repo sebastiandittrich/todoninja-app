@@ -11,17 +11,15 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
-
-export default new Page()
-    .props({
+export default {
+    props: {
         value: Boolean,
         disabled: {
             type: Boolean,
             default: false
         }
-    })
-    .vue()
+    }
+}
 </script>
 
 <style>

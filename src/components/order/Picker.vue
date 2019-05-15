@@ -8,18 +8,17 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
 import State from '@/assets/js/State'
 import OrderBy from '@/assets/js/OrderBy'
 
-export default new Page()
-    .props({
+export default {
+    props: {
         orderBy: Object
-    })
-    .data(() => ({
+    },
+    data: () => ({
         properties: OrderBy
-    }))
-    .methods({
+    }),
+    methods: {
         propertyClick(property) {
             const index = this.getIndex(property)
 
@@ -34,8 +33,8 @@ export default new Page()
         getIndex(property) {
             return this.orderBy.properties.indexOf(property.name)
         }
-    })
-    .vue()
+    },
+}
 </script>
 
 <style>

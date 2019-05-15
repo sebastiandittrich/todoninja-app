@@ -44,28 +44,23 @@
 </style>
 
 <script>
-import Page from '@/assets/js/Page'
 import States from '@/assets/js/State'
 
-export default new Page('TasksItem')
-    .with('done/Indicator', 'today/Indicator')
-    .props({
+import DoneIndicator from '@c/done/Indicator'
+import TodayIndicator from '@c/today/Indicator'
+
+export default {
+    components: { DoneIndicator, TodayIndicator },
+    props: {
         task: Object
-    })
-    .data(() => ({
+    },
+    data: () => ({
         States
-    }))
-    .methods({
+    }),
+    methods: {
         save() {
             this.task.save()
         },
-
-        // enter(el, done) {
-        //     $(el).slideDown(300, done)
-        // },
-        // leave(el, done) {
-        //     $(el).slideUp(300, done)
-        // }
-    })
-    .vue()
+    }
+}
 </script>

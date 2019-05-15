@@ -16,21 +16,27 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
-import loading from '@/assets/js/traits/loading'
+import loading from '@/mixins/loading'
+import store from '@/mixins/store'
 
-export default new Page()
-    .with('SwitchBox')
-    .use(loading)
-    .actions({
-        activatePush: 'push/activate',
-        deactivatePush: 'push/deactivate'
-    })
-    .state({
-        pushActivated: state => state.push.activated,
-        pushAvailable: state => state.push.available,
-    })
-    .methods({
+import Switchbox from '@c/SwitchBox'
+
+export default {
+    components: { Switchbox },
+    mixins: [
+        loading,
+        store({
+            actions: {
+                activatePush: 'push/activate',
+                deactivatePush: 'push/deactivate'
+            },
+            state: {
+                pushActivated: state => state.push.activated,
+                pushAvailable: state => state.push.available,
+            },
+        })
+    ],
+    methods: {
         async pushClick() {
             if(this.pushActivated) {
                 return await this.load(this.deactivatePush)
@@ -44,6 +50,6 @@ export default new Page()
                 }
             }
         }
-    })
-    .vue()
+    },
+}
 </script>

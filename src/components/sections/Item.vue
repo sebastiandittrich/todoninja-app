@@ -8,22 +8,19 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page';
-
-export default new Page('SectionsItem')
-  .props({
-      link: String,
-  })
-  .methods({
-      click() {
-          this.$router.replace({ ...this.$route, query: { ...this.$route.query, view: this.link }})
-      }
-  })
-  .computed({
-      isActive() {
-          return !['do', 'today', 'all'].includes(this.$route.query.view) ? this.link == 'do' : this.$route.query.view == this.link
-      }
-  })
-  .vue();
-
+export default {
+    props: {
+        link: String,
+    },
+    methods: {
+        click() {
+            this.$router.replace({ ...this.$route, query: { ...this.$route.query, view: this.link }})
+        }
+    },
+    computed: {
+        isActive() {
+            return !['do', 'today', 'all'].includes(this.$route.query.view) ? this.link == 'do' : this.$route.query.view == this.link
+        }
+    }
+}
 </script>

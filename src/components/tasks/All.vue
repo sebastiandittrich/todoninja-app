@@ -10,32 +10,42 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
+import store from '@/mixins/store'
 
-export default new Page()
-    .with('tasks/List', 'tasks/Placeholder')
-    .data(() => ({
+import TasksList from '@c/tasks/List'
+import TasksPlaceholder from '@c/tasks/Placeholder'
+
+export default {
+    components: { TasksList, TasksPlaceholder },
+    mixins: [
+        store({
+            getters: {
+                findTasks: 'tasks/currentFind'
+            },
+        })
+    ],
+    data: () => ({
         moreTasksAvailable: true
-    }))
-    .getters({
-        findTasks: 'tasks/currentFind'
-    })
-    .computed({
+    }),
+    computed: {
         tasks() {
             return this.findTasks().data
         }
-    })
-    .methods({
+    },
+    methods: {
         loadDoneClick() {
             this.$store.dispatch('tasks/findAll')
         },
         async updateTaskCount(length) {
             const res = this.$store.dispatch('tasks/find', { query: { $limit: 0, workspaceId: this.$store.getters['workspaces/current'].id } })
-            console.log(res)
             this.moreTasksAvailable = (await res).total - length
         }
-    })
-    .watch('tasks.length', 'updateTaskCount')
-    .created(vue => vue.updateTaskCount(vue.tasks.length))
-    .vue()    
+    },
+    watch: {
+        'tasks.length': 'updateTaskCount'
+    },
+    created() { 
+        this.updateTaskCount(this.tasks.length)
+    }
+}
 </script>

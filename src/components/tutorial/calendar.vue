@@ -15,7 +15,11 @@
 </template>
 
 <script>
-import Step from '@/components/tutorial/Step'
+import isStep from '@/mixins/isStep'
+
+export default {
+    mixins: [ isStep ]
+}
 
 export default new Step()
 

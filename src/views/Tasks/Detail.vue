@@ -53,7 +53,7 @@
                 </div>
 
                 <!-- Tags -->
-                <tags-picker @input="save()" v-model="task.tags"></tags-picker>
+                <tags-picker @input="save()" v-model="task.tags" activeFirst></tags-picker>
 
             </div>
 

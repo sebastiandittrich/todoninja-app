@@ -13,17 +13,15 @@
 </template> 
 
 <script>
-import Page from '@/assets/js/Page'
-
-export default new Page()
-    .props({
+export default {
+    props: {
         state: Object,
         positioned: {
             type: Boolean,
             default: false
         }
-    })
-    .computed({
+    },
+    computed: {
         isPositioned() {
             return !!this.positioned && (this.state.position.x != undefined && this.state.position.y != undefined)
         },
@@ -54,6 +52,6 @@ export default new Page()
                 'max-width': '95%'
             }
         }
-    })
-    .vue()
+    }
+}
 </script>

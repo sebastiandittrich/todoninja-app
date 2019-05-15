@@ -19,26 +19,32 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
 import State from '@/assets/js/State'
+import store from '@/mixins/store'
 
-export default new Page()
-    .with('tags/Picker')
-    .props({
+import TagsPicker from '@c/tags/Picker'
+
+export default {
+    components: { TagsPicker },
+    mixins: [
+        store({
+            getters: {
+                currentWorkspace: 'workspaces/current'
+            },
+        })
+    ],
+    props: {
         filters: {
             type: Array,
             default: () => []
         }
-    })
-    .getters({
-        currentWorkspace: 'workspaces/current'
-    })
-    .data(() => ({
+    },
+    data: () => ({
         tags: [],
         states: [],
         State,
-    }))
-    .methods({
+    }),
+    methods: {
         stateClick(state) {
             if(this.states.includes(state.state)) {
                 this.states.splice(this.states.indexOf(state.state), 1)
@@ -64,18 +70,20 @@ export default new Page()
             }
             return this.states.includes(task.state)
         },
-    })
-    .mounted(vue => {
-        vue.tagsFilter.written_name = 'tags'
-        vue.stateFilter.written_name = 'state'
-        vue.filters.push(vue.tagsFilter)
-        vue.filters.push(vue.stateFilter)
-    })
-    .watch('currentWorkspace.id', function() {
-        this.state = []
-        this.tags = []
-    })
-    .vue()
+    },
+    mounted() {
+        this.tagsFilter.written_name = 'tags'
+        this.stateFilter.written_name = 'state'
+        this.filters.push(this.tagsFilter)
+        this.filters.push(this.stateFilter)
+    },
+    watch: {
+        'currentWorkspace.id': function() {
+            this.state = []
+            this.tags = []
+        }
+    }
+}
 </script>
 
 <style>

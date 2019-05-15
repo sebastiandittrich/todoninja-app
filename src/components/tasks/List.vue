@@ -3,54 +3,53 @@
         <filter-bar v-if="filter" :filters="filters" :orderBy="orderBy"></filter-bar>
         <transition-group name="list" tag="div" class="mx-4">
             <tasks-item v-for="task in displayTasks" :task="task" :key="task.id"></tasks-item>
-            <div key="loader" class="flex flex-row items-center justify-center w-full">
-                <Loader color="#45547c" class="" :loading="$store.state.tasks.isFindPending"></Loader>
-            </div>
         </transition-group>
     </div>
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
-import loading from '@/assets/js/traits/loading'
+import loading from '@/mixins/loading'
+import store from '@/mixins/store'
 import _ from 'lodash'
 import OrderBy from '@/assets/js/OrderBy'
 
-export default new Page()
-  .with('tasks/Item', 'filter/Bar')
-  .use(loading)
-  .props({
-      tasks: {
-          type: Array,
-          default: undefined
-      },
-      filter: {
-          type: Boolean,
-          default: true,
-      }
-  })
-  .data(() => ({
-      filters: [],
-      orderBy: {
-          properties: [ OrderBy.filter(order => order.written_name == 'Open/Done')[0].name, OrderBy.filter(order => order.written_name == 'Newest')[0].name ],
-          directions: ['asc', 'desc']
-      }
-  }))
-  .getters({taskList: 'tasks/list'})
-  .computed({
-      displayTasks() {
-          let tasks = this.tasks !== undefined ? this.tasks : this.taskList
+import TasksItem from '@c/tasks/Item'
+import FilterBar from '@c/filter/Bar'
 
-          for(const filter of this.filters) {
-              if(filter.full) {
-                  tasks = filter.filter(tasks)
-              } else {
-                  tasks = tasks.filter(filter)
-              }
-          }
+export default {
+    components: { TasksItem, FilterBar },
+    mixins: [ loading, store({ getters: { taskList: 'tasks/list' } }) ],
+    props: {
+        tasks: {
+            type: Array,
+            default: undefined
+        },
+        filter: {
+            type: Boolean,
+            default: true,
+        }
+    },
+    data: () => ({
+        filters: [],
+        orderBy: {
+            properties: [ OrderBy.filter(order => order.written_name == 'Open/Done')[0].name, OrderBy.filter(order => order.written_name == 'Newest')[0].name ],
+            directions: ['asc', 'desc']
+        }
+    }),
+    computed: {
+        displayTasks() {
+            let tasks = this.tasks !== undefined ? this.tasks : this.taskList
 
-          return _.orderBy(tasks, this.orderBy.properties, this.orderBy.directions)
-      }
-  })
-  .vue();
+            for(const filter of this.filters) {
+                if(filter.full) {
+                    tasks = filter.filter(tasks)
+                } else {
+                    tasks = tasks.filter(filter)
+                }
+            }
+
+            return _.orderBy(tasks, this.orderBy.properties, this.orderBy.directions)
+        }
+    }
+}
 </script>

@@ -24,11 +24,9 @@
 
 
 <script>
-    import Page from '@/assets/js/Page'
-
-    export default new Page('NavigationItem')
-        .props({
-            link: String
-        })
-        .vue()
+export default {
+    props: {
+        link: String
+    }
+}
 </script>

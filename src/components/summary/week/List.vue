@@ -15,17 +15,17 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
+import ProgressCircle from "@c/progress/Circle";
 
-export default new Page()
-    .with('progress/Circle')
-    .props({
+export default {
+    components: { ProgressCircle },
+    props: {
         value: {
             type: Array,
             default: () => []
         }
-    })
-    .vue()
+    }
+}
 </script>
 
 <style>

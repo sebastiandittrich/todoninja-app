@@ -16,16 +16,19 @@
 </template>
 
 <script>
-import Modal from '@/assets/js/Modal'
+import isModal from '@/mixins/isModal'
 import colors from '@/assets/js/Colors'
 
-export default new Modal()
-    .with('push/Toggle')
-    .methods({
+import PushToggle from '@c/push/Toggle'
+
+export default {
+    components: { PushToggle },
+    mixins: [ isModal ],
+    methods: {
         neverClick() {
             this.$store.commit('push/neverAskAgain')
             this.hide()
         }
-    })
-    .vue()
+    }
+}
 </script>

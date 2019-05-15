@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
+import Action from '@c/modal/action'
 
-export default new Page()
-    .with('action:modal/action')
-    .vue()
+export default {
+    components: { Action }
+}
 </script>

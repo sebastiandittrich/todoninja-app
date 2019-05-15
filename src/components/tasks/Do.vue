@@ -10,28 +10,35 @@
 </template>
 
 <script>
-    import Page from '@/assets/js/Page'
-    import _ from 'lodash'
+import _ from 'lodash'
+import store from '@/mixins/store'
 
-    export default new Page()
-        .with('tasks/List', 'tasks/Placeholder')
-        .getters({
-            _find: 'tasks/currentFind'
-        })
-        .methods({
-            find(query) {
-                return this._find({ query: { doneAt: null, ...query } }).data
-            },
-        })
-        .computed({
-            tasks() {
-                const list = [ ]
-                const now = moment()
+import TasksList from '@c/tasks/List'
+import TasksPlaceholder from '@c/tasks/Placeholder'
 
-                list.push(this.find().filter( task => task.isDo() ))
-
-                return _.uniqBy(_.flatten(list), 'id')
+export default {
+    components: { TasksList, TasksPlaceholder },
+    mixins: [
+        store({
+            getters: {
+                _find: 'tasks/currentFind'
             }
         })
-        .vue()
+    ],
+    methods: {
+        find(query) {
+            return this._find({ query: { doneAt: null, ...query } }).data
+        },
+    },
+    computed: {
+        tasks() {
+            const list = [ ]
+            const now = moment()
+
+            list.push(this.find().filter( task => task.isDo() ))
+
+            return _.uniqBy(_.flatten(list), 'id')
+        }
+    }
+}
 </script>

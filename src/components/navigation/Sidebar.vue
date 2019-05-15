@@ -18,23 +18,27 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
+import store from '@/mixins/store'
 
-export default new Page()
-    .with('item:navigation/SidebarItem', 'filter/Picker')
-    .getters({
-        workspaces: 'workspaces/withStandard',
-        activeWorkspace: 'workspaces/current',
-        changeWorkspace: 'workspaces/setCurrent'
-    })
-    .data(() => ({
-        
-    }))
-    .methods({
+import Item from '@c/navigation/SidebarItem'
+import FilterPicker from '@c/filter/Picker'
+
+export default {
+    components: { Item, FilterPicker },
+    mixins: [
+        store({
+            getters: {
+                workspaces: 'workspaces/withStandard',
+                activeWorkspace: 'workspaces/current',
+                changeWorkspace: 'workspaces/setCurrent'
+            },
+        })
+    ],
+    methods: {
         isWorkspaceActive(workspace) {
             return workspace.id === this.activeWorkspace
         },
-    })
-    .vue()
+    }
+}
 </script>
 

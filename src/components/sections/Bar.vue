@@ -17,10 +17,9 @@
 
 
 <script>
-import Item from './Item';
-import Page from '@/assets/js/Page';
+import SectionsItem from '@c/sections/Item'
 
-export default new Page('SectionsBar')
-  .with('sections/Item')
-  .vue();
+export default {
+    components: { SectionsItem }
+}
 </script>

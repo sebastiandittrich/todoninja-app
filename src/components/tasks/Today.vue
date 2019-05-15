@@ -22,34 +22,41 @@
 </template>
 
 <script>
-    import Page from '@/assets/js/Page'
+import store from '@/mixins/store'
 
-    export default new Page()
-        .with('tasks/List', 'tasks/Placeholder')
-        .getters({
-            _findTasks: 'tasks/currentFind'
-        })
-        .methods({
-            findTasks(...args) {
-                return this._findTasks(...args).data.filter(task => !task.isDone())
+import TasksList from '@c/tasks/List'
+import TasksPlaceholder from '@c/tasks/Placeholder'
+
+export default {
+    components: { TasksList, TasksPlaceholder },
+    mixins: [ 
+        store({
+            getters: {
+                _findTasks: 'tasks/currentFind'
             }
-        })
-        .computed({
-            tasksDate() {
-                return moment().format('YYYY-MM-DD')
-            },
-            yesterdayTasksDate() {
-                return moment().subtract(1, 'day').format('YYYY-MM-DD')
-            },
-            tasks() {
-                return this.findTasks({query: { today: this.tasksDate }})
-            },
-            yesterdayTasks() {
-                return this.findTasks({ query: { today: this.yesterdayTasksDate } })
-            },
-            earlierTasks() {
-                return this.findTasks({ query: { today: { $ne: null, $nin: [ this.tasksDate, this.yesterdayTasksDate ] } } })
-            }
-        })
-        .vue()    
+        }) 
+    ],
+    methods: {
+        findTasks(...args) {
+            return this._findTasks(...args).data.filter(task => !task.isDone())
+        }
+    },
+    computed: {
+        tasksDate() {
+            return moment().format('YYYY-MM-DD')
+        },
+        yesterdayTasksDate() {
+            return moment().subtract(1, 'day').format('YYYY-MM-DD')
+        },
+        tasks() {
+            return this.findTasks({query: { today: this.tasksDate }})
+        },
+        yesterdayTasks() {
+            return this.findTasks({ query: { today: this.yesterdayTasksDate } })
+        },
+        earlierTasks() {
+            return this.findTasks({ query: { today: { $ne: null, $nin: [ this.tasksDate, this.yesterdayTasksDate ] } } })
+        }
+    }
+}
 </script>
