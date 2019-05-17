@@ -92,4 +92,8 @@ export default new Modal()
 .item {
     @apply text-lg text-grey-darker font-light rounded-lg px-4 pl-2 py-2 flex flex-row items-center justify-start cursor-pointer select-none;
 }
+
+#app.dark .item {
+    @apply text-grey-lighter
+}
 </style>

@@ -45,8 +45,12 @@ body {
 }
 
 #app.dark {
-    @apply bg-black
+    @apply bg-black text-white;
 }
+
+/* [class*='dark:'] {
+    @apply transition;
+} */
 
 * {
     -webkit-tap-highlight-color: transparent;

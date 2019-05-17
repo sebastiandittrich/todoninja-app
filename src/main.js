@@ -6,6 +6,7 @@ import store from './store';
 import { initAuth } from 'feathers-vuex';
 import Page from './assets/js/Page';
 import VueTouch from 'vue-touch'
+import VueMeta from 'vue-meta'
 import * as Sentry from '@sentry/browser'
 import Overdrive from 'vue-overdrive'
 import 'jquery'
@@ -28,6 +29,7 @@ window.Vue = Vue
 
 Vue.use(VueTouch)
 Vue.use(Overdrive)
+Vue.use(VueMeta)
 
 Vue.config.productionTip = false;
 

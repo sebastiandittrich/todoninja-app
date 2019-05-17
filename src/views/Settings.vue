@@ -1,6 +1,6 @@
 <template>
     <transition name="opacity-slide-up">
-        <div class="bg-grey-lighter overflow-auto">
+        <div class="bg-grey-lighter dark:bg-grey-darker overflow-auto">
             <!-- Header Bar -->
             <div>
                 <div class="p-4 flex flex-row items-center justify-start text-2xl mx-auto container">
@@ -20,7 +20,7 @@
                             <div class="font-bold">
                                 {{ user.name }}
                             </div>
-                            <div class="text-grey-darker">
+                            <div class="text-grey-lighter">
                                 {{ user.email }}
                             </div>
                         </div>
@@ -38,13 +38,13 @@
                         <div class="font-bold">
                             Workspaces
                         </div>
-                        <div class="text-blue font-light cursor-pointer select-none" @click="showModal('workspaces-picker')">
+                        <div class="text-blue dark:text-blue-light font-light cursor-pointer select-none" @click="showModal('workspaces-picker')">
                             Manage
                             <i class="feather icon-chevron-right"></i>
                         </div>
                     </div>
                     <div class="flex flex-row items-center justify-start mt-4 horizontal-scrolling pb-2 -mx-8">
-                        <div v-for="workspace of workspaces" :key="workspace.id" class="rounded-lg p-2 border-grey-lighter border-2 ml-8 -mr-6 whitespace-no-wrap">
+                        <div v-for="workspace of workspaces" :key="workspace.id" class="rounded-lg p-2 dark:text-grey-lighter border-grey-lighter dark:border-grey-darker border-2 ml-8 -mr-6 whitespace-no-wrap">
                             {{ workspace.name }}
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                         <div class="font-bold">
                             Tags
                         </div>
-                        <div class="font-light cursor-pointer select-none" :class="tags_remove ? 'text-green' : 'text-blue'" @click="tags_remove = !tags_remove">
+                        <div class="font-light cursor-pointer select-none" :class="tags_remove ? 'text-green' : 'text-blue dark:text-blue-light'" @click="tags_remove = !tags_remove">
                             <i v-if="tags_remove" class="feather icon-check"></i>
                             {{ tags_remove ? 'Done' : 'Delete some tags' }}
                             <i v-if="!tags_remove" class="feather icon-chevron-right"></i>
@@ -70,7 +70,15 @@
             </settings-card>
 
             <settings-card title="Design" class="mt-8">
-                <switchbox :value="dark" @click="setDark(!dark)"></switchbox>
+                <div class="flex flex-row items-center justify-between -mx-8 px-8 py-3 active:bg-grey-lightest" @click="setDark(!dark)">
+                    <div>
+                        <div class="">Dark mode</div>
+                        <div class="text-grey-dark text-sm">
+                            Turn everything black!
+                        </div>
+                    </div>
+                    <switchbox :value="dark"></switchbox>
+                </div>
             </settings-card>
 
             <settings-card title="Notifications" class="mt-8">

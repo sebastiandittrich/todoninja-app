@@ -93,5 +93,12 @@ const test = new Page()
   .watch('$store.state.workspaces.currentId', 'fetchWorkspaceSpecific')
   .vue()
 
+  test.metaInfo = {
+    title: 'Todoninja',
+    meta: [
+      { name: 'theme-color', content: '#000000' }
+    ]
+  }
+
 export default test
 </script>
