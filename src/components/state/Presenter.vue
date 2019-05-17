@@ -3,7 +3,7 @@
         <div class="flex flex-row items-center justify-between cursor-pointer select-none" @click="showModal('state-picker', $event)">
             <div class="flex flex-row items-center justify-start">
                 <span class="icon-presenter">
-                    <i class="w-8 h-8 bg-blue rounded-full"></i>
+                    <i class="w-8 h-8 bg-blue dark:bg-blue-light rounded-full"></i>
                     <i class="text-white" :class="activeState.icon"></i>
                 </span>
                 <div class="flex flex-col items-start justify-start ml-2">
@@ -19,7 +19,7 @@
                 <div @click.stop="showModal('personpicker', $event)" class="button-secondary button-small mt-0 rounded-r-none border-r-0">
                     <i class="feather icon-edit"></i>
                 </div>
-                <div @click.stop="showModal('datepicker', $event)" class="button-secondary button-small mt-0 rounded-l-none" :class="{ 'text-orange border-orange bg-orange-lightest': value.isDeadlineOver(), 'text-blue border-blue bg-blue-lightest': value.isDeadlineToday(), 'font-bold': value.isDeadlineOver() || value.isDeadlineToday() }">
+                <div @click.stop="showModal('datepicker', $event)" class="button-secondary button-small mt-0 rounded-l-none" :class="{ 'text-orange dark:text-orange border-orange dark:border-orange bg-orange-lightest dark:bg-orange-darkest': value.isDeadlineOver(), 'text-blue dark:text-blue-light border-blue dark:border-blue-light dark:bg-blue-darkest bg-blue-lightest': value.isDeadlineToday(), 'font-bold': value.isDeadlineOver() || value.isDeadlineToday() }">
                     <i v-if="!value.hasDeadline()" class="feather icon-plus mr-2"></i>
                     {{ value.hasDeadline() ? value.deadlineMoment().fromNow() : 'Deadline' }}
                 </div>

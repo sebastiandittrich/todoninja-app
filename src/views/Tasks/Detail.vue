@@ -1,21 +1,21 @@
 <template>
     <transition name="slide-right" @after-enter="afterEnter">
-        <div class="bg-white">
+        <div class="bg-white dark:bg-black dark:text-white">
 
             <!-- Save Button -->
-            <div v-show="isCreate || isEdit" @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide fixed pin-b pin-r m-8 cursor-pointer select-none">
+            <div v-show="isCreate || isEdit" @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide fixed bottom-0 right-0 m-8 cursor-pointer select-none">
                 <i class="feather icon-check text-2xl mr-2"></i>
                 Save
             </div>
 
             <!-- Header Part -->
-            <div class="p-6 relative" :class="task.workspace.isInbox() ? 'inbox-pattern border-b' : 'bg-blue-lightest'">
+            <div class="p-6 relative" :class="task.workspace.isInbox() ? 'inbox-pattern border-b border-grey-light dark:border-grey-darkest' : 'bg-blue-lightest dark:bg-black-deep'">
                 <div class="flex flex-row items-center justify-between mb-6 text-2xl">
                     <!-- Back button -->
                     <i @click="$router.go(-1)" class="feather icon-chevron-left lg:hidden cursor-pointer select-none"></i>
                     <i @click="$router.replace('/tasks')" class="feather icon-x hidden lg:block cursor-pointer select-none"></i>
 
-                    <div :class="`text-${task.workspace.getColor()}-darker`"  class="flex flex-row items-center text-sm cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
+                    <div :class="`text-${task.workspace.getColor()}-darker dark:text-${task.workspace.getColor()}-lighter`" class="flex flex-row items-center text-sm cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
                         <i v-if="task.workspace.isInbox()" :class="task.workspace.getIcon()" class="feather mr-2"></i>
                         <div v-else :class="`h-3 w-3 mr-2 rounded-lg bg-${task.workspace.getColor()}`"></div>
                         <span class="font-bold">{{ task.workspace.name }}</span>
@@ -24,15 +24,15 @@
                     <!-- Options Button -->
                     <i :class="{'opacity-0': isCreate}" @click="!isCreate ? showModal('tasks-options', $event) : null" class="feather icon-more-vertical cursor-pointer select-none"></i>
                 </div>
-                <div class="flex flex-row items-center">
+                <div class="flex flex-row items-center justify-between">
                     <!-- State -->
-                    <done-indicator @change="save()" :task="task" class="text-2xl mr-6"></done-indicator>
+                    <done-indicator @change="save()" :task="task" class="text-2xl mr-6 float-left"></done-indicator>
 
                     <!-- Title -->
-                    <inputt @press-enter="save({ explicit: true })" ref="inputt" @input="setEdited" iclass="font-bold text-2xl border-none" v-model="task.title" placeholder="My new task" type="text" class="w-full"></inputt>
+                    <inputt @press-enter="save({ explicit: true })" ref="inputt" @input="setEdited" iclass="font-bold text-2xl border-none w-full dark:text-grey-lighter" v-model="task.title" placeholder="My new task" type="text"></inputt>
 
                     <!-- Today -->
-                    <today-indicator @change="save()" :task="task" class="text-2xl ml-6" darker></today-indicator>
+                    <today-indicator @change="save()" :task="task" class="text-2xl ml-6 float-right" darker></today-indicator>
                 </div>
             </div>
 
@@ -46,7 +46,7 @@
 
                 <reminder-presenter class="mt-6 w-full" @change="save()" v-model="task"></reminder-presenter>
                 <div class="font-bold text-sm mb-2 mt-8">Description</div>
-                <textarea @input="setEdited" v-model="task.description" class="-z-10 w-full font-light text-lg focus:shadow-lg rounded-lg transition focus:p-2" rows="2" placeholder="Describe your task!"></textarea>
+                <textarea @input="setEdited" v-model="task.description" class="-z-10 w-full font-light text-lg focus:shadow-lg rounded-lg transition focus:p-2 dark:bg-black" rows="2" placeholder="Describe your task!"></textarea>
 
                 <div class="font-bold text-sm mb-2 mt-6">
                     Tags
@@ -66,8 +66,18 @@
 </template>  
 
 <style scoped>
-.inbox-pattern {
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVQoU2NkIALcevj8PyMhdSBFavKSjHgVwhSBDMOpEFkRToXoirAqxKYIQyEuRSgK8SmCKySkCKyQGEUghQB8xyesWcqJlAAAAABJRU5ErkJggg==) repeat;
+.inbox-pattern::before {
+  content: "";
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;  
+  z-index: -1;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVQoU2NkIALcevj8PyMhdSBFavKSjHgVwhSBDMOpEFkRToXoirAqxKYIQyEuRSgK8SmCKySkCKyQGEUghQB8xyesWcqJlAAAAABJRU5ErkJggg==) repeat;
+}
+#app.dark .inbox-pattern::before {
+  opacity: .2; 
 }
 </style>
 

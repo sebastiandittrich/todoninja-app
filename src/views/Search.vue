@@ -1,7 +1,7 @@
 <template>
     <transition name="opacity-slide-up">
         <div>
-            <div class="px-4 py-4 shadow-md text-grey-darker bg-white sticky pin-t pin-x">
+            <div class="px-4 py-4 shadow-md text-grey-darker bg-white sticky top-0 inset-x-0">
                 <div class="container mx-auto flex flex-row items-center ">
                     <i @click="$router.back()" class="feather icon-arrow-left text-2xl mr-4 cursor-pointer"></i>
                     <inputt ref="searchinputt" iclass="border-none" class="inline-flex w-full" @input="setQuery" :value="query" placeholder="Search for a task..." type="text"></inputt>

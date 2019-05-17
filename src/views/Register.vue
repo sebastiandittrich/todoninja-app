@@ -3,7 +3,7 @@
     <div>
       <div class="h-screen md:bg-grey-lighter" style="display: grid; grid-template: 'content' 1fr 'footer' auto / auto">
         <div class="md:my-8 bg-white md:rounded-lg md:shadow-lg container mx-auto lg:max-w-2/3 md:self-center" style="grid-area: content">
-          <div class="absolute pin-t pin-r z-0" style="z-index: -10">
+          <div class="absolute top-0 right-0 z-0" style="z-index: -10">
             <img src="img/logo-bg.svg" class="w-1/3 opacity-50 m-8 float-right">
           </div>
           <div class="font-bold text-blue flex flex-row items-center justify-start p-8 pt-16 md:pt-10">

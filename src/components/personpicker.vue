@@ -6,7 +6,7 @@
         <div class="mx-8">
             <div class="overflow-x-auto mb-4 -mx-8 pr-8">
                 <div class="mx-8 flex flex-row items-center justify-start">
-                    <div v-for="person of persons" :key="person" @click="choosePerson(person)" class="rounded-lg p-2 border-2 border-blue-lightest text-blue font-bold tracking-wide mr-2 whitespace-no-wrap cursor-pointer select-none">
+                    <div v-for="person of persons" :key="person" @click="choosePerson(person)" class="rounded-lg p-2 border-2 border-blue-lightest dark:border-blue-darker text-blue dark:text-blue-light font-bold tracking-wide mr-2 whitespace-no-wrap cursor-pointer select-none">
                         {{ person }}
                     </div>
                 </div>

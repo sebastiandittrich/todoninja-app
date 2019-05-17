@@ -5,7 +5,7 @@
       <!-- Normal Page -->
       <div class="overflow-hidden hidden lg:flex flex-row items-stretch justify-stretch h-full">
 
-        <div class="flex flex-col items-stretch justify-between w-1/6 border-r">
+        <div class="flex flex-col items-stretch justify-between w-1/6 border-r border-grey-light">
           <div class="flex flex-col">
 
             <!-- Search Bar -->
@@ -51,7 +51,7 @@
         <div class="flex flex-col items-stretch justify-start overflow-auto relative" :class="isDetailActive ? 'w-1/2' : 'w-5/6'">
 
           <!-- Top Bar -->
-          <div class="  flex-col items-stretch justify-start border-b">
+          <div class="  flex-col items-stretch justify-start border-b border-grey-light">
 
             <div class="mx-8 mt-8 mb-3 text-sm flex flex-row items-center">
               <div class="text-blue font-bold">Todoninja</div>
@@ -96,19 +96,19 @@
             </transition>
           </div>
 
-          <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="transition hidden md:flex absolute pin-r pin-b z-10 m-8">
+          <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="transition hidden md:flex absolute right-0 bottom-0 z-10 m-8">
             <i class="feather icon-plus text-blue p-3 rounded-full bg-white shadow-lg mr-4 text-2xl"></i>
           </navigation-item>
         </div>
 
-        <router-view :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l"></router-view>
+        <router-view :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l border-grey-light"></router-view>
 
       </div>
 
       <!-- Mobile Page ------------------------------------------------------------------------------- -->
       <v-touch @swipe="listSwipe" :swipe-options="{direction: 'horizontal'}" class="lg:hidden min-h-full">
 
-        <greeting :class="{ 'border': workspace.isInbox() }" class="rounded-lg m-2 mx-4 overflow-hidden shadow"></greeting>
+        <greeting :class="{ 'border border-grey-light dark:border-none': workspace.isInbox() }" class="rounded-lg m-2 mx-4 overflow-hidden shadow dark:shadow-2xl dark:bg-black-deep"></greeting>
 
         <sections-bar class="m-6 mb-10"></sections-bar>
 
@@ -120,7 +120,7 @@
           </transition>
         </div>
         
-        <router-view class="fixed pin z-10 overflow-x-hidden"></router-view>
+        <router-view class="fixed inset-0 z-10 overflow-x-hidden"></router-view>
 
       </v-touch>
 

@@ -19,7 +19,7 @@
                         <div class="text-center text-grey-dark font-bold tracking-wide uppercase text-xs mb-8 mt-16">
                             {{ year.year == moment().year() ? 'Current year' : year.year }}
                         </div>
-                        <summary-week-list :value="year.weeks" class="rounded-lg border mx-4"></summary-week-list>
+                        <summary-week-list :value="year.weeks" class="rounded-lg border border-grey-light mx-4"></summary-week-list>
                     </div>
                 </transition-group>
                 <infinite-loading key="loader" @infinite="loadMore"></infinite-loading>

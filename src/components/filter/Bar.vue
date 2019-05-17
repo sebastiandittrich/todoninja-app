@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flex flex-row justify-between items-center text-grey-dark px-4 mb-4 py-3 font-bold tracking-wide text-xs uppercase">
-            <span @click.stop="showModal('order-modal', $event)" class="flex flex-row items-center" :class="orderBy.properties.length > 0 ? 'text-blue' : ''">
+            <span @click.stop="showModal('order-modal', $event)" class="flex flex-row items-center" :class="orderBy.properties.length > 0 ? 'text-blue dark:text-blue-light' : ''">
                 <i class="feather icon-bar-chart-2 cursor-pointer mr-2 text-base transition"></i>
                 <!-- Order By -->
                 <transition name="opacity">

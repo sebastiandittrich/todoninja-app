@@ -1,11 +1,11 @@
 <template>
-    <div class="fixed pin-b pin-x flex flex-col items-stretch">
+    <div class="fixed bottom-0 inset-x-0 flex flex-col items-stretch">
         <transition name="opacity-slide-up">
             <navigation-item v-if="showAddButton" link="/tasks/create" class="self-end m-8 z-10">
-                <i class="feather icon-plus text-2xl text-blue p-3 rounded-full bg-white shadow-lg"></i>
+                <i class="feather icon-plus text-2xl text-blue p-3 rounded-full bg-white dark:bg-black-deep dark:text-blue-light shadow-lg"></i>
             </navigation-item>
         </transition>
-        <div class="bg-white flex flex-row justify-around items-center text-xl px-2 py-3 text-grey rounded-t-lg nav-bar">
+        <div class="bg-white dark:bg-black-deep flex flex-row justify-around items-center text-xl px-2 py-3 text-grey dark:text-grey-dark rounded-t-lg nav-bar">
             <navigation-item link="summary">
                 <i class="feather icon-pie-chart"></i>
             </navigation-item>

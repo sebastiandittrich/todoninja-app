@@ -11,6 +11,9 @@ export default new VuexPersistence({
     tutorial: {
       done: state.tutorial.done,
       step: state.tutorial.step
+    },
+    darkmode: {
+      dark: state.darkmode.dark
     }
   })
 })

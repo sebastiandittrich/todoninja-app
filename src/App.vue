@@ -1,10 +1,10 @@
 <template>
-  <div id="app" class="bg-white absolute pin lg:-z-20">
+  <div id="app" :class="dark ? 'dark' : ''" class="bg-white dark:bg-black absolute inset-0 lg:-z-20">
     <router-view v-if="!splashscreenVisible" class="h-full lg:-z-20"/>
     <transition name="splashscreen" appear>
-      <splashscreen v-if="splashscreenVisible" class="absolute pin"></splashscreen>
+      <splashscreen v-if="splashscreenVisible" class="absolute inset-0"></splashscreen>
     </transition>
-    <events-list class="fixed pin-t pin-x m-4 z-10"></events-list>
+    <events-list class="fixed top-0 inset-x-0 m-4 z-10"></events-list>
     <transition name="opacity-slide-up">
       <navigation-bar v-if="showNavBar && !splashscreenVisible" :showAddButton="showAddButton" class="lg:hidden z-10"></navigation-bar>
     </transition>
@@ -17,6 +17,7 @@ import '@/assets/css/main.css';
 import '@/assets/css/iconfont.css';
 import '@/assets/css/transitions.css'
 import * as Sentry from '@sentry/browser'
+import store from '@/mixins/store'
 
 import Splashscreen from '@c/Splashscreen'
 import EventsList from '@c/events/List'
@@ -24,6 +25,13 @@ import NavigationBar from '@c/navigation/Bar'
 
 export default {
   components: { Splashscreen, EventsList, NavigationBar },
+  mixins: [
+    store({
+      getters: {
+        dark: 'darkmode/isOn'
+      }
+    })
+  ],
   data: () => ({
     splashscreenVisible: true,
   }),

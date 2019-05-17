@@ -5,8 +5,8 @@
 
         <div class="mx-8">
             <div class="text-lg flex flex-col items-stretch">
-                <div v-for="state of states" :key="state.state" @click="stateClick(state, $event)" :class="isActive(state) ? 'text-blue font-black' : 'font-light text-grey-darker'" class="rounded-lg px-4 py-2 flex flex-row items-center justify-start cursor-pointer select-none">
-                    <i class="mr-4" :class="{[state.icon]: true, 'text-grey-dark': !isActive(state)}"></i>
+                <div v-for="state of states" :key="state.state" @click="stateClick(state, $event)" :class="isActive(state) ? 'text-blue dark:text-blue-light font-black' : 'font-light text-grey-darker dark:text-grey-lighter'" class="rounded-lg px-4 py-2 flex flex-row items-center justify-start cursor-pointer select-none">
+                    <i class="mr-4" :class="{[state.icon]: true, 'text-grey-dark dark:text-grey-light': !isActive(state)}"></i>
                     {{ state.name }}
                 </div>
             </div>
