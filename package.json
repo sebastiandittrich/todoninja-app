@@ -39,6 +39,7 @@
     "vue-overdrive": "^1.1.0",
     "vue-router": "^3.0.1",
     "vue-spinner": "^1.0.3",
+    "vue-top-progress": "^0.7.0",
     "vue-touch": "^2.0.0-beta.4",
     "vue2-circle-progress": "^1.2.3",
     "vuejs-datepicker": "^1.5.4",

@@ -22,30 +22,27 @@
         </actions>
 
         <div slot="submodals">
-            <datetime :type="type" input-class="hidden" auto ref="datetime" :value="value" @input="pickDate" @close="timeout(() => $emit('hide'), 150)"></datetime>
+            <datetime :type="type" input-class="hidden" auto ref="datetime" :value="value" @input="pickDate($event); log('datepicker')" @close="timeout(() => $emit('hide'), 150)"></datetime>
         </div>
 
     </modal>
 </template>
 
 <script>
-import Modal from '@/assets/js/Modal'
-import hasModals from '@/assets/js/traits/hasModals'
-import {Datetime} from 'vue-datetime'
+import { isModal, hasModals } from '@/mixins'
+import { Datetime } from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
 
-Datetime.name = 'datetime'
-
-export default new Modal()
-    .with(Datetime)
-    .props({
+export default {
+    mixins: [ isModal, hasModals({ Datetime }) ],
+    props: {
         value: String,
         type: {
             type: String,
             default: 'date'
         }
-    })
-    .methods({
+    },
+    methods: {
         optionClick(option) {
             this.$emit('input', option.moment().format())
             this.$emit('hide')
@@ -57,8 +54,8 @@ export default new Modal()
             this.$emit('input', null)
             this.$emit('hide')
         }
-    })
-    .computed({
+    },
+    computed: {
         pickdateText() {
             if(!this.value) {
                 return 'Choose a date'
@@ -66,8 +63,8 @@ export default new Modal()
             
             return moment(this.value).format('D. MMMM YYYY')
         }
-    })
-    .data(() => ({
+    },
+    data: () => ({
         options: [
             {
                 name: 'Tomorrow',
@@ -84,8 +81,8 @@ export default new Modal()
                 }
             },
         ]
-    }))
-    .vue()
+    })
+}
 </script>
 
 <style scoped>

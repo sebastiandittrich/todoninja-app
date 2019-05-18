@@ -11,22 +11,19 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
-
-export default new Page()
-    .props({
+export default {
+    props: {
         task: Object,
         darker: {
             default: false,
             type: Boolean,
         }
-    })
-    .methods({
+    },
+    methods: {
         toggleToday() {
             this.task.toggleToday()
             this.$emit('change')
         }
-    })
-    .vue()
-
+    }
+}
 </script>

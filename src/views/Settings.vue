@@ -13,14 +13,14 @@
             <div>
                 <div class="mx-auto container p-4 pt-8">
                     <div class="flex flex-row items-center justify-start">
-                        <div class="rounded-full border-grey-light border-2 overflow-hidden h-16 w-16 flex items-center justify-center bg-white mr-8">
+                        <div class="rounded-full border-grey-light dark:border-grey-dark border-2 overflow-hidden h-16 w-16 flex items-center justify-center bg-white dark:bg-grey mr-8">
                             <img src="/img/logo.svg" class="h-8">
                         </div>
                         <div class="flex flex-col">
                             <div class="font-bold">
                                 {{ user.name }}
                             </div>
-                            <div class="text-grey-lighter">
+                            <div class="text-grey-darker dark:text-grey-lighter">
                                 {{ user.email }}
                             </div>
                         </div>
@@ -114,9 +114,10 @@ import TagsPicker from '@c/tags/Picker'
 import SettingsCard from '@c/settings/Card'
 import PushToggle from '@c/push/Toggle'
 import WorkspacesPicker from '@c/workspaces/Picker'
+import Switchbox from '@c/SwitchBox'
 
 export default {
-    components: { TagsPicker, SettingsCard, PushToggle },
+    components: { TagsPicker, SettingsCard, PushToggle, Switchbox },
     mixins: [
         hasModals({ WorkspacesPicker }),
         store({

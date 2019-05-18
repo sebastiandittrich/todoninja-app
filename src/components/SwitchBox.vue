@@ -8,15 +8,13 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page'
-import loading from '@/assets/js/traits/loading'
 import Loader from 'vue-spinner/src/ClipLoader.vue';
 
 Loader.name = 'Loader'
 
-export default new Page()
-    .with(Loader)
-    .props({
+export default {
+    components: { Loader },
+    props: {
         disabled: {
             type: Boolean,
             default: false
@@ -29,8 +27,8 @@ export default new Page()
             type: Boolean,
             default: false,
         }
-    })
-    .vue()
+    }
+}
 </script>
 
 

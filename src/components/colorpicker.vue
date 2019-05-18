@@ -16,21 +16,22 @@
 </template>
 
 <script>
-import Modal from '@/assets/js/Modal'
+import { isModal } from '@/mixins'
 import colors from '@/assets/js/Colors'
 
-export default new Modal()
-    .props({
+export default {
+    mixins: [ isModal ],
+    props: {
         value: String
-    })
-    .data(() => ({
+    },
+    data: () => ({
         colors,
-    }))
-    .methods({
+    }),
+    methods: {
         select({ value }) {
             this.$emit('input', value)
             this.hide()
         }
-    })
-    .vue()
+    }
+}
 </script>

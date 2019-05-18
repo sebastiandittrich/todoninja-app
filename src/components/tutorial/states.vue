@@ -17,11 +17,11 @@
 </template>
 
 <script>
-import Step from '@/components/tutorial/Step'
+import isStep from '@/mixins/isStep'
 
-export default new Step()
-
-    .vue()
+export default {
+    mixins: [ isStep ]
+}
 </script>
 
 <style>

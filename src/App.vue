@@ -22,9 +22,10 @@ import store from '@/mixins/store'
 import Splashscreen from '@c/Splashscreen'
 import EventsList from '@c/events/List'
 import NavigationBar from '@c/navigation/Bar'
+import Progress from 'vue-top-progress'
 
 export default {
-  components: { Splashscreen, EventsList, NavigationBar },
+  components: { Splashscreen, EventsList, NavigationBar, Progress },
   mixins: [
     store({
       getters: {
@@ -34,6 +35,7 @@ export default {
   ],
   data: () => ({
     splashscreenVisible: true,
+    loading: false
   }),
   methods: {
     async fetchWorkspaceSpecific() {
@@ -101,7 +103,7 @@ export default {
     '$store.state.auth.user.id': function() {
       this.boot({ soft: true })
     },
-    '$store.state.workspaces.currentId': 'fetchWorkspaceSpecific'
+    '$store.state.workspaces.currentId': 'fetchWorkspaceSpecific',
   }
 }
 </script>

@@ -21,22 +21,24 @@
 </template>
 
 <script>
-import Modal from '@/assets/js/Modal'
-import hasModals from '@/assets/js/traits/hasModals'
+import { isModal, hasModals } from '@/mixins'
 
-export default new Modal()
-    .with('inputt')
-    .props({
+import inputt from '@c/inputt'
+import colorpicker from '@c/colorpicker'
+
+export default {
+    components: { inputt },
+    mixins: [ hasModals({ colorpicker }), isModal ],
+    props: {
         edit: {
             type: Boolean,
             default: false,
         }
-    })
-    .use( hasModals({ colorpicker: 'colorpicker' }) )
-    .data(() => ({
+    },
+    data: () => ({
         workspace: null
-    }))
-    .methods({
+    }),
+    methods: {
         async createWorkspaceClick() {
             const created = await this.workspace.save()
             this.workspace = new this.$FeathersVuex.Workspace()
@@ -57,14 +59,16 @@ export default new Modal()
         afterEnter() {
             this.$refs.inputt.focus()
         }
-    })
-    .watch('state.data', function() {
-        if(this.edit) {
-            this.workspace = this.state.data.clone()
+    },
+    watch: {
+        'state.data': function() {
+            if(this.edit) {
+                this.workspace = this.state.data.clone()
+            }
         }
-    })
-    .created(vue => {
-        vue.workspace = new vue.$FeathersVuex.Workspace()
-    })
-    .vue()
+    },
+    created() {
+        this.workspace = new this.$FeathersVuex.Workspace()
+    }
+}
 </script>

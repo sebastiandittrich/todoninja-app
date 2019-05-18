@@ -14,18 +14,23 @@
 </template>
 
 <script>
-import Page from '@/assets/js/Page';
-import hasModals from '@/assets/js/traits/hasModals'
+import { hasModals, store } from '@/mixins'
 import { theme } from '@/../tailwind.config.js'
+
+import WorkspacesPicker from '@c/workspaces/Picker'
 
 const colors = theme.colors
 
-export default new Page('Greeting')
-  .use( hasModals({ 'workspaces-picker': 'workspaces/Picker' }) )
-  .getters({
-    selectedWorkspace: 'workspaces/current'
-  })
-  .computed({
+export default {
+  mixins: [ 
+    hasModals({ WorkspacesPicker }),
+    store({
+      getters: {
+        selectedWorkspace: 'workspaces/current'
+      }
+    })
+  ],
+  computed: {
     isExtended() {
       return !!this.$store.state.auth.user
     },
@@ -50,6 +55,6 @@ export default new Page('Greeting')
       result += '!';
       return result;
     },
-  })
-  .vue();
+  },
+}
 </script>

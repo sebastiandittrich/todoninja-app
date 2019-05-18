@@ -1,6 +1,6 @@
 <template>
     <transition name="slide-right" @after-enter="afterEnter">
-        <div class="bg-white dark:bg-black dark:text-white">
+        <div v-if="!loading" class="bg-white dark:bg-black dark:text-white">
 
             <!-- Save Button -->
             <div v-show="isCreate || isEdit" @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide fixed bottom-0 right-0 m-8 cursor-pointer select-none">
@@ -42,9 +42,9 @@
                 <!-- Was today -->
 
                 <!-- State -->
-                <state-presenter @change="save()" v-model="task" class="z-10"/>
+                <state-presenter @change="save(); log('state')" v-model="task" class="z-10"/>
 
-                <reminder-presenter class="mt-6 w-full" @change="save()" v-model="task"></reminder-presenter>
+                <reminder-presenter class="mt-6 w-full" @change="save(); log('reminder')" v-model="task"></reminder-presenter>
                 <div class="font-bold text-sm mb-2 mt-8">Description</div>
                 <textarea @input="setEdited" v-model="task.description" class="-z-10 w-full font-light text-lg focus:shadow-lg rounded-lg transition focus:p-2 dark:bg-black" rows="2" placeholder="Describe your task!"></textarea>
 
@@ -66,7 +66,11 @@
 </template>  
 
 <style scoped>
-.inbox-pattern::before {
+#app:not(.dark) .inbox-pattern {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVQoU2NkIALcevj8PyMhdSBFavKSjHgVwhSBDMOpEFkRToXoirAqxKYIQyEuRSgK8SmCKySkCKyQGEUghQB8xyesWcqJlAAAAABJRU5ErkJggg==) repeat;
+}
+
+#app.dark .inbox-pattern::before {
   content: "";
   position: absolute;
   top: 0; 
@@ -75,18 +79,16 @@
   height: 100%;  
   z-index: -1;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVQoU2NkIALcevj8PyMhdSBFavKSjHgVwhSBDMOpEFkRToXoirAqxKYIQyEuRSgK8SmCKySkCKyQGEUghQB8xyesWcqJlAAAAABJRU5ErkJggg==) repeat;
-}
-#app.dark .inbox-pattern::before {
   opacity: .2; 
 }
 </style>
 
 
 <script>
-import Page from '@/assets/js/Page'
 import hasModals from '@/mixins/hasModals'
 import store from '@/mixins/store'
 import Vue from 'vue'
+import vuex from '@/store'
 
 import Inputt from '@c/inputt'
 import TagsPicker from '@c/tags/Picker'
@@ -96,6 +98,20 @@ import TodayIndicator from '@c/today/Indicator'
 import ReminderPresenter from '@c/reminder/Presenter'
 import WorkspacesPicker from '@c/workspaces/Picker'
 import TasksOptions from '@c/tasks/Options'
+
+async function fetchData(route) {
+    if(!isNaN(route.params.id) && Number.isInteger(parseInt(route.params.id))) {
+        return {
+            mode: 'view',
+            task: await vuex.dispatch('tasks/get', parseInt(route.params.id))
+        }
+    } else {
+        return {
+            mode: 'create',
+            task: new Vue.$FeathersVuex.Task({ workspaceId: vuex.getters['workspaces/current'].id })
+        }
+    }
+}
 
 export default {
     components: { Inputt, TagsPicker, StatePresenter, DoneIndicator, TodayIndicator, ReminderPresenter },
@@ -116,6 +132,7 @@ export default {
         mode: null,
         edited: false,
         task: new (Vue.$FeathersVuex.Task)(),
+        loading: true,
     }),
     props: {
         id: {
@@ -129,6 +146,7 @@ export default {
         },
 
         async save({ explicit = false } = {}) {
+            console.log('save called')
             // If save is triggered by a change event on a component and 
             // task is in create mode, don't save the task, so the page 
             // will not close unexpected.
@@ -154,16 +172,6 @@ export default {
                 this.$refs.inputt.focus()
             }
         },
-
-        async fetchData() {
-            if(!isNaN(this.id) && Number.isInteger(parseInt(this.id))) {
-                this.mode = 'view'
-                this.task = (await this.getTask(parseInt(this.id)))
-            } else {
-                this.mode = 'create'
-                this.task = new this.$FeathersVuex.Task({ workspaceId: this.currentWorkspace.id })
-            }
-        }
     },
     computed: {
         isView() {
@@ -176,102 +184,29 @@ export default {
             return this.isView ? this.edited : false
         }
     },
-    created() {
-        this.fetchData()
+    mounted() {
+        this.afterEnter()
     },
-    watch: {
-        id: function() {
-            this.fetchData()
-            this.afterEnter()
-        }
+    async beforeRouteUpdate(to, from, next) {
+        const { mode, task } = await fetchData(to)
+        next(vue => {
+            vue.mode = mode
+            vue.task = task
+            vue.$nextTick(() => {
+                vue.loading = false
+            })
+            vue.afterEnter()
+        })
+    },
+    async beforeRouteEnter(to, from, next) {
+        const { mode, task } = await fetchData(to)
+        next(vue => {
+            vue.mode = mode
+            vue.task = task
+            vue.$nextTick(() => {
+                vue.loading = false
+            })
+        })
     }
 }
-
-// export default new Page()
-//     .with('inputt', 'tags/Picker', 'state/Presenter', 'done/Indicator', 'today/Indicator', 'reminder/Presenter')
-//     .use( hasModals({ 'workspaces-picker': 'workspaces/Picker', 'tasks-options': 'tasks/Options' }) )
-
-//     .getters({
-//         getWorkspace: 'workspaces/get',
-//         currentWorkspace: 'workspaces/current'
-//     })
-//     .actions({
-//         getTask: 'tasks/get',
-//         loadWorkspace: 'workspaces/get'
-//     })
-
-//     .data(() =>({
-//         mode: null,
-//         edited: false,
-//         task: new (Vue.$FeathersVuex.Task)(),
-//     }))
-//     .props({
-//         id: {
-//             type: Number,
-//             default: null
-//         }
-//     })
-//     .methods({
-//         setEdited() {
-//             this.edited = true
-//         },
-
-//         async save({ explicit = false } = {}) {
-//             // If save is triggered by a change event on a component and 
-//             // task is in create mode, don't save the task, so the page 
-//             // will not close unexpected.
-//             // 
-//             // If the user explicitly saves the task, 
-//             // the page will close
-//             if( !(this.isCreate && !explicit) ) {
-
-//                 await this.task.save()
-
-//                 if(explicit) this.$store.dispatch('events/success', { message: 'Task ' + (this.isCreate ? 'created.' : 'saved.') })
-
-//                 if(this.isCreate) {
-//                     this.$router.go(-1)
-//                 } else if(this.isEdit) {
-//                     this.edited = false
-//                 }
-
-//             }
-//         },
-//         afterEnter() {
-//             if(this.isCreate) {
-//                 this.$refs.inputt.focus()
-//             }
-//         },
-
-//         async fetchData() {
-//             if(!isNaN(this.id) && Number.isInteger(parseInt(this.id))) {
-//                 this.mode = 'view'
-//                 this.task = (await this.getTask(parseInt(this.id)))
-//             } else {
-//                 this.mode = 'create'
-//                 this.task = new this.$FeathersVuex.Task({ workspaceId: this.currentWorkspace.id })
-//             }
-//         }
-//     })
-//     .computed({
-//         isView() {
-//             return this.mode == 'view'
-//         },
-//         isCreate() {
-//             return this.mode == 'create'
-//         },
-//         isEdit() {
-//             return this.isView ? this.edited : false
-//         }
-//     })
-
-//     .created(vue => {
-//         vue.fetchData()
-//     })
-//     .watch('id', function() {
-//         this.fetchData()
-//         this.afterEnter()
-//     })
-
-//     .vue()
 </script>

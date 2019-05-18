@@ -24,18 +24,20 @@
 
 
 <script>
-import Modal from '@/assets/js/Modal'
+import { isModal } from '@/mixins'
 
-export default new Modal()
-    .with('inputt')
-    .props({
+import Inputt from '@c/inputt'
+
+export default {
+    components: { Inputt },
+    props: {
         value: String,
         default: null
-    })
-    .data(() => ({
+    },
+    data: () => ({
         newperson: null,
-    }))
-    .methods({
+    }),
+    methods: {
         add() {
             this.$emit('input', this.newperson)
             this.newperson = null
@@ -51,8 +53,8 @@ export default new Modal()
             this.$emit('input', person)
             this.hide()
         }
-    })
-    .computed({
+    },
+    computed: {
         persons() {
             const names = []
             return this.$store.getters['tasks/find']().data.map(task => task.waiting_for).filter(name => {
@@ -61,6 +63,6 @@ export default new Modal()
                 return result
             })
         }
-    })
-    .vue()
+    }
+}
 </script>

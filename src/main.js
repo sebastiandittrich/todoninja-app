@@ -4,15 +4,14 @@ import router from './router';
 import './registerServiceWorker';
 import store from './store';
 import { initAuth } from 'feathers-vuex';
-import Page from './assets/js/Page';
 import VueTouch from 'vue-touch'
 import VueMeta from 'vue-meta'
 import * as Sentry from '@sentry/browser'
 import Overdrive from 'vue-overdrive'
 import log from '@/mixins/log'
+import timeout from '@/mixins/timeout'
 import 'jquery'
 import 'jquery-mousewheel'
-import { mapActions } from 'vuex';
 
 if(window.location.href.includes('ref=makerads')) {
   window.location.href = 'https://todoninja.de/?ref=makerads'
@@ -31,16 +30,17 @@ Vue.use(VueTouch)
 Vue.use(Overdrive)
 Vue.use(VueMeta)
 
+Vue.mixin(log)
+Vue.mixin(timeout)
+
 Vue.config.productionTip = false;
 
 window.vue = new Vue({
   router,
   store,
-  mixins: [ log ],
   render: h => h(App),
 }).$mount('#app');
 
 window.Vue = Vue
 window.initAuth = initAuth;
 window.store = store;
-window.Page = Page

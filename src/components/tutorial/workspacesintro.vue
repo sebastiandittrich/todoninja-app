@@ -49,15 +49,23 @@
 </template>
 
 <script>
-import Step from '@/components/tutorial/Step'
-import hasModals from '@/assets/js/traits/hasModals'
+import isStep from '@/mixins/isStep'
+import hasModals from '@/mixins/hasModals'
+import store from '@/mixins/store'
 
-export default new Step()
-    .use( hasModals({ 'workspaces-creator': 'workspaces/Creator' }) )
-    .getters({
-        added: 'workspaces/list'
-    })
-    .vue()
+import WorkspacesCreator from '@c/workspaces/Creator'
+
+export default {
+    mixins: [ 
+        isStep, 
+        hasModals({ WorkspacesCreator }),
+        store({
+            getters: {
+                added: 'workspaces/list'
+            }
+        })
+    ]
+}
 </script>
 
 <style>

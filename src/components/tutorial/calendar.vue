@@ -20,10 +20,6 @@ import isStep from '@/mixins/isStep'
 export default {
     mixins: [ isStep ]
 }
-
-export default new Step()
-
-    .vue()
 </script>
 
 <style>

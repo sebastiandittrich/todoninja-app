@@ -20,10 +20,11 @@
 </template>
 
 <script>
-import Modal from '@/assets/js/Modal'
+import { isModal } from '@/mixins'
 
-export default new Modal()
-    .props({
+export default {
+    mixins: [ isModal ],
+    props: {
         title: {
             type: String,
             default: 'Confirm your action'
@@ -32,6 +33,6 @@ export default new Modal()
             type: String,
             default: 'Confirm'
         }
-    })
-    .vue()
+    }
+}
 </script>

@@ -114,9 +114,7 @@
 
         <div class="stacking overflow-hidden mx-2">
           <transition :name="transition">
-            <keep-alive>
-              <component :is="this.TaskListView" class="pb-32"></component>
-            </keep-alive>
+            <component :is="this.TaskListView" class="pb-32"></component>
           </transition>
         </div>
         

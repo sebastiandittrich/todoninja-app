@@ -34,23 +34,30 @@
 </template>
 
 <script>
-import Modal from '@/assets/js/Modal'
-import hasModals from '@/assets/js/traits/hasModals'
+import { isModal, hasModals, store } from '@/mixins'
 
-export default new Modal()
-    .use( hasModals({ 'creator': 'workspaces/Creator', 'confirmator': 'confirmator' }, [ 'editor' ]) )
-    .props({
+import Creator from '@c/workspaces/Creator'
+import Confirmator from '@c/confirmator'
+
+export default {
+    mixins: [
+        isModal,
+        hasModals({ Creator, Confirmator }, [ 'editor' ]),
+        store({
+            getters: {
+                standard_workspaces: 'workspaces/withStandard',
+                manage_workspaces: 'workspaces/list'
+            }
+        })
+    ],
+    props: {
         value: Number,
         manage: {
             type: Boolean,
             default: false
         }
-    })
-    .getters({
-        standard_workspaces: 'workspaces/withStandard',
-        manage_workspaces: 'workspaces/list'
-    })
-    .computed({
+    },
+    computed: {
         workspaces() {
             if(this.manage) {
                 return this.manage_workspaces
@@ -58,8 +65,8 @@ export default new Modal()
                 return this.standard_workspaces
             }
         }
-    })
-    .methods({
+    },
+    methods: {
         workspaceClick(id) {
             if(this.manage) {
                 return true
@@ -72,6 +79,6 @@ export default new Modal()
             const ret = await this.$store.dispatch('workspaces/remove', id)
             this.$store.dispatch('events/success', { message: 'Workspace deleted.', color: 'orange' })
         }
-    })
-    .vue()
+    }
+}
 </script>

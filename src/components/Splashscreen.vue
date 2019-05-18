@@ -25,18 +25,17 @@
 
 
 <script>
-import Page from '@/assets/js/Page'
-import loading from '@/assets/js/traits/loading'
+import { loading } from '@/mixins'
 
-export default new Page('Splashscreen')
-    .use(loading)
-    .computed({
+export default {
+    mixins: [ loading ],
+    computed: {
         isLoggedIn() {
             return !!this.$store.state.auth.accessToken
         },
         user() {
             return this.isLoggedIn ? this.$store.state.auth.user : { name: '' }
         }
-    })
-    .vue()
+    }
+}
 </script>

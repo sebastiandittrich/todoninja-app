@@ -1,7 +1,7 @@
 import Modal from '@/components/modal/frame'
 import Headline from '@/components/modal/header'
 import Actions from '@/components/modal/actions'
-import Action from '@/components/modal/actions'
+import Action from '@/components/modal/action'
 import Cancel from '@/components/modal/cancel-action'
 
 export default {
