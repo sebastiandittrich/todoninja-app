@@ -30,6 +30,7 @@ import Inputt from '@c/inputt'
 
 export default {
     components: { Inputt },
+    mixins: [ isModal ],
     props: {
         value: String,
         default: null

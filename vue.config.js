@@ -15,6 +15,10 @@ module.exports = {
                 'vue$': 'vue/dist/vue.esm.js',
                 '@c': '@/components/'
             },
-        }
+        },
     },
+    pwa: {
+        name: 'Todoninja',
+        themeColor: '',
+    }
 }

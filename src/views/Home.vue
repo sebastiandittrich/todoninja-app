@@ -223,6 +223,11 @@ export default {
         }
       }
     }
+  },
+  metaInfo: {
+    meta: [
+      { name: 'theme-color', content: '#22292f' }
+    ]
   }
 }
 </script>

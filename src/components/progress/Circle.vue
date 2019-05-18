@@ -13,7 +13,7 @@
         </div>
         <transition-group v-if="legend" name="list" class="font-xs text-grey-dark ml-8">
             <div v-for="section of [ ...ordered.slice().reverse(), total ]" :key="section.name" class="flex flex-row mt-2">
-                <div class="rounded-full w-4 h-4 mr-2" :style="{ background: color(section) || totalcolor() }"></div> {{ section.name }} (<span class="text-black font-bold">{{ section.value }}</span>) 
+                <div class="rounded-full w-4 h-4 mr-2" :style="{ background: color(section) || totalcolor() }"></div> {{ section.name }} (<span class="text-black dark:text-white font-bold">{{ section.value }}</span>) 
             </div>
         </transition-group>
     </div>
@@ -97,6 +97,9 @@ export default {
             return colors[this.basecolor + shades[this.ordered.length].slice().reverse()[this.ordered.indexOf(section)]]
         },
         totalcolor() {
+            if(this.$store.getters['darkmode/isOn']) {
+                return colors[this.basecolor + '-darker']
+            }
             return colors[this.basecolor + '-lightest']
         }
     },

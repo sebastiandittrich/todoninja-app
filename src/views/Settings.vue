@@ -151,6 +151,13 @@ export default {
             localStorage.clear()
             window.location.reload()
         },
+    },
+    metaInfo() {
+        return {
+            meta: [
+                { name: 'theme-color', content: (this.$store.getters['darkmode/isOn'] ? '#606f7b' : '#f1f5f8') }
+            ]
+        }
     }
 }
 </script>

@@ -6,7 +6,7 @@
                 <div class="ml-8">Summary</div>
             </div>
 
-            <div class="flex flex-col items-center justify-center p-8">
+            <div class="flex flex-col items-center justify-center p-8 dark:bg-black-deep dark:pb-16">
                 <div class="text-grey-dark font-bold tracking-wide uppercase text-xs mb-8">
                     Current week
                 </div>
@@ -16,10 +16,10 @@
             <div class="container md:mx-auto">
                 <transition-group name="opacity">
                     <div v-for="year of years" :key="year.year">
-                        <div class="text-center text-grey-dark font-bold tracking-wide uppercase text-xs mb-8 mt-16">
+                        <div class="text-center text-grey-dark font-bold tracking-wide uppercase text-xs mb-8 mt-16 dark:mt-8">
                             {{ year.year == moment().year() ? 'Current year' : year.year }}
                         </div>
-                        <summary-week-list :value="year.weeks" class="rounded-lg border border-grey-light mx-4"></summary-week-list>
+                        <summary-week-list :value="year.weeks" class="rounded-lg border border-grey-light dark:border-none mx-4"></summary-week-list>
                     </div>
                 </transition-group>
                 <infinite-loading key="loader" @infinite="loadMore"></infinite-loading>
@@ -86,6 +86,11 @@ export default {
     },
     mounted() {
         this.fetchData()
+    },
+    metaInfo: {
+        meta: [
+            { name: 'theme-color', content: '#000000' }
+        ]
     }
 }
 </script>

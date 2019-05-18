@@ -1,6 +1,6 @@
 <template>
-  <div id="app" :class="dark ? 'dark' : ''" class="bg-white dark:bg-black absolute inset-0 lg:-z-20">
-    <router-view v-if="!splashscreenVisible" class="h-full lg:-z-20"/>
+  <div id="app" :class="dark ? 'dark' : ''" class="h-full overflow-auto bg-white dark:bg-black absolute inset-0 lg:-z-20">
+    <router-view v-if="!splashscreenVisible" class="lg:-z-20"/>
     <transition name="splashscreen" appear>
       <splashscreen v-if="splashscreenVisible" class="absolute inset-0"></splashscreen>
     </transition>
@@ -104,6 +104,6 @@ export default {
       this.boot({ soft: true })
     },
     '$store.state.workspaces.currentId': 'fetchWorkspaceSpecific',
-  }
+  },
 }
 </script>

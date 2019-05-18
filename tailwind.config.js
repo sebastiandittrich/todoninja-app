@@ -10,8 +10,8 @@ module.exports = {
         opacity: ['responsive', 'dark'],
         container: [ "responsive" ],
         height: [ "responsive", "group-hover" ],
-        margin: [ "responsive", "focus" ],
-        padding: [ "responsive", "focus" ],
+        margin: [ "responsive", "focus", 'dark' ],
+        padding: [ "responsive", "focus", 'dark' ],
         width: [ "responsive", "group-hover" ],
     },
     theme: {
