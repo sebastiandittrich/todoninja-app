@@ -1,9 +1,11 @@
 <template>
     <transition name="opacity-slide-up">
         <div class="pb-32">
-            <div class="p-4 hidden lg:flex flex-row items-center justify-start text-2xl mx-auto container">
-                <i @click="$router.back()" class="feather icon-arrow-left cursor-pointer select-none"></i>
-                <div class="ml-8">Summary</div>
+            <div class="dark:bg-black-deep">
+                <div class="p-4 hidden lg:flex flex-row items-center justify-start text-2xl mx-auto container">
+                    <i @click="$router.back()" class="feather icon-arrow-left cursor-pointer select-none"></i>
+                    <div class="ml-8">Summary</div>
+                </div>
             </div>
 
             <div class="flex flex-col items-center justify-center p-8 dark:bg-black-deep dark:pb-16">
@@ -66,12 +68,6 @@ export default {
 
             return { from, to, color, relation, number: week, total: created, data: [ { name: 'Done', value: done } ] }
         },
-
-        async fetchData() {
-            // for(let week = 0; week < 5; week++) {
-            //     this.weeks.push(await this.fetchWeek(week))
-            // }
-        },
         relationColor(relation) {
             if(relation <= 0) return 'red'
             else if(relation < 0.5) return 'orange'
@@ -85,9 +81,6 @@ export default {
         moment(...args) {
             return moment(...args)
         }
-    },
-    mounted() {
-        this.fetchData()
     },
 }
 </script>
