@@ -22,7 +22,7 @@
         </actions>
 
         <div slot="submodals">
-            <datetime :type="type" input-class="hidden" auto ref="datetime" :value="value" @input="pickDate($event); log('datepicker')" @close="timeout(() => $emit('hide'), 150)"></datetime>
+            <datetime :type="type" input-class="hidden" auto ref="datetime" :value="value" @input="pickDate($event)" @close="timeout(() => $emit('hide'), 150)"></datetime>
         </div>
 
     </modal>

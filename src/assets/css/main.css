@@ -114,6 +114,9 @@ button:focus {
 .button-red {
     @apply button bg-red-lightest text-red text-sm mt-0;
 }
+#app.dark .button-red {
+    @apply bg-red-darker text-red-lightest;
+}
 .button-red:hover {
     @apply button-hover bg-red;
 }

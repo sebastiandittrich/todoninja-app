@@ -34,6 +34,9 @@ export default {
       }
     })
   ],
+  metaInfo: {
+    title: 'Todoninja'
+  },
   data: () => ({
     splashscreenVisible: true,
     loading: false

@@ -1,6 +1,6 @@
 <template>
   <transition name="opacity-slide-up">
-    <div class="">
+    <div class="h-full">
 
       <!-- Normal Page -->
       <div class="overflow-hidden hidden lg:flex flex-row items-stretch justify-stretch h-full">
@@ -114,7 +114,9 @@
 
         <div class="stacking overflow-hidden mx-2">
           <transition :name="transition">
-            <component :is="this.TaskListView" class="pb-32"></component>
+            <keep-alive>
+              <component :is="this.TaskListView" class="pb-32"></component>
+            </keep-alive>
           </transition>
         </div>
         

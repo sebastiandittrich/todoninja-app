@@ -1,6 +1,6 @@
 <template>
     <transition name="slide-right" @after-enter="afterEnter">
-        <div v-if="!loading" class="bg-white dark:bg-black dark:text-white">
+        <div v-if="task" class="bg-white dark:bg-black dark:text-white">
 
             <!-- Save Button -->
             <div v-show="isCreate || isEdit" @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide fixed bottom-0 right-0 m-8 cursor-pointer select-none">
@@ -42,9 +42,9 @@
                 <!-- Was today -->
 
                 <!-- State -->
-                <state-presenter @change="save(); log('state')" v-model="task" class="z-10"/>
+                <state-presenter @change="save()" v-model="task" class="z-10"/>
 
-                <reminder-presenter class="mt-6 w-full" @change="save(); log('reminder')" v-model="task"></reminder-presenter>
+                <reminder-presenter class="mt-6 w-full" @change="save()" v-model="task"></reminder-presenter>
                 <div class="font-bold text-sm mb-2 mt-8">Description</div>
                 <textarea @input="setEdited" v-model="task.description" class="-z-10 w-full font-light text-lg focus:shadow-lg rounded-lg transition focus:p-2 dark:bg-black" rows="2" placeholder="Describe your task!"></textarea>
 
@@ -98,20 +98,6 @@ import ReminderPresenter from '@c/reminder/Presenter'
 import WorkspacesPicker from '@c/workspaces/Picker'
 import TasksOptions from '@c/tasks/Options'
 
-async function fetchData(route) {
-    if(!isNaN(route.params.id) && Number.isInteger(parseInt(route.params.id))) {
-        return {
-            mode: 'view',
-            task: await vuex.dispatch('tasks/get', parseInt(route.params.id))
-        }
-    } else {
-        return {
-            mode: 'create',
-            task: new Vue.$FeathersVuex.Task({ workspaceId: vuex.getters['workspaces/current'].id })
-        }
-    }
-}
-
 export default {
     components: { Inputt, TagsPicker, StatePresenter, DoneIndicator, TodayIndicator, ReminderPresenter },
     mixins : [ 
@@ -134,7 +120,7 @@ export default {
     data: () =>({
         mode: null,
         edited: false,
-        task: new (Vue.$FeathersVuex.Task)(),
+        task: null,
         loading: true,
     }),
     props: {
@@ -149,7 +135,6 @@ export default {
         },
 
         async save({ explicit = false } = {}) {
-            console.log('save called')
             // If save is triggered by a change event on a component and 
             // task is in create mode, don't save the task, so the page 
             // will not close unexpected.
@@ -175,6 +160,16 @@ export default {
                 this.$refs.inputt.focus()
             }
         },
+        async fetchData() {
+            if(!isNaN(this.id) && Number.isInteger(parseInt(this.id))) {
+                this.mode = 'view'
+                this.task = (await this.getTask(parseInt(this.id)))
+            } else {
+                this.mode = 'create'
+                this.task = new this.$FeathersVuex.Task({ workspaceId: this.currentWorkspace.id })
+            }
+        }
+
     },
     computed: {
         isView() {
@@ -187,29 +182,14 @@ export default {
             return this.isView ? this.edited : false
         }
     },
-    mounted() {
-        this.afterEnter()
+    created() {
+        this.fetchData()
     },
-    async beforeRouteUpdate(to, from, next) {
-        const { mode, task } = await fetchData(to)
-        next(vue => {
-            vue.mode = mode
-            vue.task = task
-            vue.$nextTick(() => {
-                vue.loading = false
-            })
-            vue.afterEnter()
-        })
-    },
-    async beforeRouteEnter(to, from, next) {
-        const { mode, task } = await fetchData(to)
-        next(vue => {
-            vue.mode = mode
-            vue.task = task
-            vue.$nextTick(() => {
-                vue.loading = false
-            })
-        })
+    watch: {
+        id: function() {
+            this.fetchData()
+            this.afterEnter() 
+        }
     }
 }
 </script>

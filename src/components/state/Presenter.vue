@@ -33,9 +33,9 @@
                 Add Date
             </div>
         </div>
-        <state-picker @change="$emit('change', $event); log('picker')" v-model="value" :state="modalState('state-picker')" @hide="hideModal('state-picker')"/>
-        <personpicker @input="$emit('change', $event); log('person')" v-model="value.waiting_for" :state="modalState('personpicker')" @hide="hideModal('personpicker')"></personpicker>
-        <datepicker @input="$emit('change', $event); log('date')" v-model="value.deadline" :state="modalState('datepicker')" @hide="hideModal('datepicker')"></datepicker>
+        <state-picker @change="$emit('change', $event)" v-model="value" :state="modalState('state-picker')" @hide="hideModal('state-picker')"/>
+        <personpicker @input="$emit('change', $event)" v-model="value.waiting_for" :state="modalState('personpicker')" @hide="hideModal('personpicker')"></personpicker>
+        <datepicker @input="$emit('change', $event)" v-model="value.deadline" :state="modalState('datepicker')" @hide="hideModal('datepicker')"></datepicker>
     </div>
 </template> 
 
