@@ -5,7 +5,8 @@ export default function(theme) {
     return {
         metaInfo() {
             console.log('recall')
-            let { dark, light } = typeof theme == 'function' ? theme(this) : theme
+            let values = typeof theme == 'function' ? theme(this) : theme
+            let { dark, light } = typeof values == 'object' ? values : { dark: values, light: values }
 
             if(colors[dark] != undefined) {
                 dark = colors[dark]

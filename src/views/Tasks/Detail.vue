@@ -3,9 +3,14 @@
         <div v-if="task" class="bg-white dark:bg-black dark:text-white">
 
             <!-- Save Button -->
-            <div v-show="isCreate || isEdit" @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide fixed bottom-0 right-0 m-8 cursor-pointer select-none">
-                <i class="feather icon-check text-2xl mr-2"></i>
-                Save
+            <div v-show="isCreate || isEdit" class="fixed bottom-0 right-0 m-8 flex flex-row items-center" >
+                <!-- <div @click="remove" class="rounded-full bg-red-lighter text-red-darker p-2 mr-4 flex flex-row items-center justify-center text-base uppercase tracking-wide cursor-pointer select-none">
+                    <i class="feather icon-trash"></i>
+                </div> -->
+                <div @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide cursor-pointer select-none">
+                    <i class="feather icon-check text-2xl mr-2"></i>
+                    Save
+                </div>
             </div>
 
             <!-- Header Part -->
@@ -24,12 +29,13 @@
                     <!-- Options Button -->
                     <i :class="{'opacity-0': isCreate}" @click="!isCreate ? showModal('tasks-options', $event) : null" class="feather icon-more-vertical cursor-pointer select-none"></i>
                 </div>
-                <div class="flex flex-row items-center justify-between">
+                <div class="flex flex-row items-start justify-between">
                     <!-- State -->
                     <done-indicator @change="save()" :task="task" class="text-2xl mr-6 float-left"></done-indicator>
 
                     <!-- Title -->
-                    <inputt @press-enter="save({ explicit: true })" ref="inputt" @input="setEdited" iclass="font-bold text-2xl border-none w-full dark:text-grey-lighter" v-model="task.title" placeholder="My new task" type="text"></inputt>
+                    <textarea-autosize @keyup.enter="save({ explicit: true })" ref="inputt" @input="setEdited" class="font-bold text-2xl border-none w-full dark:text-grey-lighter bg-transparent" rows="1" v-model="task.title" placeholder="My new task"></textarea-autosize>
+                    <!-- <inputt @press-enter="save({ explicit: true })" ref="inputt" @input="setEdited" iclass="font-bold text-2xl border-none w-full dark:text-grey-lighter" v-model="task.title" placeholder="My new task" type="text"></inputt> -->
 
                     <!-- Today -->
                     <today-indicator @change="save()" :task="task" class="text-2xl ml-6 float-right" darker></today-indicator>
@@ -97,6 +103,7 @@ import TodayIndicator from '@c/today/Indicator'
 import ReminderPresenter from '@c/reminder/Presenter'
 import WorkspacesPicker from '@c/workspaces/Picker'
 import TasksOptions from '@c/tasks/Options'
+import TextareaAutosize from 'vue-textarea-autosize'
 
 export default {
     components: { Inputt, TagsPicker, StatePresenter, DoneIndicator, TodayIndicator, ReminderPresenter },
@@ -134,6 +141,15 @@ export default {
             this.edited = true
         },
 
+        remove() {
+            if(this.isCreate) {
+                this.$router.back()
+            } else {
+                this.task.reset()
+                this.edited = false
+            }
+        },
+
         async save({ explicit = false } = {}) {
             // If save is triggered by a change event on a component and 
             // task is in create mode, don't save the task, so the page 
@@ -157,7 +173,7 @@ export default {
         },
         afterEnter() {
             if(this.isCreate) {
-                this.$refs.inputt.focus()
+                this.$refs.inputt.$el.focus()
             }
         },
         async fetchData() {

@@ -5,11 +5,11 @@
       <!-- Normal Page -->
       <div class="overflow-hidden hidden lg:flex flex-row items-stretch justify-stretch h-full">
 
-        <div class="flex flex-col items-stretch justify-between w-1/6 border-r border-grey-light">
+        <div class="flex flex-col items-stretch justify-between w-1/6 border-r border-grey-light dark:border-grey-darker">
           <div class="flex flex-col">
 
             <!-- Search Bar -->
-            <greeting class="overflow-hidden"></greeting>
+            <greeting :class="{ 'border-b border-grey-light dark:border-grey-darker': workspace.isInbox() }" class="overflow-hidden"></greeting>
 
             <!-- Sections -->
             <div class="mx-4 mt-8">
@@ -25,9 +25,9 @@
                 Workspaces
               </div>
               <div class="flex flex-col items-start justify-start">
-                <div v-for="workspace of workspaces" :key="workspace.id" @click="setWorkspace(workspace)" :class="{ 'text-blue font-bold': isActiveWorkspace(workspace), 'text-grey-darkest': !isActiveWorkspace(workspace) }" class="px-4 py-2 cursor-pointer select-none flex flex-row items-center transition">
-                  <i :class="{ [workspace.getIcon()]: true, 'opacity-0': !isActiveWorkspace(workspace) }" :style="{ transform: !isActiveWorkspace(workspace) ? 'translateX(25%)' : '' }" class="text-blue feather transition mr-4"></i>
-                  <span>{{ workspace.name }}</span>
+                <div v-for="workspace of workspaces" :key="workspace.id" @click="setWorkspace(workspace)" :class="{ 'font-bold': isActiveWorkspace(workspace), 'text-grey-darkest dark:text-grey': !isActiveWorkspace(workspace) }" class="px-4 py-2 cursor-pointer select-none flex flex-row items-center transition">
+                  <i :class="{ [workspace.getIcon()]: true, 'opacity-0': !isActiveWorkspace(workspace) }" :style="{ transform: !isActiveWorkspace(workspace) ? 'translateX(25%)' : '' }" class="text-blue dark:text-blue-light feather transition mr-4"></i>
+                  <span class="transition">{{ workspace.name }}</span>
                 </div>
               </div>
             </div>
@@ -35,7 +35,7 @@
           </div>
 
           <!-- Navigation -->
-          <div class="flex flex-col items-stretch justify-start text-grey-darkest mb-8">
+          <div class="flex flex-col items-stretch justify-start text-grey-darkest dark:text-grey-lightest mb-8">
             <div class="mx-6 cursor-pointer select-none mb-8" @click="$router.push('/summary')">
               <i class="feather icon-pie-chart mr-4"></i>
               Summary
@@ -51,24 +51,24 @@
         <div class="flex flex-col items-stretch justify-start overflow-auto relative" :class="isDetailActive ? 'w-1/2' : 'w-5/6'">
 
           <!-- Top Bar -->
-          <div class="  flex-col items-stretch justify-start border-b border-grey-light">
+          <div class="  flex-col items-stretch justify-start border-b border-grey-light dark:border-grey-darker">
 
             <div class="mx-8 mt-8 mb-3 text-sm flex flex-row items-center">
-              <div class="text-blue font-bold">Todoninja</div>
-              <div class="text-blue font-bold mx-2">-</div>
+              <div class="text-blue dark:text-blue-light font-bold">Todoninja</div>
+              <div class="text-blue dark:text-blue-light font-bold mx-2">-</div>
               <div class="text-grey"> Todo PWA</div> 
             </div>
 
             <transition name="opacity" mode="out-in">
               <div :key="workspace.id" class="text-5xl m-8 mt-0 flex flex-row items-center justify-start">
-                <i class="feather text-3xl mr-4 rounded-lg p-2" :class="{ [workspace.getIcon()]: true, [`bg-${workspace.getColor()}-lightest text-${workspace.getColor()}`]: !workspace.isInbox(), 'border-2 border-grey': workspace.isInbox() }"></i>
+                <i class="feather text-3xl mr-4 rounded-lg p-2" :class="{ [workspace.getIcon()]: true, [`bg-${workspace.getColor()}-lightest dark:bg-${workspace.getColor()}-darker text-${workspace.getColor()} dark:text-${workspace.getColor()}-lighter`]: !workspace.isInbox(), 'border-2 border-grey': workspace.isInbox() }"></i>
                 {{ workspace.name }}
               </div>
             </transition>
 
             <div class="flex flex-row items-stretch justify-start self-start -mb-px mx-8 mt-2">
-              <div :class="!isInbox ? 'border-blue' : 'border-transparent'" class="border-b-3 flex flex-row items-center pb-6 cursor-pointer select-none">
-                <div :class="!isInbox ? '' : 'opacity-50'" class="rounded-full bg-blue-lightest text-blue px-2 py-1 mr-2 font-bold text-xs">
+              <div :class="!isInbox ? 'border-blue dark:border-blue-light' : 'border-transparent'" class="border-b-3 flex flex-row items-center pb-6 cursor-pointer select-none">
+                <div :class="!isInbox ? '' : 'opacity-50'" class="rounded-full bg-blue-lightest dark:bg-blue-darker dark:text-blue-light text-blue px-2 py-1 mr-2 font-bold text-xs">
                   {{ tasksCount }}
                 </div>
                 <div :class="!isInbox ? 'font-bold' : ''">
@@ -97,11 +97,11 @@
           </div>
 
           <navigation-item v-if="!($route.name == 'Tasks.Create')" link="/tasks/create" class="transition hidden md:flex absolute right-0 bottom-0 z-10 m-8">
-            <i class="feather icon-plus text-blue p-3 rounded-full bg-white shadow-lg mr-4 text-2xl"></i>
+            <i class="feather icon-plus text-blue dark:text-blue-light p-3 rounded-full bg-white dark:bg-black-deep shadow-lg mr-4 text-2xl"></i>
           </navigation-item>
         </div>
 
-        <router-view :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l border-grey-light"></router-view>
+        <router-view :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l border-grey-light dark:border-grey-darker"></router-view>
 
       </div>
 

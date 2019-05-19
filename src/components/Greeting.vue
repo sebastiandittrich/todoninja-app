@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="{ 'border-b border-grey-light dark:border-none': selectedWorkspace.isInbox() }" class="py-4 px-6 flex flex-row items-center justify-between lg:py-6 transition" :style="!selectedWorkspace.isInbox() ? gradient : { }" @click="$router.push('/search')">
+    <div class="py-4 px-6 flex flex-row items-center justify-between lg:py-6 transition" :style="!selectedWorkspace.isInbox() ? gradient : { }" @click="$router.push('/search')">
       <span :class="{ 'text-grey-lighter': !selectedWorkspace.isInbox(), 'text-grey-darker dark:text-grey-light': selectedWorkspace.isInbox() }" class="cursor-pointer select-none mr-2 truncate"><i class="feather icon-search mr-2"></i> Search for a task...</span>
       <div v-if="isExtended" :class="{ 'text-white': !selectedWorkspace.isInbox() }" class="md:hidden flex flex-row items-center text-sm cursor-pointer select-none dark:text-white" @click.stop="showModal('workspaces-picker', $event)">
         <i v-if="selectedWorkspace.isInbox()" class="feather icon-inbox mr-2"></i>

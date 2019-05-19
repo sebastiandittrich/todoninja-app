@@ -25,10 +25,10 @@
 
 
 <script>
-import { loading } from '@/mixins'
+import { loading, themeColor } from '@/mixins'
 
 export default {
-    mixins: [ loading ],
+    mixins: [ loading, themeColor({ dark: 'black', light: 'white' }) ],
     computed: {
         isLoggedIn() {
             return !!this.$store.state.auth.accessToken
