@@ -13,7 +13,7 @@
                         </div>
                         <div v-if="task.isDeadlineToday()" class="ml-1">
                             &bull;
-                            <span class="text-blue font-bold">
+                            <span class="text-blue dark:text-blue-light font-bold">
                                 Today
                             </span>
                         </div>

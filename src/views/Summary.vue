@@ -34,6 +34,7 @@
 <script>
 import State from '@/assets/js/State'
 import _ from 'lodash'
+import { themeColor } from '@/mixins'
 
 import SummaryWeekList from '@c/summary/week/List'
 import ProgressCircle from '@c/progress/Circle'
@@ -41,6 +42,7 @@ import InfiniteLoading from 'vue-infinite-loading'
 
 export default {
     components: { SummaryWeekList, ProgressCircle, InfiniteLoading },
+    mixins: [ themeColor({ dark: 'black-deep', light: 'white' }) ],
     data: () => ({
         weeks: [],
         nextweek: 0,
@@ -87,10 +89,5 @@ export default {
     mounted() {
         this.fetchData()
     },
-    metaInfo: {
-        meta: [
-            { name: 'theme-color', content: '#000000' }
-        ]
-    }
 }
 </script>

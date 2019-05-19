@@ -13,7 +13,15 @@
 </template> 
 
 <script>
+import { themeColor } from '@/mixins'
+
 export default {
+    mixins: [ 
+        // themeColor(vue => {
+        //     // console.log(vue.cssText)
+        //     return { dark: 'white', light: 'white' }
+        // })
+    ],
     props: {
         state: Object,
         positioned: {

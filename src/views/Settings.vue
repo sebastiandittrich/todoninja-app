@@ -107,8 +107,7 @@
 </template>
 
 <script>
-import hasModals from '@/mixins/hasModals'
-import store from '@/mixins/store'
+import { hasModals, store, themeColor } from '@/mixins'
 
 import TagsPicker from '@c/tags/Picker'
 import SettingsCard from '@c/settings/Card'
@@ -119,6 +118,7 @@ import Switchbox from '@c/SwitchBox'
 export default {
     components: { TagsPicker, SettingsCard, PushToggle, Switchbox },
     mixins: [
+        themeColor({ dark: 'grey-darker', light: 'grey-lighter' }),
         hasModals({ WorkspacesPicker }),
         store({
             state: {
@@ -152,13 +152,6 @@ export default {
             window.location.reload()
         },
     },
-    metaInfo() {
-        return {
-            meta: [
-                { name: 'theme-color', content: (this.$store.getters['darkmode/isOn'] ? '#606f7b' : '#f1f5f8') }
-            ]
-        }
-    }
 }
 </script>
 

@@ -131,7 +131,7 @@
 </style>
 
 <script>
-import store from '@/mixins/store'
+import { store, themeColor } from '@/mixins'
 
 import Greeting from '@c/Greeting'
 import SectionsBar from '@c/sections/Bar'
@@ -146,6 +146,7 @@ import TasksAll from '@c/tasks/All'
 export default {
   components: { Greeting, SectionsBar, TasksList, NavigationBar, NavigationItem, NavigationSidebar, TasksDo, TasksToday, TasksAll },
   mixins: [ 
+    themeColor({ dark: 'black', light: 'white' }),
     store({ 
       getters: {
         workspace: 'workspaces/current',
@@ -224,10 +225,5 @@ export default {
       }
     }
   },
-  metaInfo: {
-    meta: [
-      { name: 'theme-color', content: '#22292f' }
-    ]
-  }
 }
 </script>

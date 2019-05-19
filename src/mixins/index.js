@@ -8,8 +8,10 @@ import log from './log'
 import requiresPush from './requires-push'
 import sameWatcher from './sameWatcher'
 import store from './store'
+import themeColor from './themeColor'
 
 export { 
+    themeColor,
     isModal,
     error,
     form,

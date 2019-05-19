@@ -1,5 +1,10 @@
-const readable = {
-    yellow: 'dark'
+import store from '@/store'
+
+function readable() {
+    return {
+        yellow: 'dark',
+        blue: store.getters['darkmode/isOn'] ? 'light' : undefined
+    }
 }
 
 export default {
@@ -7,7 +12,7 @@ export default {
 
     getColor() {
         if(this.isInbox()) {
-            return 'black'
+            return store.getters['darkmode/isOn'] ? 'white' : 'black'
         }
 
         if(!this.color) {
@@ -18,8 +23,8 @@ export default {
     },
 
     readableColor() {
-        if(typeof readable[this.getColor()] == 'string') {
-            return this.getColor() + '-' + readable[this.getColor()]
+        if(typeof readable()[this.getColor()] == 'string') {
+            return this.getColor() + '-' + readable()[this.getColor()]
         }
 
         return this.getColor()

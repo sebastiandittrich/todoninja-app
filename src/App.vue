@@ -17,7 +17,7 @@ import '@/assets/css/main.css';
 import '@/assets/css/iconfont.css';
 import '@/assets/css/transitions.css'
 import * as Sentry from '@sentry/browser'
-import store from '@/mixins/store'
+import { store, themeColor } from '@/mixins'
 
 import Splashscreen from '@c/Splashscreen'
 import EventsList from '@c/events/List'
@@ -27,6 +27,7 @@ import Progress from 'vue-top-progress'
 export default {
   components: { Splashscreen, EventsList, NavigationBar, Progress },
   mixins: [
+    themeColor({ dark: 'black', light: 'white' }),
     store({
       getters: {
         dark: 'darkmode/isOn'

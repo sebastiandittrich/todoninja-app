@@ -85,8 +85,7 @@
 
 
 <script>
-import hasModals from '@/mixins/hasModals'
-import store from '@/mixins/store'
+import { hasModals, store, themeColor } from '@/mixins'
 import Vue from 'vue'
 import vuex from '@/store'
 
@@ -116,6 +115,10 @@ async function fetchData(route) {
 export default {
     components: { Inputt, TagsPicker, StatePresenter, DoneIndicator, TodayIndicator, ReminderPresenter },
     mixins : [ 
+        themeColor(vue => ({ 
+            dark: vue && vue.task && vue.task.workspace.isInbox() ? 'black' : 'black-deep',
+            light: vue && vue.task && vue.task.workspace.isInbox() ? 'white' : 'blue-lightest'
+        })),
         hasModals({ WorkspacesPicker, TasksOptions }),
         store({
             getters: {

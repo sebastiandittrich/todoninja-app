@@ -19,6 +19,6 @@ module.exports = {
     },
     pwa: {
         name: 'Todoninja',
-        themeColor: '',
+        themeColor: false,
     }
 }
