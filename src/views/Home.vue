@@ -5,11 +5,11 @@
       <!-- Normal Page -->
       <div class="overflow-hidden hidden lg:flex flex-row items-stretch justify-stretch h-full">
 
-        <div class="flex flex-col items-stretch justify-between w-1/6 border-r border-grey-light dark:border-grey-darker">
+        <div class="flex flex-col items-stretch justify-between w-1/6 border-r border-grey-light dark:border-grey-darkest">
           <div class="flex flex-col">
 
             <!-- Search Bar -->
-            <greeting :class="{ 'border-b border-grey-light dark:border-grey-darker': workspace.isInbox() }" class="overflow-hidden"></greeting>
+            <greeting :class="{ 'border-b border-grey-light dark:border-grey-darkest': workspace.isInbox() }" class="overflow-hidden"></greeting>
 
             <!-- Sections -->
             <div class="mx-4 mt-8">
@@ -51,7 +51,7 @@
         <div class="flex flex-col items-stretch justify-start overflow-auto relative" :class="isDetailActive ? 'w-1/2' : 'w-5/6'">
 
           <!-- Top Bar -->
-          <div class="  flex-col items-stretch justify-start border-b border-grey-light dark:border-grey-darker">
+          <div class="  flex-col items-stretch justify-start border-b border-grey-light dark:border-grey-darkest">
 
             <div class="mx-8 mt-8 mb-3 text-sm flex flex-row items-center">
               <div class="text-blue dark:text-blue-light font-bold">Todoninja</div>
@@ -101,7 +101,7 @@
           </navigation-item>
         </div>
 
-        <router-view :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l border-grey-light dark:border-grey-darker"></router-view>
+        <router-view :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l border-grey-light dark:border-grey-darkest"></router-view>
 
       </div>
 
