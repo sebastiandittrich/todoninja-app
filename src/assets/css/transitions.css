@@ -142,3 +142,15 @@
 .list-up-leave-active {
     position: absolute;
 }
+
+/* Event */
+.event-description-enter, .event-description-leave-to {
+    opacity: 0;
+    transform: translateY(-100%);
+    padding-top: 0px;
+    margin-top: 0px
+}
+
+.event-description-enter-active, .event-description-leave-active {
+    transition-delay: var(--transition-duration);
+}

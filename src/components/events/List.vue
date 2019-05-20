@@ -1,7 +1,14 @@
 <template>
-    <transition-group name="list-up" class="flex flex-col items-center justify-center">
-        <div v-for="event of events" :key="event.id" :class="'bg-' + event.color + '-lightest text-' + event.color" class="rounded-full shadow-md px-4 py-2 flex flex-row items-center mb-4 font-bold">
-            <i v-if="event.icon" :class="event.icon" class="mr-2"></i> {{ event.message }} <div v-for="action of event.actions" :key="action.name" :class="`text-${event.color}-darkest`" class="uppercase tracking-wide ml-4 cursor-pointer select-none" @click="actionClick(action, event)">{{ action.name }}</div>
+    <transition-group name="list-up" class="flex flex-col items-center justify-center pointer-events-none">
+        <div v-for="event of events" :key="event.id" class="rounded-lg shadow-md mb-4 flex flex-col items-stretch">
+            <div :class="'bg-' + event.color + '-lightest text-' + event.color" class="flex flex-row items-center font-bold rounded-lg px-4 py-2">
+                <i v-if="event.icon" :class="event.icon" class="mr-2"></i> {{ event.message }} <div v-for="action of event.actions" :key="action.name" :class="`text-${event.color}-darkest`" class="pointer-events-auto uppercase tracking-wide ml-4 cursor-pointer select-none" @click="actionClick(action, event)">{{ action.name }}</div>
+            </div>
+            <transition appear name="event-description">
+                <div v-if="event.description && event.description.length > 0" :class="`text-sm px-4 py-2 text-${event.color}-darker bg-${event.color}-lighter rounded-lg -mt-8 pt-10 -z-10`">
+                    {{ event.description }}
+                </div>
+            </transition>
         </div>
         <div v-if="isLoading" key="loader" class="bg-blue-lightest text-blue rounded-full shadow-md px-4 py-2 flex flex-row items-center mb-4 font-bold">
             <Loader loading color="#45547c"></Loader>
@@ -41,6 +48,7 @@ export default {
             if(to) {
                 this.addError({
                     message: 'Something went wrong.',
+                    description: to.errors && to.errors[0] && to.errors[0].message
                 })
             }
         })
