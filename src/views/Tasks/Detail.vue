@@ -1,6 +1,6 @@
 <template>
     <transition name="slide-right" @after-enter="afterEnter">
-        <div v-if="task" class="bg-white dark:bg-black dark:text-white">
+        <div v-if="task" class="bg-white dark:bg-black dark:text-white pb-32">
 
             <!-- Save Button -->
             <div v-show="isCreate || isEdit" class="fixed bottom-0 right-0 m-8 flex flex-row items-center" >
@@ -52,7 +52,7 @@
 
                 <reminder-presenter class="mt-6 w-full" @change="save()" v-model="task"></reminder-presenter>
                 <div class="font-bold text-sm mb-2 mt-8">Description</div>
-                <textarea @input="setEdited" v-model="task.description" class="-z-10 w-full font-light text-lg focus:shadow-lg rounded-lg transition focus:p-2 dark:bg-black" rows="2" placeholder="Describe your task!"></textarea>
+                <textarea-autosize @input="setEdited" v-model="task.description" class="-z-10 w-full font-light text-lg rounded-lg transition dark:bg-black" rows="2" placeholder="Describe your task!"></textarea-autosize>
 
                 <div class="font-bold text-sm mb-2 mt-6">
                     Tags
