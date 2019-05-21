@@ -3,8 +3,8 @@
         <div class="flex flex-row items-center justify-between cursor-pointer select-none" @click="showDatepicker">
             <div class="flex flex-row items-center justify-start">
                 <span class="icon-presenter">
-                    <i class="w-8 h-8 rounded-full" :class="value.remindAt ? 'bg-blue-lightest' : ''"></i>
-                    <i class="feather text-blue" :class="value.remindAt ? 'icon-bell' : 'icon-plus'"></i>
+                    <i class="w-8 h-8 rounded-full" :class="value.remindAt ? 'bg-blue-lightest dark:bg-blue-darker' : ''"></i>
+                    <i class="feather text-blue dark:text-blue-light" :class="value.remindAt ? 'icon-bell' : 'icon-plus'"></i>
                 </span>
                 <div class="flex flex-col items-start justify-start ml-2">
                     <div v-if="!value.remindAt" class="font-bold text-sm text-blue dark:text-blue-light">
