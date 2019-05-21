@@ -23,7 +23,7 @@
                     <done-indicator @change="save()" :task="task" class="text-2xl mr-6 float-left"></done-indicator>
 
                     <!-- Title -->
-                    <textarea-autosize @keyup.enter="save({ explicit: true })" ref="inputt" @input="edited++; debounceSave()" class="font-bold text-2xl border-none w-full dark:text-grey-lighter bg-transparent" rows="1" v-model="task.title" placeholder="My new task"></textarea-autosize>
+                    <textarea-autosize @keyup.enter="save({ explicit: true })" ref="inputt" @input="edited++; debounceSave()" class="font-bold text-2xl border-none w-full dark:text-grey-lighter bg-transparent leading-none" rows="1" v-model="task.title" placeholder="My new task"></textarea-autosize>
 
                     <!-- Today -->
                     <today-indicator @change="save()" :task="task" class="text-2xl ml-6 float-right" darker></today-indicator>
