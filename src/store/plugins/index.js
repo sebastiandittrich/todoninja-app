@@ -13,5 +13,5 @@ export default [
     users,
     pushsubscriptions,
     auth,
-    vuexPersist.plugin
+    vuexPersist.plugin,
 ]

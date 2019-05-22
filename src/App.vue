@@ -30,7 +30,7 @@ export default {
     themeColor({ dark: 'black', light: 'white' }),
     store({
       getters: {
-        dark: 'darkmode/isOn'
+        dark: 'theme/isDark'
       }
     })
   ],

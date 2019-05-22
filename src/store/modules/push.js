@@ -48,7 +48,10 @@ export default {
         },
         neverAskAgain(state) {
             state.dontask = true
-        }
+        },
+        setDontAsk(state, dontask) {
+            state.dontask = dontask
+        },
     },
     actions: {
     

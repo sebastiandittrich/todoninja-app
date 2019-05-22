@@ -208,6 +208,7 @@ export default {
         original_task: {
             deep: true,
             handler(to) {
+                console.log('task changed. edited:', this.edited)
                 if(this.edited == 0) {
                     this.task = to.clone()
                 }
@@ -215,7 +216,7 @@ export default {
         },
         edited(to) {
             console.log('edited', to)
-        }
+        },
     }
 }
 </script>

@@ -97,7 +97,7 @@ export default {
             return colors[this.basecolor + shades[this.ordered.length].slice().reverse()[this.ordered.indexOf(section)]]
         },
         totalcolor() {
-            if(this.$store.getters['darkmode/isOn']) {
+            if(this.$store.getters['theme/isDark']) {
                 return colors[this.basecolor + '-darker']
             }
             return colors[this.basecolor + '-lightest']

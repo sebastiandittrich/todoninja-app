@@ -4,13 +4,14 @@ export default {
         dark: false,
     },
     getters: {
-        isOn(state) {
+        isDark(state) {
             return state.dark
         }
     },
     mutations: {
         setDark(state, dark) {
             state.dark = dark
-        }
+        },
+        reset() {}
     }
 }

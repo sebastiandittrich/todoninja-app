@@ -1,5 +1,7 @@
 import VuexPersistence from 'vuex-persist'
 
+export const persisted = [ 'workspaces', 'theme', 'push', 'tutorial' ]
+
 export default new VuexPersistence({
   reducer: state => ({ 
     workspaces: { 
@@ -12,8 +14,8 @@ export default new VuexPersistence({
       done: state.tutorial.done,
       step: state.tutorial.step
     },
-    darkmode: {
-      dark: state.darkmode.dark
+    theme: {
+      dark: state.theme.dark
     }
   })
 })

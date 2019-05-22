@@ -3,7 +3,7 @@ import store from '@/store'
 function readable() {
     return {
         yellow: 'dark',
-        blue: store.getters['darkmode/isOn'] ? 'light' : undefined
+        blue: store.getters['theme/isDark'] ? 'light' : undefined
     }
 }
 
@@ -12,7 +12,7 @@ export default {
 
     getColor() {
         if(this.isInbox()) {
-            return store.getters['darkmode/isOn'] ? 'white' : 'black'
+            return store.getters['theme/isDark'] ? 'white' : 'black'
         }
 
         if(!this.color) {

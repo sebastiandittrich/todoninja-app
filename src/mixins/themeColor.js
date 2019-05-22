@@ -16,7 +16,7 @@ export default function(theme) {
 
             return {
                 meta: [
-                    { vmid: 'themeColor', name: 'theme-color', content: (this.$store.getters['darkmode/isOn'] ? dark : light) }
+                    { vmid: 'themeColor', name: 'theme-color', content: (this.$store.getters['thtme/isDark'] ? dark : light) }
                 ]
             }
         }

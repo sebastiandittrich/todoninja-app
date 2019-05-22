@@ -23,6 +23,12 @@ export default {
         },
         skip(state) {
             state.done = true
+        },
+        setStep(state, step) {
+            state.step = step
+        },
+        setDone(state, done) {
+            state.done = done
         }
     }
 }

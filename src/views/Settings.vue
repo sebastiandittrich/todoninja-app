@@ -125,7 +125,7 @@ export default {
                 user: state => state.auth.user,
             },
             mutations: {
-                setDark: 'darkmode/setDark'
+                setDark: 'theme/setDark'
             },
             actions: {
                 logout: 'auth/logout',
@@ -133,7 +133,7 @@ export default {
             getters: {
                 workspaces: 'workspaces/list',
                 tags: 'tags/list',
-                dark: 'darkmode/isOn',
+                dark: 'theme/isDark',
             },
         })
     ],
@@ -146,9 +146,17 @@ export default {
         },
     },
     methods: {
+        resetStore() {
+            this.$store.commit('workspaces/setCurrent', null)
+            this.$store.commit('theme/setDark', false)
+            this.$store.commit('push/setDontAsk', false)
+            this.$store.commit('tutorial/setDone', false)
+            this.$store.commit('tutorial/setStep', 0)
+        },
         async logoutClick() {
+            await this.$store.dispatch('push/deactivate')
             await this.logout()
-            localStorage.clear()
+            this.resetStore()
             window.location.reload()
         },
     },
