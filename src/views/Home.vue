@@ -133,7 +133,7 @@
 </style>
 
 <script>
-import { store, themeColor } from '@/mixins'
+import { store, themeColor, color } from '@/mixins'
 
 import Greeting from '@c/Greeting'
 import SectionsBar from '@c/sections/Bar'
@@ -144,10 +144,11 @@ import NavigationSidebar from '@c/navigation/Sidebar'
 import TasksDo from '@c/tasks/Do'
 import TasksToday from '@c/tasks/Today'
 import TasksAll from '@c/tasks/All'
+import Loader from '@c/loader'
 
 export default {
-  components: { Greeting, SectionsBar, TasksList, NavigationBar, NavigationItem, NavigationSidebar, TasksDo, TasksToday, TasksAll },
-  mixins: [ 
+  components: { Greeting, SectionsBar, TasksList, NavigationBar, NavigationItem, NavigationSidebar, TasksDo, TasksToday, TasksAll, Loader },
+  mixins: [
     themeColor({ dark: 'black', light: 'white' }),
     store({ 
       getters: {

@@ -1,14 +1,22 @@
-const test_mixed = ['show:String', 'state: Number']
-const test_mixed_2 = 'show:String|state: Number | other: Array'
-const test_mixed_3 = '1|2|3'
-const test_mixed_4 = 'String|required|max:255'
+import { theme } from '@/../tailwind.config.js'
+import store from '@/store'
+const { colors } = theme
 
-test_plan_1 = { type: Object, pairs: { required: Boolean, show:  } }
+export function dependsOnTheme({ dark, light }) {
+    return store.getters['theme/isDark'] ? dark : light
+}
+
+export function singleColor(color) {
+    if(colors[color] != undefined) {
+        return colors[color]
+    }
+    return color
+}
+
+export function color(value) {
+    return typeof value == 'string' ? singleColor(value) : singleColor(dependsOnTheme(value))
+}
 
 export default {
-
-    parseObject(mixed, plan) {
-
-    }
-
+    color,
 }

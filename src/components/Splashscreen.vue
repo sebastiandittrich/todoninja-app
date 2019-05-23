@@ -1,34 +1,18 @@
 <template>
     <div class="flex flex-col items-center justify-center h-full text-center text-3xl font-light text-grey-darkest dark:text-grey-lightest p-8">
         Welcome back {{ user && user.name && user.name.split(' ')[0] }}!
-        <i class="feather icon-loader mt-16"></i>
+        <Loader class="w-16 mt-16" :color="{ dark: 'white', light: 'black' } | color"></Loader>
     </div>
 </template>
 
-<style scoped>
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg)
-        }
-        50% {
-            transform: rotate(180deg)
-        }
-        0% {
-            transform: rotate(360deg)
-        }
-    }
-
-    .icon-loader {
-        animation: spin 2s linear infinite;
-    }
-</style>
-
-
 <script>
-import { loading, themeColor } from '@/mixins'
+import { themeColor } from '@/mixins'
+
+import Loader from '@c/loader'
 
 export default {
-    mixins: [ loading, themeColor({ dark: 'black', light: 'white' }) ],
+    mixins: [ themeColor({ dark: 'black', light: 'white' }) ],
+    components: { Loader },
     computed: {
         isLoggedIn() {
             return !!this.$store.state.auth.accessToken

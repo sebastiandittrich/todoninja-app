@@ -8,8 +8,7 @@ import VueTouch from 'vue-touch'
 import VueMeta from 'vue-meta'
 import * as Sentry from '@sentry/browser'
 import Overdrive from 'vue-overdrive'
-import log from '@/mixins/log'
-import timeout from '@/mixins/timeout'
+import { log, timeout, color } from '@/mixins'
 import 'jquery'
 import 'jquery-mousewheel'
 
@@ -32,6 +31,7 @@ Vue.use(VueMeta)
 
 Vue.mixin(log)
 Vue.mixin(timeout)
+Vue.mixin(color)
 
 Vue.config.productionTip = false;
 
