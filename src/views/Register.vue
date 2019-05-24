@@ -21,11 +21,9 @@
           <inputt classes="mt-4 pb-2 mx-8" name="Email" placeholder="john.doe@domain.com" type="email" v-model="email"></inputt>
           <inputt classes="mt-4 pb-2 mx-8" name="Password" placeholder="********" type="password" v-model="password"></inputt>
 
-          <div class="button m-8" @click="submitForm">
+          <bbutton class="m-8" @click="submitForm" :loading="loading">
               Register
-          </div>
-
-          <Loader color="#45547c" class="inline-block" :loading="loading"></Loader>
+          </bbutton>
 
         </div>
 

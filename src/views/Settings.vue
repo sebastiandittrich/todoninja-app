@@ -122,7 +122,7 @@ export default {
         hasModals({ WorkspacesPicker }),
         store({
             state: {
-                user: state => state.auth.user,
+                user: state => state.auth.user || {},
             },
             mutations: {
                 setDark: 'theme/setDark'

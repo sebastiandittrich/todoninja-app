@@ -1,16 +1,14 @@
 <template>
-    <div @click="$emit('click', $event)" class="stacking">
+    <div @click="$emit('click', $event)" class="stacking items-center">
         <input :checked="value" type="checkbox" style="display: none" :name="$options._scopeId" :id="$options._scopeId" :disabled="disabled">
         <span :class="{ 'opacity-25': loading }" :for="$options._scopeId" class="toggle"><span></span></span>
 
-        <Loader :loading="loading" color="#45547c" ></Loader>
+        <Loader v-if="loading" color="#45547c" ></Loader>
     </div>
 </template>
 
 <script>
-import Loader from 'vue-spinner/src/ClipLoader.vue';
-
-Loader.name = 'Loader'
+import Loader from '@c/loader';
 
 export default {
     components: { Loader },

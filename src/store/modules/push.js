@@ -70,7 +70,7 @@ export default {
         },
     
         async deactivate({ dispatch, state }) {
-            await state.subscription.unsubscribe()
+            await state.subscription && state.subscription.unsubscribe()
             dispatch('initialize')
         },
     

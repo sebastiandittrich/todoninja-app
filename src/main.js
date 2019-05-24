@@ -9,6 +9,7 @@ import VueMeta from 'vue-meta'
 import * as Sentry from '@sentry/browser'
 import Overdrive from 'vue-overdrive'
 import { log, timeout, color } from '@/mixins'
+import BButton from '@c/bbutton'
 import 'jquery'
 import 'jquery-mousewheel'
 
@@ -32,6 +33,8 @@ Vue.use(VueMeta)
 Vue.mixin(log)
 Vue.mixin(timeout)
 Vue.mixin(color)
+
+Vue.component('bbutton', BButton)
 
 Vue.config.productionTip = false;
 

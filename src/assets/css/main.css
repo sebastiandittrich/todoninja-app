@@ -121,6 +121,16 @@ button:focus {
     @apply button-hover bg-red;
 }
 
+.stacking {
+    display: grid;
+    grid-template: 'content' 1fr / 1fr;
+    justify-items: stretch;
+    align-items: stretch;
+}
+.stacking > * {
+    grid-area: content;
+}
+
 
 .vue-datepicker {
     @apply border-none !important;
@@ -168,16 +178,6 @@ button:focus {
 
 .bg-theme-gradient {
     background: linear-gradient(-45deg, hsl(224, 28%, 38%), hsl(180, 28%, 38%));
-}
-
-.stacking {
-    display: grid;
-    grid-template: 'content' 1fr / 1fr;
-    justify-items: stretch;
-    align-items: stretch;
-}
-.stacking > * {
-    grid-area: content;
 }
 
 .transition {

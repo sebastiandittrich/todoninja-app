@@ -1,6 +1,4 @@
-import Loader from 'vue-spinner/src/PulseLoader.vue';
-
-Loader.name = 'Loader';
+import Loader from '@c/loader';
 
 export default {
   components: { Loader },
