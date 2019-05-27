@@ -2,6 +2,17 @@
     <transition name="slide-right" @after-enter="afterEnter">
         <div v-if="task" class="bg-white dark:bg-black dark:text-white pb-32">
 
+            <!-- Save Button -->
+            <div v-show="isCreate || isEdit" class="fixed bottom-0 right-0 m-8 flex flex-row items-center" >
+                <!-- <div @click="remove" class="rounded-full bg-red-lighter text-red-darker p-2 mr-4 flex flex-row items-center justify-center text-base uppercase tracking-wide cursor-pointer select-none">
+                    <i class="feather icon-trash"></i>
+                </div> -->
+                <div @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide cursor-pointer select-none">
+                    <i class="feather icon-check text-2xl mr-2"></i>
+                    Save
+                </div>
+            </div>
+
             <!-- Header Part -->
             <div class="p-6 relative" :class="task.workspace.isInbox() ? 'inbox-pattern border-b border-grey-light dark:border-grey-darkest' : 'bg-blue-lightest dark:bg-black-deep'">
                 <div class="flex flex-row items-center justify-between mb-6 text-2xl">
@@ -23,7 +34,7 @@
                     <done-indicator @change="save()" :task="task" class="text-2xl mr-6 float-left"></done-indicator>
 
                     <!-- Title -->
-                    <textarea-autosize @keyup.enter="save({ explicit: true })" ref="inputt" @input="edited++; debounceSave()" class="font-bold text-2xl border-none w-full dark:text-grey-lighter bg-transparent leading-none" rows="1" v-model="task.title" placeholder="My new task"></textarea-autosize>
+                    <textarea-autosize @keyup.enter="save({ explicit: true })" ref="inputt" @input="setEdited" class="font-bold text-2xl border-none w-full dark:text-grey-lighter bg-transparent leading-none" rows="1" v-model="task.title" placeholder="My new task"></textarea-autosize>
 
                     <!-- Today -->
                     <today-indicator @change="save()" :task="task" class="text-2xl ml-6 float-right" darker></today-indicator>
@@ -40,7 +51,7 @@
 
                 <reminder-presenter class="mt-6 w-full" @change="save()" v-model="task"></reminder-presenter>
                 <div class="font-bold text-sm mb-2 mt-8">Description</div>
-                <textarea-autosize @input="edited++; debounceSave()" v-model="task.description" class="-z-10 w-full font-light text-lg rounded-lg transition dark:bg-black" rows="2" placeholder="Describe your task!"></textarea-autosize>
+                <textarea-autosize @input="setEdited" v-model="task.description" class="-z-10 w-full font-light text-lg rounded-lg transition dark:bg-black" rows="2" placeholder="Describe your task!"></textarea-autosize>
 
                 <div class="font-bold text-sm mb-2 mt-6">
                     Tags
@@ -80,10 +91,9 @@
 
 
 <script>
-import { hasModals, store, themeColor, debounce } from '@/mixins'
+import { hasModals, store, themeColor } from '@/mixins'
 import Vue from 'vue'
 import vuex from '@/store'
-import _ from 'lodash'
 
 import Inputt from '@c/inputt'
 import TagsPicker from '@c/tags/Picker'
@@ -97,7 +107,7 @@ import TextareaAutosize from 'vue-textarea-autosize'
 
 export default {
     components: { Inputt, TagsPicker, StatePresenter, DoneIndicator, TodayIndicator, ReminderPresenter },
-    mixins : [
+    mixins : [ 
         themeColor(vue => ({ 
             dark: vue && vue.task && vue.task.workspace.isInbox() ? 'black' : 'black-deep',
             light: vue && vue.task && vue.task.workspace.isInbox() ? 'white' : 'blue-lightest'
@@ -118,7 +128,6 @@ export default {
         mode: null,
         edited: false,
         task: null,
-        original_task: null,
         loading: true,
     }),
     props: {
@@ -141,12 +150,6 @@ export default {
             }
         },
 
-        debounceSave: _.debounce(function() {
-            setTimeout(() => {
-                this.save()
-            }, 0);
-        }, 500),
-
         async save({ explicit = false } = {}) {
             // If save is triggered by a change event on a component and 
             // task is in create mode, don't save the task, so the page 
@@ -156,16 +159,14 @@ export default {
             // the page will close
             if( !(this.isCreate && !explicit) ) {
 
-                const lastEdited = this.edited
-                setTimeout(() => {
-                    if(this.edited == lastEdited) this.edited = 0
-                }, 500);
                 await this.task.save()
 
                 if(explicit) this.$store.dispatch('events/success', { message: 'Task ' + (this.isCreate ? 'created.' : 'saved.') })
 
                 if(this.isCreate) {
                     this.$router.go(-1)
+                } else if(this.isEdit) {
+                    this.edited = false
                 }
 
             }
@@ -178,7 +179,7 @@ export default {
         async fetchData() {
             if(!isNaN(this.id) && Number.isInteger(parseInt(this.id))) {
                 this.mode = 'view'
-                this.original_task = (await this.getTask(parseInt(this.id)))
+                this.task = (await this.getTask(parseInt(this.id)))
             } else {
                 this.mode = 'create'
                 this.task = new this.$FeathersVuex.Task({ workspaceId: this.currentWorkspace.id })
@@ -194,7 +195,7 @@ export default {
             return this.mode == 'create'
         },
         isEdit() {
-            return this.isView ? this.edited != 0 : false
+            return this.isView ? this.edited : false
         }
     },
     created() {
@@ -204,19 +205,7 @@ export default {
         id: function() {
             this.fetchData()
             this.afterEnter() 
-        },
-        original_task: {
-            deep: true,
-            handler(to) {
-                console.log('task changed. edited:', this.edited)
-                if(this.edited == 0) {
-                    this.task = to.clone()
-                }
-            }
-        },
-        edited(to) {
-            console.log('edited', to)
-        },
+        }
     }
 }
 </script>
