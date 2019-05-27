@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Upcoming
+### Added
+- Dark Mode.
+- Auto-growing description and title fields for tasks.
+### Changed
+- Tasks are now sorted by done/open by default.
+- Switched to new mixin architecture, page should load faster!
+- Switched to Tailwindcss Version 1.
+- Now using `Ubuntu` Font
+### Fixed
+- The search bar is now better visible on smaller screens.
+- Navigation bar was overlaying some tasks. This is fixed now.
+- Logout now disables push notifications.
+
 ## [1.4.1] - 2019-05-02
 ### Changed
  - More intuitive tags layout.
