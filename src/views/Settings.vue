@@ -70,7 +70,7 @@
             </settings-card>
 
             <settings-card title="Design" class="mt-8">
-                <div class="flex flex-row items-center justify-between -mx-8 px-8 py-3 active:bg-grey-lightest" @click="setDark(!dark)">
+                <div class="flex flex-row items-center justify-between -mx-8 px-8 py-3" @click="setDark(!dark)">
                     <div>
                         <div class="">Dark mode</div>
                         <div class="text-grey-dark text-sm">
@@ -87,16 +87,16 @@
 
             <settings-card title="Info" class="mt-8">
                 <a target="_blank" href="https://gitlab.com/ninja-labs/todoninja-v2/blob/master/CHANGELOG.md">
-                    <div class="-mx-8 px-8 py-3 active:bg-grey-lightest">Changelog</div>
+                    <div class="-mx-8 px-8 py-3">Changelog</div>
                 </a>
-                <div class="-mx-8 px-8 py-3 cursor-pointer select-none active:bg-grey-lightest">
+                <div class="-mx-8 px-8 py-3 cursor-pointer select-none">
                     <div class="">Version</div>
                     <div class="text-grey-dark text-sm">You are using version {{ version }}</div>
                 </div>
             </settings-card>
 
             <settings-card title="About" class="mt-8 mb-32">
-                <a target="_blank" href="https://owner.todoninja.de" class="block -mx-8 px-8 py-3 cursor-pointer select-none active:bg-grey-lightest">
+                <a target="_blank" href="https://owner.todoninja.de" class="block -mx-8 px-8 py-3 cursor-pointer select-none">
                     <div class="">Sebastian Dittrich</div>
                     <div class="text-grey-dark text-sm">The developer of this application</div>
                 </a>
