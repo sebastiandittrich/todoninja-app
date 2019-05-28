@@ -86,6 +86,9 @@
             </settings-card>
 
             <settings-card title="Info" class="mt-8">
+                <router-link to="/stats">
+                    <div class="-mx-8 px-8 py-3">Statistics</div>
+                </router-link>
                 <a target="_blank" href="https://gitlab.com/ninja-labs/todoninja-v2/blob/master/CHANGELOG.md">
                     <div class="-mx-8 px-8 py-3">Changelog</div>
                 </a>

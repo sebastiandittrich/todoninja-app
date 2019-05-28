@@ -67,6 +67,13 @@ const router = new Router({
     },
 
     {
+      path: '/stats',
+      name: 'Stats',
+      component: page('Stats.Index'),
+      meta: { guest: true }
+    },
+
+    {
       path: '/login',
       name: 'login',
       meta: { guest: 'only', hideNavBar: true },

@@ -5,8 +5,10 @@ import users from './users'
 import auth from './auth'
 import pushsubscriptions from './push-subscriptions'
 import vuexPersist from './vuex-persist'
+import stats from './stats'
 
 export default [
+    stats,
     tasks,
     tags,
     workspaces,
