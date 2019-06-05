@@ -37,6 +37,8 @@ deploy:
   stage: deploy
   environment: production
   when: manual
+  only: 
+    - tags
   variables:
     GIT_STRATEGY: none
   script:
