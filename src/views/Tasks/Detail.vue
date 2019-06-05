@@ -51,7 +51,11 @@
 
                 <reminder-presenter class="mt-6 w-full" @change="save()" v-model="task"></reminder-presenter>
                 <div class="font-bold text-sm mb-2 mt-8">Description</div>
-                <textarea-autosize @input="setEdited" v-model="task.description" class="-z-10 w-full font-light text-lg rounded-lg transition dark:bg-black" rows="2" placeholder="Describe your task!"></textarea-autosize>
+
+                <div class="stacking">
+                  <textarea-autosize @input="setEdited" v-model="task.description" class="break-all bg-transparent description-edit" placeholder="Describe your task!"></textarea-autosize>
+                  <div class="description-rendered break-all" v-html="task.renderedDescription()"></div>
+                </div>
 
                 <div class="font-bold text-sm mb-2 mt-6">
                     Tags
@@ -87,7 +91,34 @@
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVQoU2NkIALcevj8PyMhdSBFavKSjHgVwhSBDMOpEFkRToXoirAqxKYIQyEuRSgK8SmCKySkCKyQGEUghQB8xyesWcqJlAAAAABJRU5ErkJggg==) repeat;
   opacity: .2; 
 }
+
+.description-edit {
+  opacity: 0;
+}
+.description-rendered {
+  @apply pointer-events-none;
+  z-index: 1;
+}
+
+
+.description-edit:focus {
+  opacity: 1;
+  z-index: 1;
+}
+
+.description-edit:focus + .description-rendered {
+  opacity: 0;
+  z-index: 0;
+}
+
 </style>
+
+<style>
+.description-rendered a.link {
+  @apply font-normal pointer-events-auto
+}
+</style>
+
 
 
 <script>
@@ -103,7 +134,6 @@ import TodayIndicator from '@c/today/Indicator'
 import ReminderPresenter from '@c/reminder/Presenter'
 import WorkspacesPicker from '@c/workspaces/Picker'
 import TasksOptions from '@c/tasks/Options'
-import TextareaAutosize from 'vue-textarea-autosize'
 
 export default {
     components: { Inputt, TagsPicker, StatePresenter, DoneIndicator, TodayIndicator, ReminderPresenter },

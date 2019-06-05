@@ -79,10 +79,18 @@ button:focus {
   .link {
       @apply font-bold text-grey-darkest transition border-b-2 border-grey;
   }
-
   .link:hover {
       @apply text-black border-black;
   }
+
+#app.dark .link {
+    @apply text-grey-lightest border-grey-dark;
+}
+
+#app.dark .link:hover {
+    @apply text-white border-white;
+}
+
 
 .button {
     @apply cursor-pointer select-none text-blue font-bold self-center mt-8 bg-blue-lightest px-8 py-4 rounded-lg inline-block transition;
