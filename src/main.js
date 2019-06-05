@@ -12,6 +12,7 @@ import { log, timeout, color } from '@/mixins'
 import BButton from '@c/bbutton'
 import 'jquery'
 import 'jquery-mousewheel'
+import VueTextareaAutosize from 'vue-textarea-autosize'
 
 if(window.location.href.includes('ref=makerads')) {
   window.location.href = 'https://todoninja.de/?ref=makerads'
@@ -29,6 +30,7 @@ if(process.env.NODE_ENV == 'production') {
 Vue.use(VueTouch)
 Vue.use(Overdrive)
 Vue.use(VueMeta)
+Vue.use(VueTextareaAutosize)
 
 Vue.mixin(log)
 Vue.mixin(timeout)

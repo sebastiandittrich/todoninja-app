@@ -1,4 +1,5 @@
 import States from '@/assets/js/State'
+import { escape } from 'lodash'
 
 export default function(data, { store, Model, Models }) {
     return {
@@ -53,6 +54,12 @@ export default function(data, { store, Model, Models }) {
         },
         isDeadlineOver() {
             return !this.isDone() && this.hasDeadline() && this.deadlineMoment().isBefore(moment(), 'day')
+        },
+
+        renderedDescription() {
+            return escape(this.description)
+                .replace(/((https|http):\/\/)?[\w]+(\.[^\s.,;]+)+/g, match => `<a target="_blank" href="${match.startsWith('http') ? match : `http://${match}`}" class="link">${match}</a>`)
+                .replace(/\n/g, '<br>')
         },
     
         toggleState() {
