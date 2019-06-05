@@ -24,6 +24,9 @@ before_script:
 
 build:
   stage: build
+  only:
+    - tags
+    - master
   script:
     - echo $(git rev-parse --short=8 HEAD) > .commithash
     - npm install
