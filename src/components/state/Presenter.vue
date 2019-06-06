@@ -21,7 +21,7 @@
                 </div>
                 <div @click.stop="showModal('datepicker', $event)" class="button-secondary button-small mt-0 rounded-l-none" :class="{ 'text-orange dark:text-orange border-orange dark:border-orange bg-orange-lightest dark:bg-orange-darkest': value.isDeadlineOver(), 'text-blue dark:text-blue-light border-blue dark:border-blue-light dark:bg-blue-darkest bg-blue-lightest': value.isDeadlineToday(), 'font-bold': value.isDeadlineOver() || value.isDeadlineToday() }">
                     <i v-if="!value.hasDeadline()" class="feather icon-plus mr-2"></i>
-                    {{ value.hasDeadline() ? value.deadlineMoment().fromNow() : 'Deadline' }}
+                    {{ value.hasDeadline() ? value.humanDeadline() : 'Deadline' }}
                 </div>
             </div>
             <div v-else-if="value.hasDeadline()" @click.stop="showModal('datepicker', $event)" class="button-secondary button-small mt-0">

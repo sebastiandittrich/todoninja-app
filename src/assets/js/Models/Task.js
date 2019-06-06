@@ -80,7 +80,7 @@ export default function(data, { store, Model, Models }) {
             this.deadline = null
         },
         deadlineMoment() {
-            return this.deadline ? moment(this.deadline) : this.deadline
+            return this.deadline ? moment(this.deadline).startOf('day') : this.deadline
         },
         todayMoment() {
             return this.today ? moment(this.today) : this.today
@@ -98,7 +98,12 @@ export default function(data, { store, Model, Models }) {
                 nextWeek: 'dddd',
                 lastDay: '[Yesterday]',
                 lastWeek: '[Last] dddd',
-                sameElse: 'D. MMMM YYYY'
+                sameElse(now) {
+                    if(this.isSame(now, 'year') && this.isAfter(now)) {
+                        return 'D. MMMM'
+                    }
+                    return 'D. MMMM YYYY'
+                }
             }) : null
         },
         humanRemindAt() {
