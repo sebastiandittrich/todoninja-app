@@ -45,11 +45,15 @@ export default {
     async fetchWorkspaceSpecific() {
       await this.$store.dispatch('tasks/findAll', { doneAt: null, workspaceId: this.$store.getters['workspaces/current'].id })
     },
+    async fetchToday() {
+      this.$store.dispatch('tasks/findAll', { today: { $ne: null }, doneAt: null })
+    },
     async fetchData() {
       await this.$store.dispatch('workspaces/findAll')
 
       await this.fetchWorkspaceSpecific()
       this.$store.dispatch('tags/findAll')
+      this.fetchToday()
     },
     initSentry() {
       Sentry.configureScope(scope => {

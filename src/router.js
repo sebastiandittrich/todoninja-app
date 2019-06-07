@@ -60,6 +60,13 @@ const router = new Router({
     },
 
     {
+      path: '/today',
+      name: 'Today',
+      component: page('Today'),
+      meta: { }
+    },
+
+    {
       path: '/summary',
       name: 'Summary',
       component: page('Summary'),
