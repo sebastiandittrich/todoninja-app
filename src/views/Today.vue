@@ -34,7 +34,7 @@ export default {
     }),
     computed: {
         tasks() {
-            return this.$store.getters['tasks/find']({ query: { today: { $ne: null } } }).data
+            return this.$store.getters['tasks/find']({ query: { today: { $ne: null }, doneAt: { $or: [ { $gt: moment().startOf('day') }, null ] } } }).data
         }
     },
     methods: {
