@@ -5,9 +5,6 @@
       <splashscreen v-if="splashscreenVisible" class="absolute inset-0"></splashscreen>
     </transition>
     <events-list class="fixed top-0 inset-x-0 m-4 z-10"></events-list>
-    <transition name="opacity-slide-up">
-      <navigation-bar v-if="showNavBar && !splashscreenVisible" :showAddButton="showAddButton" class="lg:hidden z-10"></navigation-bar>
-    </transition>
   </div>
 </template>
 
@@ -46,7 +43,7 @@ export default {
       await this.$store.dispatch('tasks/findAll', { doneAt: null, workspaceId: this.$store.getters['workspaces/current'].id })
     },
     async fetchToday() {
-      this.$store.dispatch('tasks/findAll', { today: { $ne: null }, doneAt: null })
+      this.$store.dispatch('tasks/findAll', { today: { $ne: null }, doneAt: { $or: [ { $gte: moment().startOf('day') }, null ] } })
     },
     async fetchData() {
       await this.$store.dispatch('workspaces/findAll')
@@ -94,14 +91,6 @@ export default {
 
         event.preventDefault();
       });
-    }
-  },
-  computed: {
-    showAddButton() {
-      return this.$route.meta.showAddButton == true
-    },
-    showNavBar() {
-      return !this.$route.meta.hideNavBar && this.$store.getters['modals/open'] <= 0
     }
   },
   created() {

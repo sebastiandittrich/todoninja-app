@@ -2,53 +2,60 @@
     <transition name="opacity-slide-up">
         <div class="pb-32">
 
-            <div :class="isAddingFromScratch ? 'dark:bg-grey-darkest bg-grey-lighter' : 'dark:bg-black-deep bg-grey-light'" class="transition">
-                <div class="p-4 flex flex-row items-center justify-start text-2xl mx-auto container">
+            <div class="dark:bg-black-deep bg-grey-light">
+                <div class="p-4 px-6 flex flex-row items-center justify-start text-2xl mx-auto container">
                     <i @click="$router.back()" class="feather icon-arrow-left cursor-pointer select-none"></i>
                     <div class="ml-8">Today</div>
                 </div>
             </div>
 
-            <div class="bg-grey-light dark:bg-black-deep" v-if="!isAddingFromScratch">
-                <div class="max-w-2xl mx-auto py-8 px-2">
-                    <tasks-list :tasks="tasks" :filter="false"></tasks-list>
+            <div class="bg-grey-light dark:bg-black-deep">
+                <div class="max-w-2xl mx-auto py-8 px-2 pb-10">
+                    <transition name="opacity" mode="out-in">
+                        <tasks-list key="placeholder" v-if="tasks.length > 0" :tasks="tasks" :filter="false"></tasks-list>
+                        <div key="list" class="flex flex-col items-center justify-start" v-else>
+                            <img src="/img/todaystart.svg" class="w-2/3" >
+                            <div class="mt-8 font-bold text-xl">
+                                No Tasks for today.
+                            </div>
+                            <div @click="showModal('tasks-modal')" class="button bg-blue text-white rounded-full px-4 py-3 mt-6">
+                                <i class="feather icon-compass mr-2"></i> Suggestions
+                            </div>
+                        </div>
+                    </transition>
                 </div>
             </div>
 
-            <div @click="areSuggestionsVisible = !areSuggestionsVisible" class="cursor-pointer select-none flex flex-col items-center justify-center bg-grey-lighter dark:bg-grey-darkest">
-                <div :class="areSuggestionsVisible ? 'text-grey-dark dark:text-grey' : 'text-blue dark:text-blue-light'" class="p-4 font-bold uppercase tracking-wide text-sm flex flex-row items-center">
-                    <i class="feather icon-compass mr-2"></i> Suggestions <i :class="areSuggestionsVisible ? 'icon-chevron-up' : 'icon-chevron-down'" class="feather ml-2"></i>
-                </div>
-                <transition name="expand">
-                    <div v-if="areSuggestionsVisible" class="container mx-auto mt-8 font-bold text-xl max-w-2xl">
-                        <tasks-list :tasks="suggestions" :filter="false" ></tasks-list>
-                    </div>
-                </transition>
-            </div>
+            <tasks-modal :tasks="suggestions" headline="Suggestions" @hide="hideModal('tasks-modal')" :state="modalState('tasks-modal')"></tasks-modal>
+
+            <navigation-bar>
+                <navigation-button @click="showModal('tasks-modal')">
+                    <i class="feather icon-compass"></i>
+                </navigation-button>
+            </navigation-bar>
 
             <!-- Space for bottom bar -->
             <div class="h-32"></div>
+
         </div>
     </transition>
 </template>
 
 <script>
-import { themeColor } from '@/mixins'
+import { themeColor, hasModals } from '@/mixins'
 
 import TasksList from '@c/tasks/List'
+import TasksModal from '@c/tasks/Modal'
 
 export default {
     components: { TasksList },
-    mixins: [ themeColor((vue) => (vue.isAddingFromScratch ? { dark: 'grey-darkest', light: 'grey-lighter' } : { dark: 'black-deep', light: 'grey-light' })) ],
-    data: () => ({
-        areSuggestionsVisible: false
-    }),
+    mixins: [ 
+        themeColor({ dark: 'black-deep', light: 'grey-light' }),
+        hasModals({ TasksModal })
+    ],
     computed: {
         tasks() {
-            return this.$store.getters['tasks/find']({ query: { today: { $ne: null }, doneAt: { $or: [ { $gt: moment().startOf('day') }, null ] } } }).data
-        },
-        isAddingFromScratch() {
-            return this.tasks.length < 1
+            return this.$store.getters['tasks/find']({ query: { today: { $ne: null }, doneAt: { $or: [ { $gte: moment().startOf('day') }, null ] } } }).data
         },
         suggestions() {
             const inPast = { $lte: moment().endOf('day') }
@@ -62,20 +69,5 @@ export default {
             }}).data
         },
     },
-    methods: {
-        mayShowSuggestions() {
-            if(this.isAddingFromScratch) {
-                this.areSuggestionsVisible = true
-            } else if(this.suggestions.length < 1) {
-                this.areSuggestionsVisible = false
-            }
-        }
-    },
-    watch: {
-        'tasks.length': 'mayShowSuggestions'
-    },
-    mounted() {
-        this.mayShowSuggestions()
-    }
 }
 </script>

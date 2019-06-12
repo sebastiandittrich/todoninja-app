@@ -105,6 +105,8 @@
                 </a>
             </settings-card>
 
+            <navigation-bar></navigation-bar>
+
         </div>
     </transition>
 </template>

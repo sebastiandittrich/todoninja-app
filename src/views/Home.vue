@@ -124,6 +124,15 @@
 
       </v-touch>
 
+      <!-- Navigation Bar -->
+      <navigation-bar v-if="!isDetailActive">
+        <navigation-button class="lg:hidden">
+          <router-link to="/tasks/create">
+            <i class="feather icon-plus"></i>
+          </router-link>
+        </navigation-button>
+      </navigation-bar>
+
     </div>
   </transition>
 </template>
@@ -138,7 +147,6 @@ import { store, themeColor, color } from '@/mixins'
 import Greeting from '@c/Greeting'
 import SectionsBar from '@c/sections/Bar'
 import TasksList from '@c/tasks/List'
-import NavigationBar from '@c/navigation/Bar'
 import NavigationItem from '@c/navigation/Item'
 import NavigationSidebar from '@c/navigation/Sidebar'
 import TasksDo from '@c/tasks/Do'
@@ -147,7 +155,7 @@ import TasksAll from '@c/tasks/All'
 import Loader from '@c/loader'
 
 export default {
-  components: { Greeting, SectionsBar, TasksList, NavigationBar, NavigationItem, NavigationSidebar, TasksDo, TasksToday, TasksAll, Loader },
+  components: { Greeting, SectionsBar, TasksList, NavigationItem, NavigationSidebar, TasksDo, TasksToday, TasksAll, Loader },
   mixins: [
     themeColor({ dark: 'black', light: 'white' }),
     store({ 
