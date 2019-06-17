@@ -43,7 +43,7 @@ export default {
       await this.$store.dispatch('tasks/findAll', { doneAt: null, workspaceId: this.$store.getters['workspaces/current'].id })
     },
     async fetchToday() {
-      this.$store.dispatch('tasks/findAll', { today: { $ne: null }, doneAt: { $or: [ { $gte: moment().startOf('day') }, null ] } })
+      this.$store.dispatch('tasks/today')
     },
     async fetchData() {
       await this.$store.dispatch('workspaces/findAll')

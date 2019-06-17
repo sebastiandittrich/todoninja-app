@@ -32,6 +32,14 @@
     padding: 0
 }
 
+.expand-opacity-enter, .expand-opacity-leave-to, .expand-opacity-enter *, .expand-opacity-leave-to *, .expand-opacity-enter *::before, .expand-opacity-leave-to *::before {
+    opacity: 0;
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+    transition: font-size calc( var(--transition-duration) / 2 ) var(--transition-timing), margin calc( var(--transition-duration) / 2 ) var(--transition-timing), padding calc( var(--transition-duration) / 2 ) var(--transition-timing), opacity calc( var(--transition-duration) / 2 ) var(--transition-timing) calc( var(--transition-duration) / 2 )
+}
+
 .scale-enter {
     opacity: 0;
     transform: scale(1.5);
