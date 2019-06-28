@@ -17,8 +17,8 @@
             <div class="p-6 relative" :class="task.workspace.isInbox() ? 'inbox-pattern border-b border-grey-light dark:border-grey-darkest' : 'bg-blue-lightest dark:bg-black-deep'">
                 <div class="flex flex-row items-center justify-between mb-6 text-2xl">
                     <!-- Back button -->
-                    <i @click="$router.go(-1)" class="feather icon-chevron-left lg:hidden cursor-pointer select-none"></i>
-                    <i @click="$router.replace('/tasks')" class="feather icon-x hidden lg:block cursor-pointer select-none"></i>
+                    <i v-if="replaceOnClose" @click="$router.replace('/tasks')" class="feather icon-x cursor-pointer select-none"></i>
+                    <i v-else @click="$router.go(-1)" class="feather icon-chevron-left cursor-pointer select-none"></i>
 
                     <div :class="`text-${task.workspace.getColor()}-darker dark:text-${task.workspace.getColor()}-lighter`" class="flex flex-row items-center text-sm cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
                         <i v-if="task.workspace.isInbox()" :class="task.workspace.getIcon()" class="feather mr-2"></i>
@@ -115,7 +115,7 @@
 
 <style>
 .description-rendered a.link {
-  @apply font-normal pointer-events-auto
+  @apply font-normal pointer-events-auto;
 }
 </style>
 
@@ -164,6 +164,14 @@ export default {
         id: {
             type: Number,
             default: null
+        },
+        today: {
+            type: Boolean,
+            default: false
+        },
+        replaceOnClose: {
+            type: Boolean, 
+            default: false
         }
     },
     methods: {
@@ -212,7 +220,7 @@ export default {
                 this.task = (await this.getTask(parseInt(this.id)))
             } else {
                 this.mode = 'create'
-                this.task = new this.$FeathersVuex.Task({ workspaceId: this.currentWorkspace.id })
+                this.task = new this.$FeathersVuex.Task({ workspaceId: this.currentWorkspace.id, today: this.today ? new Date().toString() : null })
             }
         }
 

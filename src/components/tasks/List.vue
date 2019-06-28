@@ -2,7 +2,7 @@
     <div>
         <filter-bar v-if="filter" :filters="filters" :orderBy="orderBy"></filter-bar>
         <transition-group name="list" tag="div" class="mx-4">
-            <tasks-item v-for="task in displayTasks" :task="task" :key="task.id"></tasks-item>
+            <tasks-item v-for="task in displayTasks" :task="task" :key="task.id" @click="$emit('item-click', task)"></tasks-item>
         </transition-group>
     </div>
 </template>

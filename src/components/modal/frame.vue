@@ -1,9 +1,9 @@
 <template>
     <div>
         <transition :name="isPositioned ? 'popup' : 'modal'" @after-enter="$emit('after-enter', $event)" @before-enter="$emit('before-enter', $event)">
-            <div v-show="state.show" class="z-10">
-                <div :class="isPositioned ? 'opacity-25' : 'opacity-50'" class="h-full w-full bg-black dark:bg-white fixed inset-0 dimmer z-10 cursor-pointer select-none" @click="$emit('hide')"></div>
-                <div ref="content" :class="isPositioned ? 'shadow-lg rounded-lg modal-positioned' : 'rounded-t-lg inset-x-0 bottom-0 md:shadow-lg md:rounded-lg md:inset-auto'" class="z-10 bg-white dark:bg-black fixed content modalframe" :style="contentStyle">
+            <div v-show="state.show" class="z-10 fixed inset-0 stacking items-end md:items-center justify-items-stretch md:justify-items-center overflow-auto md:overflow-hidden">
+                <div :class="isPositioned ? 'opacity-25' : 'opacity-50'" class="h-full w-full bg-black dark:bg-white dimmer z-10 cursor-pointer select-none" @click="$emit('hide')"></div>
+                <div ref="content" :class="isPositioned ? 'shadow-lg rounded-lg fixed' : 'rounded-t-lg md:shadow-lg md:rounded-lg'" class="z-10 bg-white dark:bg-black content max-h-full md:overflow-auto mt-32 md:mt-0" :style="contentStyle">
                     <slot></slot>
                 </div>
             </div>

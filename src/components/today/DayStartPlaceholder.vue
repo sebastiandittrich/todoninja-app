@@ -1,5 +1,5 @@
 <template>
-    <div key="list" class="flex flex-col items-center justify-start">
+    <div key="list" class="flex flex-col items-center justify-start container mx-auto">
         <img src="/img/todaystart.svg" class="w-2/3" >
         <div class="mt-8 font-bold text-xl">
             No Tasks for today.

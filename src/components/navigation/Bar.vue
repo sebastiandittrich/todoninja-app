@@ -1,7 +1,7 @@
 <template>
     <transition name="opacity-slide-up">
         <div v-if="show" class="fixed bottom-0 inset-x-0 flex flex-col items-stretch pointer-events-none z-10 container mx-auto">
-            <div class="self-end pointer-events-auto z-10">
+            <div class="self-end z-10">
                 <transition name="opacity-slide-up">
                     <slot></slot>
                 </transition>

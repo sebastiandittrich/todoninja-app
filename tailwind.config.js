@@ -21,6 +21,9 @@ module.exports = {
                 "2/6": "33.33333%",
                 "4/6": "66.66667%",
             },
+            height: {
+                '2/3': '66.6666667%'
+            },
             fontSize: {
                 "gigantic": "6rem",
             },
@@ -141,6 +144,12 @@ module.exports = {
                     return `#app.dark .${e(`dark${separator}${className}`)}`
                 })
             })
+        },
+        function({ addUtilities }) {
+            addUtilities({ 
+                '.justify-items-center': { 'justify-items': 'center' }, 
+                '.justify-items-stretch': { 'justify-items': 'stretch' }, 
+            }, [ 'responsive' ])
         }
     ]
 }

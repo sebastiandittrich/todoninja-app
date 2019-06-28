@@ -2,48 +2,45 @@
     <transition name="opacity-slide-up">
         <div class="pb-32">
 
-            <topbar class="dark:bg-black-deep bg-grey-light">Today</topbar>
+            <topbar class="dark:bg-black-deep">
+                Today
+            </topbar>
 
-            <div class="bg-grey-light dark:bg-black-deep">
+            <div class="dark:bg-black-deep">
                 <transition name="opacity" mode="out-in">
-                    <today-progress v-if="tasks.length > 0" class="container mx-auto"></today-progress>
-                    <day-start-placeholder v-else class="bg-grey-light dark:bg-black-deep p-8" @click="showModal('today-suggestions-modal')"></day-start-placeholder>
+                    <today-progress v-if="tasks.length > 0" class="container mx-auto px-2"></today-progress>
+                    <day-start-placeholder v-else class="mt-32 p-8" @click="showModal('today-suggestions-modal')"></day-start-placeholder>
                 </transition>
             </div>
 
             <transition name="opacity">
-                <today-quote v-if="tasks.length > 0 && openTasks.length == 0" class="my-16 mx-8 container mx-auto"></today-quote>
+                <div v-if="tasks.length > 0 && openTasks.length == 0" class="container mx-auto h-2/3 flex flex-col items-center justify-center">
+                    <today-quote class="mx-8"></today-quote>
+                </div>
             </transition>
 
-            <tasks-list class="mt-6 container mx-auto" :tasks="tasks" :filter="false"></tasks-list>
+            <tasks-list @item-click="$router.push('/today/task/' + $event.id)" class="mt-8 container mx-auto" :tasks="tasks" :filter="false"></tasks-list>
 
-            <!-- <div v-if="tasks.length > 0 || doneTasks.length < 1" class="bg-grey-light dark:bg-black-deep">
-                <div class="max-w-2xl mx-auto py-8 px-2 pb-10">
-                    <transition name="opacity" mode="out-in">
-                        <tasks-list key="placeholder" v-if="tasks.length > 0" :tasks="tasks" :filter="false"></tasks-list>
-                        <day-start-placeholder v-else @click="showModal('today-suggestions-modal')"></day-start-placeholder>
-                    </transition>
-                </div>
-            </div>
-        
-            <div v-if="doneTasks.length > 0" class="bg-grey-light dark:bg-grey-darkest py-4 px-2">
-                <transition name="opacity">
-                    <div v-if="doneTasks.length > 0 && tasks.length < 1" class="-my-4 -mx-2 px-6 pt-4 pb-10 flex flex-col items-center">
-                       
-                        
-                        <quote class="mt-8" :quote="quote"></quote>
-
+            <transition name="opacity">
+                <div v-if="tasks.length > 0" class="flex flex-col items-center justify-center mt-16">
+                    <div @click="showModal('today-suggestions-modal')" class=" text-sm text-blue dark:text-blue-light px-4 py-3 font-bold tracking-wide uppercase select-none cursor-pointer">
+                        <i class="feather icon-compass mr-2"></i> Suggestions
                     </div>
-                </transition>
-            </div> -->
+                </div>
+            </transition>
 
             <today-suggestions-modal @hide="hideModal('today-suggestions-modal')" :state="modalState('today-suggestions-modal')"></today-suggestions-modal>
 
-            <navigation-bar>
-                <navigation-button @click="showModal('today-suggestions-modal')">
-                    <i class="feather icon-compass"></i>
+            <navigation-bar v-if="!isDetailOpen">
+                <navigation-button @click="$router.push('/today/task/create')">
+                    <i class="feather icon-plus"></i>
                 </navigation-button>
             </navigation-bar>
+
+            <transition name="opacity">
+                <div @click="$router.back()" v-if="isDetailOpen" class="fixed inset-0 bg-black opacity-50 cursor-pointer hidden lg:block"></div>
+            </transition>
+            <router-view class="fixed inset-0 lg:left-auto lg:max-w-md lg:rounded-l-lg lg:shadow-xl"></router-view>
 
             <!-- Space for bottom bar -->
             <div class="h-32"></div>
@@ -65,7 +62,7 @@ import TodayProgress from '@c/today/Progress'
 export default {
     components: { TasksList, Topbar, DayStartPlaceholder, TodayQuote, TodayProgress },
     mixins: [ 
-        themeColor({ dark: 'black-deep', light: 'grey-light' }),
+        themeColor({ dark: 'black-deep', light: 'white' }),
         hasModals({ TodaySuggestionsModal }),
         colorfunction
     ],
@@ -76,6 +73,9 @@ export default {
         },
         openTasks() {
             return this.tasks.filter(task => !task.isDone())
+        },
+        isDetailOpen() {
+            return this.$route.name == 'Today.Detail'
         }
     },
 }

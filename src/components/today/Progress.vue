@@ -7,7 +7,7 @@
                     <div :style="{width: `${percent}%`}" class="bg-green rounded-full h-full transition"></div>
                 </div>
                 
-                <div class="flex flex-row items-center justify-between mt-2">
+                <div class="flex flex-row items-center justify-between mt-4">
                     <transition name="opacity" mode="out-in">
                         <div :key="percent" class="text-grey-dark dark:text-grey-dark text-sm flex flex-row items-center">
                             {{ percent }}%

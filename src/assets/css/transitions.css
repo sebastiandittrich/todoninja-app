@@ -104,11 +104,18 @@
     opacity: 0;
 }
 .modal-enter .content, .modal-leave-to .content {
-    transform: translateY(100%)
+    transform: translateY(100%);
+}
+
+@screen md {
+    .modal-enter .content, .modal-leave-to .content {
+        opacity: 0;
+        transform: translateY(25%);
+    }
 }
 
 .popup-enter-active .content, .popup-leave-active .content, .popup-enter-active .dimmer, .popup-leave-active .dimmer {
-    transition: opacity 200ms ease-out, transform 200ms ease-out;
+    transition: opacity var(--transition-duration) var(--transition-timing), transform var(--transition-duration) var(--transition-timing);
 }
 .popup-enter .dimmer, .popup-leave-to .dimmer {
     opacity: 0;
@@ -116,12 +123,6 @@
 .popup-enter .content, .popup-leave-to .content {
     opacity: 0;
     transform: translateY(50px);
-    max-height: 0px;
-}
-.popup-enter-to .content, .popup-leave .content {
-    /* opacity: 0;
-    transform: translateY(50px); */
-    max-height: 1000000px;
 }
 
 /* Task List */

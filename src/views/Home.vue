@@ -36,6 +36,10 @@
 
           <!-- Navigation -->
           <div class="flex flex-col items-stretch justify-start text-grey-darkest dark:text-grey-lightest mb-8">
+            <div class="mx-6 cursor-pointer select-none mb-8" @click="$router.push('/today')">
+              <i class="feather icon-sun mr-4"></i>
+              Today
+            </div>
             <div class="mx-6 cursor-pointer select-none mb-8" @click="$router.push('/summary')">
               <i class="feather icon-pie-chart mr-4"></i>
               Summary
@@ -91,7 +95,7 @@
           <div class="stacking overflow-hidden">
             <transition :name="transition">
               <keep-alive>
-                <component :is="this.TaskListView" class="pb-32 pt-6 px-6 overflow-auto"></component>
+                <component @item-click="$router.push({ name: 'Tasks.Detail', params: { id: $event.id }, query: $route.query })" :is="this.TaskListView" class="pb-32 pt-6 px-6 overflow-auto"></component>
               </keep-alive>
             </transition>
           </div>
@@ -101,7 +105,7 @@
           </navigation-item>
         </div>
 
-        <router-view :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l border-grey-light dark:border-grey-darkest overflow-auto"></router-view>
+        <router-view replaceOnClose :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l border-grey-light dark:border-grey-darkest overflow-auto"></router-view>
 
       </div>
 
@@ -115,7 +119,7 @@
         <div class="stacking overflow-hidden mx-2">
           <transition :name="transition">
             <keep-alive>
-              <component :is="this.TaskListView" class="pb-32"></component>
+              <component @item-click="$router.push({ name: 'Tasks.Detail', params: { id: $event.id }, query: $route.query })" :is="this.TaskListView" class="pb-32"></component>
             </keep-alive>
           </transition>
         </div>

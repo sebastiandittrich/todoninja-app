@@ -224,15 +224,6 @@ button:focus {
     display: none; 
 }
 
-@screen md {
-
-    .modalframe.modalframe:not(.modal-positioned) {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-}
-
 /* Experiment */
 /* * {
     transform: translateX(-5px)translateY(-5px);

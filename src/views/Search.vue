@@ -29,7 +29,7 @@
                                     (Current)
                                 </div>
                             </div>
-                            <tasks-list :filter="false" :tasks="grouped[workspaceId]"></tasks-list>
+                            <tasks-list @item-click="$router.push({ name: 'Tasks.Detail', params: { id: $event.id }, query: $route.query })" :filter="false" :tasks="grouped[workspaceId]"></tasks-list>
                         </div>
                     </transition-group>
                 </transition>

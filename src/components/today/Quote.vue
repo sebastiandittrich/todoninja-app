@@ -1,5 +1,5 @@
 <template>
-    <div class="text-center">
+    <div class="text-center flex flex-col items-center">
         <div class="italic text-2xl relative" style="font-family: 'Lora', serif;">
             {{ quote.text }}
             <div class="absolute top-0 left-0 text-5xl -mt-4 -ml-4 italic text-grey">
