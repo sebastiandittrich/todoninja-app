@@ -24,7 +24,6 @@ export default {
             // (On back button clicked)
             // Hide modal if currently open modals number is lower than this modal number
             if((to.query.modals || 0) < this.modal_number) {
-                console.log('in it')
                 this.hide()
             }
         },
