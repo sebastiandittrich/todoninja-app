@@ -213,13 +213,6 @@ button:focus {
     z-index: -10
 }
 
-.horizontal-scrolling { 
-    @apply overflow-x-auto;
-}
-.horizontal-scrolling::-webkit-scrollbar { 
-    display: none; 
-}
-
 @screen md {
 
     .modalframe.modalframe:not(.modal-positioned) {

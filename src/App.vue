@@ -85,11 +85,7 @@ export default {
     },
 
     bootUI() {
-      $("body").on('mousewheel', '.horizontal-scrolling', function(event) {
-        this.scrollLeft = this.scrollLeft + event.originalEvent.deltaY
-
-        event.preventDefault();
-      });
+      
     }
   },
   computed: {
