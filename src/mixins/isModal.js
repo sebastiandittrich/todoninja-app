@@ -21,8 +21,9 @@ export default {
     },
     watch: {
         '$route': function(to, from) {
-            console.log('in route watcher')
-            if(to.query.modals < this.modal_number) {
+            // (On back button clicked)
+            // Hide modal if currently open modals number is lower than this modal number
+            if((to.query.modals || 0) < this.modal_number) {
                 console.log('in it')
                 this.hide()
             }
@@ -30,26 +31,26 @@ export default {
         'state.show': function(to, from, ...args) {
             if(to === true) {
                 if(from != to) {
-                    console.log('showed modal')
                     this.$store.commit('modals/increment')
-                    console.log('increment modals open')
                     this.modal_number = this.$store.getters['modals/open']
-                    console.log('is now:', this.modal_number)
+                    
+                    // Keep all other parameters in route
                     this.$router.push({ path: this.$route.path, query: { ...this.$route.query, modals: this.modal_number } })
                 }
                 this.onShow ? this.onShow(...args) : null
             } else {
                 if(from != to) {
-                    console.log('hide modal')
+                    // (Closed within UI or programmatically)
                     this.$store.commit('modals/decrement')
-                    console.log('decrement modals, is now:', this.$store.getters['modals/open'])
-                    console.log(this.$route.query.modals, this.modal_number)
+
+                    // Go back to keep back button working if not closed using back button
                     if(this.$route.query.modals >= this.modal_number) {
-                        console.log('in it, setting modal_number to null')
                         this.$router.back()
                     }
+                    
                     this.modal_number = null
                 }
+
                 this.onHide ? this.onHide(...args) : null
             }
         }
