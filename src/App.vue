@@ -99,7 +99,7 @@ export default {
   },
   watch: {
     '$store.state.auth.user.id': function() {
-      this.boot({ soft: true })
+      this.boot()
     },
     '$store.state.workspaces.currentId': 'fetchWorkspaceSpecific',
     '$route': 'cleanModals'
