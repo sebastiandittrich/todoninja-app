@@ -61,10 +61,7 @@ export default {
         }
       })
     },
-    async boot({ soft } = {}) {
-      if(!soft) {
-        await this.bootUI()
-      }
+    async boot() {
       try {
         if(!soft) {
           await this.$store.dispatch('auth/authenticate')
@@ -83,10 +80,11 @@ export default {
       // Always do this last
       this.initSentry()
     },
-
-    bootUI() {
-      
-    }
+    cleanModals() {
+      if((this.$route.query.modals || 0) > this.$store.getters['modals/open']) {
+        this.$router.back()
+      }
+    },
   },
   computed: {
     showAddButton() {
@@ -104,6 +102,7 @@ export default {
       this.boot({ soft: true })
     },
     '$store.state.workspaces.currentId': 'fetchWorkspaceSpecific',
+    '$route': 'cleanModals'
   },
 }
 </script>
