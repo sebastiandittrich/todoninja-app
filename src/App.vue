@@ -61,10 +61,7 @@ export default {
         }
       })
     },
-    async boot({ soft } = {}) {
-      if(!soft) {
-        await this.bootUI()
-      }
+    async boot() {
       try {
         if(!soft) {
           await this.$store.dispatch('auth/authenticate')
@@ -83,14 +80,11 @@ export default {
       // Always do this last
       this.initSentry()
     },
-
-    bootUI() {
-      $("body").on('mousewheel', '.horizontal-scrolling', function(event) {
-        this.scrollLeft = this.scrollLeft + event.originalEvent.deltaY
-
-        event.preventDefault();
-      });
-    }
+    cleanModals() {
+      if((this.$route.query.modals || 0) > this.$store.getters['modals/open']) {
+        this.$router.back()
+      }
+    },
   },
   computed: {
     showAddButton() {
@@ -105,9 +99,10 @@ export default {
   },
   watch: {
     '$store.state.auth.user.id': function() {
-      this.boot({ soft: true })
+      this.boot()
     },
     '$store.state.workspaces.currentId': 'fetchWorkspaceSpecific',
+    '$route': 'cleanModals'
   },
 }
 </script>
