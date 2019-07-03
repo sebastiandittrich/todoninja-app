@@ -1,6 +1,6 @@
 <template>
     <modal :state="state" @hide="hide">
-        <detail v-bind="$attrs"></detail>
+        <detail ref='detail' v-bind="{ ...$attrs, id: state.data && state.data.id }"></detail>
     </modal>
 </template>
 
@@ -11,7 +11,7 @@ import Detail from '@/views/Tasks/Detail'
 
 export default {
     components: { Detail },
-    mixins: [ isModal ]
+    mixins: [ isModal ],
 }
 </script>
 

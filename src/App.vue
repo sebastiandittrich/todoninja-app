@@ -64,14 +64,13 @@ export default {
     },
     async boot() {
       try {
-        if(!soft) {
-          await this.$store.dispatch('auth/authenticate')
-        }
+        await this.$store.dispatch('auth/authenticate')
         await this.fetchData()
         this.splashscreenVisible = false
       } catch(error) {
         this.splashscreenVisible = false
       }
+
       // Check for tutorial
       if(this.$store.state.auth.accessToken && this.$store.getters['tutorial/done'] == false) {
         this.$router.replace('/tutorial')

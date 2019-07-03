@@ -19,7 +19,7 @@
                 </div>
             </transition>
 
-            <tasks-list @item-click="$router.push('/today/task/' + $event.id)" class="mt-8 container mx-auto" :tasks="tasks" :filter="false"></tasks-list>
+            <tasks-list @item-click="showModal('tasks-detail-modal', { data: { id: $event.id } })" class="mt-8 container mx-auto" :tasks="tasks" :filter="false"></tasks-list>
 
             <transition name="opacity">
                 <div v-if="tasks.length > 0" class="flex flex-col items-center justify-center mt-16">
@@ -30,17 +30,18 @@
             </transition>
 
             <today-suggestions-modal @hide="hideModal('today-suggestions-modal')" :state="modalState('today-suggestions-modal')"></today-suggestions-modal>
+            <tasks-detail-modal today @hide="hideModal('tasks-detail-modal')" :state="modalState('tasks-detail-modal')"></tasks-detail-modal>
 
             <navigation-bar v-if="!isDetailOpen">
-                <navigation-button @click="$router.push('/today/task/create')">
+                <navigation-button @click="showModal('tasks-detail-modal', { data: { id: null } })">
                     <i class="feather icon-plus"></i>
                 </navigation-button>
             </navigation-bar>
 
-            <transition name="opacity">
+            <!-- <transition name="opacity">
                 <div @click="$router.back()" v-if="isDetailOpen" class="fixed inset-0 bg-black opacity-50 cursor-pointer hidden lg:block"></div>
             </transition>
-            <router-view class="fixed inset-0 lg:left-auto lg:max-w-md lg:rounded-l-lg lg:shadow-xl"></router-view>
+            <router-view class="fixed inset-0 lg:left-auto lg:max-w-md lg:rounded-l-lg lg:shadow-xl"></router-view> -->
 
             <!-- Space for bottom bar -->
             <div class="h-32"></div>
@@ -58,12 +59,13 @@ import Topbar from '@c/Topbar'
 import DayStartPlaceholder from '@c/today/DayStartPlaceholder'
 import TodayQuote from '@c/today/Quote'
 import TodayProgress from '@c/today/Progress'
+import TasksDetailModal from '@c/tasks/DetailModal'
 
 export default {
     components: { TasksList, Topbar, DayStartPlaceholder, TodayQuote, TodayProgress },
     mixins: [ 
         themeColor({ dark: 'black-deep', light: 'white' }),
-        hasModals({ TodaySuggestionsModal }),
+        hasModals({ TodaySuggestionsModal, TasksDetailModal }),
         colorfunction
     ],
     data: () => ({ progress: 0.5 }),

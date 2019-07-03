@@ -1,77 +1,75 @@
 <template>
-    <transition name="slide-right" @after-enter="afterEnter">
-        <div v-if="task" class="bg-white dark:bg-black dark:text-white pb-32">
+    <div v-if="task" class="bg-white dark:bg-black dark:text-white pb-32">
 
-            <!-- Save Button -->
-            <div v-show="isCreate || isEdit" class="fixed bottom-0 right-0 m-8 flex flex-row items-center" >
-                <!-- <div @click="remove" class="rounded-full bg-red-lighter text-red-darker p-2 mr-4 flex flex-row items-center justify-center text-base uppercase tracking-wide cursor-pointer select-none">
-                    <i class="feather icon-trash"></i>
-                </div> -->
-                <div @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide cursor-pointer select-none">
-                    <i class="feather icon-check text-2xl mr-2"></i>
-                    Save
-                </div>
+        <!-- Save Button -->
+        <div v-show="isCreate || isEdit" class="fixed bottom-0 right-0 m-8 flex flex-row items-center" >
+            <!-- <div @click="remove" class="rounded-full bg-red-lighter text-red-darker p-2 mr-4 flex flex-row items-center justify-center text-base uppercase tracking-wide cursor-pointer select-none">
+                <i class="feather icon-trash"></i>
+            </div> -->
+            <div @click="save({ explicit: true })" class="rounded-full bg-green-lighter text-green-darker p-2 px-4 flex flex-row items-center justify-center text-base uppercase tracking-wide cursor-pointer select-none">
+                <i class="feather icon-check text-2xl mr-2"></i>
+                Save
             </div>
-
-            <!-- Header Part -->
-            <div class="p-6 relative" :class="task.workspace.isInbox() ? 'inbox-pattern border-b border-grey-light dark:border-grey-darkest' : 'bg-blue-lightest dark:bg-black-deep'">
-                <div class="flex flex-row items-center justify-between mb-6 text-2xl">
-                    <!-- Back button -->
-                    <i v-if="replaceOnClose" @click="$router.replace('/tasks')" class="feather icon-x cursor-pointer select-none"></i>
-                    <i v-else @click="$router.go(-1)" class="feather icon-chevron-left cursor-pointer select-none"></i>
-
-                    <div :class="`text-${task.workspace.getColor()}-darker dark:text-${task.workspace.getColor()}-lighter`" class="flex flex-row items-center text-sm cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
-                        <i v-if="task.workspace.isInbox()" :class="task.workspace.getIcon()" class="feather mr-2"></i>
-                        <div v-else :class="`h-3 w-3 mr-2 rounded-lg bg-${task.workspace.getColor()}`"></div>
-                        <span class="font-bold">{{ task.workspace.name }}</span>
-                        <i class="feather icon-chevron-down ml-2 text-base"></i>
-                    </div>
-                    <!-- Options Button -->
-                    <i :class="{'opacity-0': isCreate}" @click="!isCreate ? showModal('tasks-options', $event) : null" class="feather icon-more-vertical cursor-pointer select-none"></i>
-                </div>
-                <div class="flex flex-row items-start justify-between">
-                    <!-- State -->
-                    <done-indicator @change="save()" :task="task" class="text-2xl mr-6 float-left"></done-indicator>
-
-                    <!-- Title -->
-                    <textarea-autosize @keyup.enter="save({ explicit: true })" ref="inputt" @input="setEdited" class="font-bold text-2xl border-none w-full dark:text-grey-lighter bg-transparent leading-none" rows="1" v-model="task.title" placeholder="My new task"></textarea-autosize>
-
-                    <!-- Today -->
-                    <today-indicator @change="save()" :task="task" class="text-2xl ml-6 float-right" darker></today-indicator>
-                </div>
-            </div>
-
-            <!-- Middle Part -->
-            <div class="m-6">
-
-                <!-- Was today -->
-
-                <!-- State -->
-                <state-presenter @change="save()" v-model="task" class="z-10"/>
-
-                <reminder-presenter class="mt-6 w-full" @change="save()" v-model="task"></reminder-presenter>
-                <div class="font-bold text-sm mb-2 mt-8">Description</div>
-
-                <div class="stacking">
-                  <textarea-autosize @input="setEdited" v-model="task.description" class="break-all bg-transparent description-edit" placeholder="Describe your task!"></textarea-autosize>
-                  <div class="description-rendered break-all" v-html="task.renderedDescription()"></div>
-                </div>
-
-                <div class="font-bold text-sm mb-2 mt-6">
-                    Tags
-                </div>
-
-                <!-- Tags -->
-                <tags-picker @input="save()" v-model="task.tags" activeFirst></tags-picker>
-
-            </div>
-
-            <!-- Workspace -->
-            <workspaces-picker @input="save()" @hide="hideModal('workspaces-picker')" :state="modalState('workspaces-picker')" v-model="task.workspaceId"></workspaces-picker>
-            <!-- Options Modal -->
-            <tasks-options @hide="hideModal('tasks-options')" :state="modalState('tasks-options')" :task="task" @delete="$router.go(-1)"></tasks-options>
         </div>
-    </transition>
+
+        <!-- Header Part -->
+        <div class="p-6 relative" :class="task.workspace.isInbox() ? 'inbox-pattern border-b border-grey-light dark:border-grey-darkest' : 'bg-blue-lightest dark:bg-black-deep'">
+            <div class="flex flex-row items-center justify-between mb-6 text-2xl">
+                <!-- Back button -->
+                <i v-if="replaceOnClose" @click="$router.replace('/tasks')" class="feather icon-x cursor-pointer select-none"></i>
+                <i v-else @click="$router.go(-1)" class="feather icon-chevron-left cursor-pointer select-none"></i>
+
+                <div :class="`text-${task.workspace.getColor()}-darker dark:text-${task.workspace.getColor()}-lighter`" class="flex flex-row items-center text-sm cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
+                    <i v-if="task.workspace.isInbox()" :class="task.workspace.getIcon()" class="feather mr-2"></i>
+                    <div v-else :class="`h-3 w-3 mr-2 rounded-lg bg-${task.workspace.getColor()}`"></div>
+                    <span class="font-bold">{{ task.workspace.name }}</span>
+                    <i class="feather icon-chevron-down ml-2 text-base"></i>
+                </div>
+                <!-- Options Button -->
+                <i :class="{'opacity-0': isCreate}" @click="!isCreate ? showModal('tasks-options', $event) : null" class="feather icon-more-vertical cursor-pointer select-none"></i>
+            </div>
+            <div class="flex flex-row items-start justify-between">
+                <!-- State -->
+                <done-indicator @change="save()" :task="task" class="text-2xl mr-6 float-left"></done-indicator>
+
+                <!-- Title -->
+                <textarea-autosize @keyup.enter="save({ explicit: true })" ref="inputt" @input="setEdited" class="font-bold text-2xl border-none w-full dark:text-grey-lighter bg-transparent leading-none" rows="1" v-model="task.title" placeholder="My new task"></textarea-autosize>
+
+                <!-- Today -->
+                <today-indicator @change="save()" :task="task" class="text-2xl ml-6 float-right" darker></today-indicator>
+            </div>
+        </div>
+
+        <!-- Middle Part -->
+        <div class="m-6">
+
+            <!-- Was today -->
+
+            <!-- State -->
+            <state-presenter @change="save()" v-model="task" class="z-10"/>
+
+            <reminder-presenter class="mt-6 w-full" @change="save()" v-model="task"></reminder-presenter>
+            <div class="font-bold text-sm mb-2 mt-8">Description</div>
+
+            <div class="stacking">
+                <textarea-autosize @input="setEdited" v-model="task.description" class="break-all bg-transparent description-edit" placeholder="Describe your task!"></textarea-autosize>
+                <div class="description-rendered break-all" v-html="task.renderedDescription()"></div>
+            </div>
+
+            <div class="font-bold text-sm mb-2 mt-6">
+                Tags
+            </div>
+
+            <!-- Tags -->
+            <tags-picker @input="save()" v-model="task.tags" activeFirst></tags-picker>
+
+        </div>
+
+        <!-- Workspace -->
+        <workspaces-picker @input="save()" @hide="hideModal('workspaces-picker')" :state="modalState('workspaces-picker')" v-model="task.workspaceId"></workspaces-picker>
+        <!-- Options Modal -->
+        <tasks-options @hide="hideModal('tasks-options')" :state="modalState('tasks-options')" :task="task" @delete="$router.go(-1)"></tasks-options>
+    </div>
 </template>  
 
 <style scoped>
@@ -203,6 +201,7 @@ export default {
 
                 if(this.isCreate) {
                     this.$router.go(-1)
+                    this.fetchData()
                 } else if(this.isEdit) {
                     this.edited = false
                 }
@@ -238,6 +237,9 @@ export default {
     },
     created() {
         this.fetchData()
+    },
+    mounted() {
+        this.afterEnter()
     },
     watch: {
         id: function() {

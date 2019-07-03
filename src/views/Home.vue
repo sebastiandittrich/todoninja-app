@@ -105,7 +105,9 @@
           </navigation-item>
         </div>
 
-        <router-view replaceOnClose :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l border-grey-light dark:border-grey-darkest overflow-auto"></router-view>
+        <transition name="slide-right">
+          <router-view replaceOnClose :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l border-grey-light dark:border-grey-darkest overflow-auto"></router-view>
+        </transition>
 
       </div>
 
@@ -123,8 +125,9 @@
             </keep-alive>
           </transition>
         </div>
-        
-        <router-view class="fixed inset-0 z-10 overflow-x-hidden"></router-view>
+        <transition name="slide-right">
+          <router-view class="fixed inset-0 z-10 overflow-x-hidden"></router-view>
+        </transition>
 
       </v-touch>
 
@@ -227,6 +230,7 @@ export default {
 
   watch: {
     '$route': function(to, from) {
+      console.log('changed')
       if(from.query.view == 'do' || from.query.view == undefined) {
         this.transition = 'opacity-slide-left'
       } else if(from.query.view == 'all') {
