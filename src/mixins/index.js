@@ -11,9 +11,11 @@ import sameWatcher from './sameWatcher'
 import store from './store'
 import themeColor from './themeColor'
 import color from './color'
+import colorfunction from './colorfunction'
 
 export { 
     color,
+    colorfunction,
     themeColor,
     isModal,
     error,

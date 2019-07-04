@@ -71,7 +71,7 @@ export default function(data, { store, Model, Models }) {
         },
         toggleToday() {
             if(!this.isToday()) {
-                this.today = new Date()
+                this.today = new Date().toString()
             } else {
                 this.today = null
             }

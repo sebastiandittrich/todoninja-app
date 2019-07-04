@@ -1,26 +1,49 @@
 <template>
     <div>
-        <transition :name="isPositioned ? 'popup' : 'modal'" @after-enter="$emit('after-enter', $event)" @before-enter="$emit('before-enter', $event)">
-            <div v-show="state.show" class="z-10">
-                <div :class="isPositioned ? 'opacity-25' : 'opacity-50'" class="h-full w-full bg-black dark:bg-white fixed inset-0 dimmer z-10 cursor-pointer select-none" @click="$emit('hide')"></div>
-                <div ref="content" :class="isPositioned ? 'shadow-lg rounded-lg modal-positioned' : 'rounded-t-lg inset-x-0 bottom-0 md:shadow-lg md:rounded-lg md:inset-auto'" class="z-10 bg-white dark:bg-black fixed content modalframe" :style="contentStyle">
-                    <slot></slot>
+
+        <div v-if="isPositioned">
+            <transition name="popup" @after-enter="$emit('after-enter', $event)" @before-enter="$emit('before-enter', $event)">
+                <div v-show="state.show" class="z-10 fixed inset-0 stacking items-end md:items-center justify-items-stretch md:justify-items-center">
+                    <div class="opacity-25 h-full w-full bg-black dark:bg-white dimmer z-10 cursor-pointer select-none" @click="$emit('hide')"></div>
+                    <div @click.stop="" ref="content" class="content shadow-lg rounded-lg fixed bg-white dark:bg-black overflow-hidden z-10" :style="positionedStyle">
+                        <slot></slot>
+                    </div>
                 </div>
-            </div>
-        </transition>
+            </transition>
+        </div>
+
+        <div v-else>
+            <transition name="modal" @after-enter="$emit('after-enter', $event)" @before-enter="$emit('before-enter', $event)">
+                <div v-if="state.show" class="z-10 fixed inset-0 stacking items-end md:items-center justify-items-stretch md:justify-items-center">
+                    <div class="opacity-50 h-full w-full bg-black dark:bg-white dimmer z-10 cursor-pointer select-none" @click="$emit('hide')"></div>
+                    <div @click="$emit('hide')" class="max-h-full overflow-auto z-10 content">
+                        <div @click.stop="" class="rounded-t-lg md:shadow-lg md:rounded-lg md:m-4 mt-32 bg-white dark:bg-black overflow-hidden">
+                            <slot></slot>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+        </div>
+        
         <slot name="submodals"></slot>
     </div>
 </template> 
 
 <script>
-import { themeColor } from '@/mixins'
+import themeColor from '@/mixins/themeColor'
+import { color, blend_colors } from '@/assets/js/helpers'
 
 export default {
     mixins: [ 
-        // themeColor(vue => {
-        //     // console.log(vue.cssText)
-        //     return { dark: 'white', light: 'white' }
-        // })
+        themeColor(vue => {
+            const base_color = $('meta[data-vmid=themeColor]').prop('content') || '#ffffff'
+            const overlay_color = color({ dark: 'white', light: 'black' })
+            if(vue.state.show) {
+                return blend_colors(base_color, overlay_color, (vue.isPositioned ? 0.25 : 0.5))
+            } else {
+                return undefined
+            }
+        })
     ],
     props: {
         state: Object,
@@ -54,12 +77,14 @@ export default {
             const maxtop = window.innerHeight - elementdims.height - 5
             const minleft = 5
             const mintop = 5
-            return {
+
+            const obj =  {
                 top: Math.max(Math.min(this.state.position.y, maxtop), mintop) + 'px',
                 left: Math.max(Math.min(this.state.position.x - elementdims.width/2, maxleft), minleft) + 'px',
                 'max-width': '95%'
             }
+            return obj
         }
-    }
+    },
 }
 </script>

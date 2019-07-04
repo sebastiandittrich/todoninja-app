@@ -36,6 +36,10 @@
 
           <!-- Navigation -->
           <div class="flex flex-col items-stretch justify-start text-grey-darkest dark:text-grey-lightest mb-8">
+            <div class="mx-6 cursor-pointer select-none mb-8" @click="$router.push('/today')">
+              <i class="feather icon-sun mr-4"></i>
+              Today
+            </div>
             <div class="mx-6 cursor-pointer select-none mb-8" @click="$router.push('/summary')">
               <i class="feather icon-pie-chart mr-4"></i>
               Summary
@@ -91,7 +95,7 @@
           <div class="stacking overflow-hidden">
             <transition :name="transition">
               <keep-alive>
-                <component :is="this.TaskListView" class="pb-32 pt-6 px-6 overflow-auto"></component>
+                <component @item-click="$router.push({ name: 'Tasks.Detail', params: { id: $event.id }, query: $route.query })" :is="this.TaskListView" class="pb-32 pt-6 px-6 overflow-auto"></component>
               </keep-alive>
             </transition>
           </div>
@@ -101,7 +105,9 @@
           </navigation-item>
         </div>
 
-        <router-view :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l border-grey-light dark:border-grey-darkest overflow-auto"></router-view>
+        <transition name="slide-right">
+          <router-view replaceOnClose :class="isDetailActive ? 'w-2/6' : 'w-0'" class="border-l border-grey-light dark:border-grey-darkest overflow-auto"></router-view>
+        </transition>
 
       </div>
 
@@ -115,14 +121,24 @@
         <div class="stacking overflow-hidden mx-2">
           <transition :name="transition">
             <keep-alive>
-              <component :is="this.TaskListView" class="pb-32"></component>
+              <component @item-click="$router.push({ name: 'Tasks.Detail', params: { id: $event.id }, query: $route.query })" :is="this.TaskListView" class="pb-32"></component>
             </keep-alive>
           </transition>
         </div>
-        
-        <router-view class="fixed inset-0 z-10 overflow-x-hidden"></router-view>
+        <transition name="slide-right">
+          <router-view class="fixed inset-0 z-10 overflow-x-hidden"></router-view>
+        </transition>
 
       </v-touch>
+
+      <!-- Navigation Bar -->
+      <navigation-bar v-if="!isDetailActive">
+        <navigation-button class="lg:hidden">
+          <router-link to="/tasks/create">
+            <i class="feather icon-plus"></i>
+          </router-link>
+        </navigation-button>
+      </navigation-bar>
 
     </div>
   </transition>
@@ -138,7 +154,6 @@ import { store, themeColor, color } from '@/mixins'
 import Greeting from '@c/Greeting'
 import SectionsBar from '@c/sections/Bar'
 import TasksList from '@c/tasks/List'
-import NavigationBar from '@c/navigation/Bar'
 import NavigationItem from '@c/navigation/Item'
 import NavigationSidebar from '@c/navigation/Sidebar'
 import TasksDo from '@c/tasks/Do'
@@ -147,7 +162,7 @@ import TasksAll from '@c/tasks/All'
 import Loader from '@c/loader'
 
 export default {
-  components: { Greeting, SectionsBar, TasksList, NavigationBar, NavigationItem, NavigationSidebar, TasksDo, TasksToday, TasksAll, Loader },
+  components: { Greeting, SectionsBar, TasksList, NavigationItem, NavigationSidebar, TasksDo, TasksToday, TasksAll, Loader },
   mixins: [
     themeColor({ dark: 'black', light: 'white' }),
     store({ 
@@ -215,6 +230,7 @@ export default {
 
   watch: {
     '$route': function(to, from) {
+      console.log('changed')
       if(from.query.view == 'do' || from.query.view == undefined) {
         this.transition = 'opacity-slide-left'
       } else if(from.query.view == 'all') {

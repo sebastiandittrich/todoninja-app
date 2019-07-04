@@ -10,6 +10,8 @@ import * as Sentry from '@sentry/browser'
 import Overdrive from 'vue-overdrive'
 import { log, timeout, color } from '@/mixins'
 import BButton from '@c/bbutton'
+import NavigationBar from '@c/navigation/Bar'
+import NavigationButton from '@c/navigation/Button'
 import 'jquery'
 import 'jquery-mousewheel'
 import VueTextareaAutosize from 'vue-textarea-autosize'
@@ -37,6 +39,8 @@ Vue.mixin(timeout)
 Vue.mixin(color)
 
 Vue.component('bbutton', BButton)
+Vue.component('navigation-bar', NavigationBar)
+Vue.component('navigation-button', NavigationButton)
 
 Vue.config.productionTip = false;
 

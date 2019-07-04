@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col">
-        <tasks-list :tasks="tasks"></tasks-list>
+        <tasks-list @item-click="$emit('item-click', $event)" :tasks="tasks"></tasks-list>
         <tasks-placeholder v-if="tasks.length < 1 && !moreTasksAvailable">
         </tasks-placeholder>
         <bbutton :loading="loading" v-if="moreTasksAvailable" @click="loadDoneClick">

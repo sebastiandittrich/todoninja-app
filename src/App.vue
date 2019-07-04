@@ -5,9 +5,6 @@
       <splashscreen v-if="splashscreenVisible" class="absolute inset-0"></splashscreen>
     </transition>
     <events-list class="fixed top-0 inset-x-0 m-4 z-10"></events-list>
-    <transition name="opacity-slide-up">
-      <navigation-bar v-if="showNavBar && !splashscreenVisible" :showAddButton="showAddButton" class="lg:hidden z-10"></navigation-bar>
-    </transition>
   </div>
 </template>
 
@@ -45,11 +42,15 @@ export default {
     async fetchWorkspaceSpecific() {
       await this.$store.dispatch('tasks/findAll', { doneAt: null, workspaceId: this.$store.getters['workspaces/current'].id })
     },
+    async fetchToday() {
+      this.$store.dispatch('tasks/today')
+    },
     async fetchData() {
       await this.$store.dispatch('workspaces/findAll')
 
       await this.fetchWorkspaceSpecific()
       this.$store.dispatch('tags/findAll')
+      this.fetchToday()
     },
     initSentry() {
       Sentry.configureScope(scope => {
@@ -63,14 +64,13 @@ export default {
     },
     async boot() {
       try {
-        if(!soft) {
-          await this.$store.dispatch('auth/authenticate')
-        }
+        await this.$store.dispatch('auth/authenticate')
         await this.fetchData()
         this.splashscreenVisible = false
       } catch(error) {
         this.splashscreenVisible = false
       }
+
       // Check for tutorial
       if(this.$store.state.auth.accessToken && this.$store.getters['tutorial/done'] == false) {
         this.$router.replace('/tutorial')
@@ -85,14 +85,6 @@ export default {
         this.$router.back()
       }
     },
-  },
-  computed: {
-    showAddButton() {
-      return this.$route.meta.showAddButton == true
-    },
-    showNavBar() {
-      return !this.$route.meta.hideNavBar && this.$store.getters['modals/open'] <= 0
-    }
   },
   created() {
     this.boot()

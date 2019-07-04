@@ -60,6 +60,16 @@ const router = new Router({
     },
 
     {
+      path: '/today',
+      name: 'Today',
+      component: page('Today'),
+      meta: { },
+      children: [
+        { path: 'task/:id', name: 'Today.Detail', component: page('Tasks.Detail'), props: route => ({ id: parseInt(route.params.id) || null, today: true }) }
+      ]
+    },
+
+    {
       path: '/summary',
       name: 'Summary',
       component: page('Summary'),

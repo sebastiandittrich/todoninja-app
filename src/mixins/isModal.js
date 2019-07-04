@@ -9,7 +9,7 @@ export default {
         Modal, Headline, Actions, Action, Cancel,
     },
     data: () => ({
-        modal_number: null
+        modal_number: null,
     }),
     props: {
         state: Object

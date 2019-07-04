@@ -1,6 +1,6 @@
 <template>
     <div>
-        <tasks-list :tasks="tasks"></tasks-list>
+        <tasks-list @item-click="$emit('item-click', $event)" :tasks="tasks"></tasks-list>
 
         <tasks-placeholder image="/img/success.svg" v-if="tasks.length < 1">
             There is nothing more you can do.

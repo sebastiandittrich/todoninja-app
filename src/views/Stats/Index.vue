@@ -25,6 +25,8 @@
             <time-chart :chart-data="{ datasets: [ usersEvolution ] }"></time-chart>
         </div>
 
+        <navigation-bar></navigation-bar>
+
     </div>
 </template>
 

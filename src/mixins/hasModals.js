@@ -3,19 +3,21 @@ function convertname(name) {
 }
 
 export default function(modalsargs, more = []) {
-    const modals = {}
-
-    for(const modalname in modalsargs) {
-        modals[convertname(modalname)] = { show: false, position: {x: 0, y: 0}, unwatchers: [] }
-    }
-
-    for(const modalname of more) {
-        modals[convertname(modalname)] = { show: false, position: {x: 0, y: 0}, unwatchers: [] }
-    }
-
     return { 
         components: modalsargs,
-        data: () => ({ modals }),
+        data: () => {
+            const modals = {}
+
+            for(const modalname in modalsargs) {
+                modals[convertname(modalname)] = { show: false, position: {x: 0, y: 0}, unwatchers: [] }
+            }
+
+            for(const modalname of more) {
+                modals[convertname(modalname)] = { show: false, position: {x: 0, y: 0}, unwatchers: [] }
+            }
+            
+            return { modals }
+        },
         methods: {
             modalState(name) {
                 return Object.keys(this.modals).includes(name) ? this.modals[name] : null
