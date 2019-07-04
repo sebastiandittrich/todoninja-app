@@ -37,7 +37,7 @@ export default {
     mixins: [ 
         themeColor(vue => {
             const base_color = $('meta[data-vmid=themeColor]').prop('content') || '#ffffff'
-            const overlay_color = color('black')
+            const overlay_color = color({ dark: 'white', light: 'black' })
             if(vue.state.show) {
                 return blend_colors(base_color, overlay_color, (vue.isPositioned ? 0.25 : 0.5))
             } else {
