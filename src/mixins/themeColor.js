@@ -13,11 +13,15 @@ export default function(theme) {
             if(colors[light] != undefined) {
                 light = colors[light]
             }
-
-            return {
-                meta: [
-                    { vmid: 'themeColor', name: 'theme-color', content: (this.$store.getters['theme/isDark'] ? dark : light) }
-                ]
+            
+            if(values != undefined) {
+                return {
+                    meta: [
+                        { vmid: 'themeColor', name: 'theme-color', content: (this.$store.getters['theme/isDark'] ? dark : light) }
+                    ]
+                }
+            } else {
+                return {}
             }
         }
     }

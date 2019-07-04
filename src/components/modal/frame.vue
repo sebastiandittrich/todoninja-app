@@ -30,44 +30,26 @@
 </template> 
 
 <script>
-import { themeColor } from '@/mixins'
+import themeColor from '@/mixins/themeColor'
+import { color, blend_colors } from '@/assets/js/helpers'
 
 export default {
     mixins: [ 
-        // themeColor(vue => {
-        //     // console.log(vue.cssText)
-        //     return { dark: 'white', light: 'white' }
-        // })
+        themeColor(vue => {
+            const base_color = $('meta[data-vmid=themeColor]').prop('content') || '#ffffff'
+            const overlay_color = color('black')
+            if(vue.state.show) {
+                return blend_colors(base_color, overlay_color, (vue.isPositioned ? 0.25 : 0.5))
+            } else {
+                return undefined
+            }
+        })
     ],
     props: {
         state: Object,
         positioned: {
             type: Boolean,
             default: false
-        }
-    },
-    data: () => ({ positionedStyle: {} }),
-    methods: {
-        computePositionedStyle() {
-            const elementdims = { width: 0, height: 0 }
-            const element = $(this.$refs.content)
-            if(element) {
-                elementdims.width = element.actual('width')
-                elementdims.height = element.actual('height')
-            }
-            const maxleft = window.innerWidth - elementdims.width - 5
-            const maxtop = window.innerHeight - elementdims.height - 5
-            const minleft = 5
-            const mintop = 5
-
-            console.log(element.actual('width'))
-            const obj =  {
-                top: Math.max(Math.min(this.state.position.y, maxtop), mintop) + 'px',
-                left: Math.max(Math.min(this.state.position.x - elementdims.width/2, maxleft), minleft) + 'px',
-                'max-width': '95%'
-            }
-            console.log(obj)
-            this.positionedStyle = obj
         }
     },
     computed: {
@@ -84,11 +66,25 @@ export default {
         defaultStyle() {
             return {}
         },
-    },
-    watch: {
-        'state.show': function() {
-            this.$nextTick(() => this.computePositionedStyle())
+        positionedStyle() {
+            const elementdims = { width: 0, height: 0 }
+            const element = $(this.$refs.content)
+            if(element) {
+                elementdims.width = element.actual('width')
+                elementdims.height = element.actual('height')
+            }
+            const maxleft = window.innerWidth - elementdims.width - 5
+            const maxtop = window.innerHeight - elementdims.height - 5
+            const minleft = 5
+            const mintop = 5
+
+            const obj =  {
+                top: Math.max(Math.min(this.state.position.y, maxtop), mintop) + 'px',
+                left: Math.max(Math.min(this.state.position.x - elementdims.width/2, maxleft), minleft) + 'px',
+                'max-width': '95%'
+            }
+            return obj
         }
-    }
+    },
 }
 </script>
