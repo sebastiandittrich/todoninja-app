@@ -21,12 +21,14 @@
           </select-list>
 
           <!-- Workspaces -->
-          <select-list v-if="!isToday" header="workspaces">
-            <select-item v-for="workspace of workspaces" :key="workspace.id" @click="setWorkspace(workspace)" :active="isActiveWorkspace(workspace)">
-              <i slot="icon" class="feather" :class="workspace.getIcon()"></i>
-              {{ workspace.name }}
-            </select-item>
-          </select-list>
+          <transition name="opacity">
+            <select-list v-if="!isToday" header="workspaces">
+              <select-item v-for="workspace of workspaces" :key="workspace.id" @click="setWorkspace(workspace)" :active="isActiveWorkspace(workspace)">
+                <i slot="icon" class="feather" :class="workspace.getIcon()"></i>
+                {{ workspace.name }}
+              </select-item>
+            </select-list>
+          </transition>
 
         </div>
 
@@ -52,12 +54,15 @@
           <div class="mx-8 mt-8 mb-3 text-sm flex flex-row items-center">
             <div class="text-blue dark:text-blue-light font-bold">Todoninja</div>
             <div class="text-blue dark:text-blue-light font-bold mx-2">-</div>
-            <div class="text-grey"> Todo PWA</div>
+            <div class="text-grey">Todo PWA</div>
           </div>
 
           <transition name="opacity" mode="out-in">
-            <workspace-presenter v-if="isToday" :workspace="new $FeathersVuex.Workspace({ icon: 'icon-sun', name: 'Today', color: 'yellow' })" ></workspace-presenter>
-            <workspace-presenter v-else :key="workspace.id" :workspace="workspace"></workspace-presenter>
+            <div v-if="isToday" key="today" class="flex flex-row items-center justify-between m-8 mt-0">
+              <workspace-presenter :workspace="new $FeathersVuex.Workspace({ icon: 'icon-sun', name: 'Today', color: dependsOnTheme({ dark: 'yellow', light: 'orange' }) })" ></workspace-presenter>
+              <today-circle></today-circle>
+            </div>
+            <workspace-presenter v-else :key="workspace.id" :workspace="workspace" class="m-8 mt-0"></workspace-presenter>
           </transition>
 
           <div v-if="!isToday" class="flex flex-row items-stretch justify-start self-start -mb-px mx-8 mt-2">
@@ -109,7 +114,7 @@
 </style>
 
 <script>
-import { store } from '@/mixins'
+import { store, dependsOnTheme } from '@/mixins'
 
 import Base from './Base'
 import NavigationItem from '@c/navigation/Item'
@@ -118,11 +123,13 @@ import TasksToday from '@c/tasks/Today'
 import SelectList from '@c/home/select/List'
 import SelectItem from '@c/home/select/Item'
 import WorkspacePresenter from '@c/home/WorkspacePresenter'
+import TodayCircle from '@c/today/Circle'
 
 export default {
   extends: Base,
-  components: {  NavigationItem, NavigationSidebar, TasksToday, SelectList, SelectItem, WorkspacePresenter },
+  components: {  NavigationItem, NavigationSidebar, TasksToday, SelectList, SelectItem, WorkspacePresenter, TodayCircle },
   mixins: [
+    dependsOnTheme,
     store({
       getters: {
         workspaces: 'workspaces/withStandard'

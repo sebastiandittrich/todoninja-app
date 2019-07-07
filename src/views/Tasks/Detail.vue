@@ -219,7 +219,7 @@ export default {
                 this.task = (await this.getTask(parseInt(this.id)))
             } else {
                 this.mode = 'create'
-                this.task = new this.$FeathersVuex.Task({ workspaceId: this.currentWorkspace.id, today: this.today ? new Date().toString() : null })
+                this.task = new this.$FeathersVuex.Task({ workspaceId: this.workspace, today: this.today ? new Date().toString() : null })
             }
         }
 

@@ -105,7 +105,7 @@ export default {
     },
     computed: {
         ordered() {
-            return _.orderBy(this.data.filter(section => section.value > 0), 'value', 'desc')
+            return _.orderBy(this.data.filter(section => section.value >= 0), 'value', 'desc')
         },
         steps() {
             return this.total != null ? this.total.value : this.ordered.reduce((added, section) => section.value + added, 0)
