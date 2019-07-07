@@ -4,10 +4,6 @@
             <i slot="icon" class="feather icon-zap mr-2"></i>
             Do
         </sections-item>
-        <sections-item link="today">
-            <i slot="icon" class="feather icon-sun mr-2"></i>
-            Today
-        </sections-item>
         <sections-item link="all">
             <i slot="icon" class="feather icon-list mr-2"></i>
             All

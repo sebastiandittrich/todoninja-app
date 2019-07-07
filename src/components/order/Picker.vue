@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <div v-for="property of properties" :key="property.written_name" @click="propertyClick(property)" class="rounded-lg px-4 py-2 flex flex-row items-center justify-start cursor-pointer select-none whitespace-no-wrap" :class="orderBy.properties.includes(property.name) ? 'text-blue font-black' : 'font-light'">
+        <div v-for="property of properties" :key="property.written_name" @click="propertyClick(property)" class="rounded-lg px-4 py-2 flex flex-row items-center justify-start cursor-pointer select-none whitespace-no-wrap" :class="orderBy.properties.includes(property.name) ? 'text-blue dark:text-blue-light font-black' : 'font-light'">
             <span class="mr-2" :class="getIndex(property) < 0 ? 'opacity-0' : ''">{{ getIndex(property) >= 0 ? getIndex(property) + 1 + '.' : '0.' }}</span>
             {{ property.written_name }}
         </div>

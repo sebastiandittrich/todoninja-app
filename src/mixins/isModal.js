@@ -34,7 +34,7 @@ export default {
                     this.modal_number = this.$store.getters['modals/open']
                     
                     // Keep all other parameters in route
-                    this.$router.push({ path: this.$route.path, query: { ...this.$route.query, modals: this.modal_number } })
+                    this.$router.softPush({ query: { modals: this.modal_number } })
                 }
                 this.onShow ? this.onShow(...args) : null
             } else {

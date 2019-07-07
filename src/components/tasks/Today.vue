@@ -1,62 +1,42 @@
 <template>
     <div>
-        <tasks-list :tasks="tasks" :filter="false"></tasks-list>
+        <transition name="opacity">
+            <div v-if="tasks.length > 0 && openTasks.length == 0" class="container mx-auto mt-32 mb-64 flex flex-col items-center justify-center">
+                <today-quote class="mx-8"></today-quote>
+            </div>
+        </transition>
 
-        <div v-if="yesterdayTasks.length > 0" class="font-bold text-sm m-4 mt-16 text-grey-darker dark:text-grey-dark">
-            <i class="feather icon-chevron-left mr-2"></i>
-            From yesterday
-        </div>
-        <tasks-list :tasks="yesterdayTasks" :filter="false"></tasks-list>
+        <tasks-list @item-click="$emit('item-click', $event)" :tasks="tasks" :filter="false"></tasks-list>
 
-        <div v-if="earlierTasks.length > 0" class="font-bold text-sm m-4 mt-8 text-grey-darker dark:text-grey-dark">
-            <i class="feather icon-chevrons-left mr-2"></i>
-            Earlier
-        </div>
-        <tasks-list :tasks="earlierTasks" :filter="false"></tasks-list>
+        <transition name="opacity">
+            <div v-if="tasks.length > 0" class="flex flex-col items-center justify-center mt-16">
+                <div @click="showModal('today-suggestions-modal')" class=" text-sm text-blue dark:text-blue-light px-4 py-3 font-bold tracking-wide uppercase select-none cursor-pointer">
+                    <i class="feather icon-compass mr-2"></i> Suggestions
+                </div>
+            </div>
+        </transition>
 
-        <tasks-placeholder image="/img/today_done.svg" v-if="tasks.length < 1 && yesterdayTasks.length < 1 && earlierTasks.length < 1">
-            Everything is done for today.
-            <div slot="subtitle">Now you're free!</div>
-        </tasks-placeholder>
+        <today-suggestions-modal @hide="hideModal('today-suggestions-modal')" :state="modalState('today-suggestions-modal')"></today-suggestions-modal>
     </div>
 </template>
 
 <script>
-import store from '@/mixins/store'
+import { hasModals } from '@/mixins'
 
 import TasksList from '@c/tasks/List'
-import TasksPlaceholder from '@c/tasks/Placeholder'
+import TodayQuote from '@c/today/Quote'
+import TodaySuggestionsModal from '@c/today/suggestions/Modal'
 
 export default {
-    components: { TasksList, TasksPlaceholder },
-    mixins: [ 
-        store({
-            getters: {
-                _findTasks: 'tasks/currentFind'
-            }
-        }) 
-    ],
-    methods: {
-        findTasks(...args) {
-            return this._findTasks(...args).data.filter(task => !task.isDone())
-        }
-    },
+    components: { TasksList, TodayQuote },
+    mixins: [ hasModals({ TodaySuggestionsModal }) ],
     computed: {
-        tasksDate() {
-            return moment().format('YYYY-MM-DD')
-        },
-        yesterdayTasksDate() {
-            return moment().subtract(1, 'day').format('YYYY-MM-DD')
-        },
         tasks() {
-            return this.findTasks({query: { today: this.tasksDate }})
+            return this.$store.getters['tasks/today'].data
         },
-        yesterdayTasks() {
-            return this.findTasks({ query: { today: this.yesterdayTasksDate } })
+        openTasks() {
+            return this.tasks.filter(task => !task.isDone())
         },
-        earlierTasks() {
-            return this.findTasks({ query: { today: { $ne: null, $nin: [ this.tasksDate, this.yesterdayTasksDate ] } } })
-        }
     }
 }
 </script>
