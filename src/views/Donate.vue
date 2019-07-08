@@ -17,7 +17,7 @@
             <div class="flex flex-col md:flex-row items-center justify-center -mt-32 mx-4 mb-8">
 
                 <transition name="opacity-slide-up" appear>
-                    <div class="shadow-2xl overflow-hidden bg-white rounded-lg md:rounded-r-none mx-6 md:mx-0 wait-3">
+                    <div ref="ninja" class="shadow-2xl overflow-hidden bg-white rounded-lg md:rounded-r-none mx-6 md:mx-0 wait-3">
                         <div class="pt-8 pb-10 px-10">
                             <h4 class="text-blue uppercase text-xl tracking-wide mb-3 font-bold">Ninja</h4>
                             <p class="mb-4">
@@ -72,7 +72,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="cursor-pointer select-none p-8 flex flex-row items-center justify-center bg-blue hover:bg-blue-darker text-center text-white uppercase tracking-wide font-bold">
+                        <div ref="samurai" class="cursor-pointer select-none p-8 flex flex-row items-center justify-center bg-blue hover:bg-blue-darker text-center text-white uppercase tracking-wide font-bold">
                             Donate
                             <i class="feather icon-chevron-right ml-2"></i>
                         </div>
@@ -111,24 +111,66 @@ import TodayQuote from '@c/today/Quote'
 import TodayProgress from '@c/today/Progress'
 import TasksDetailModal from '@c/tasks/DetailModal'
 
+var stripe = Stripe('pk_test_skuFEKk7Hjq2nqdRkWFcda7c00hkDhu1Vh');
+
 export default {
-    components: { TasksList, Topbar, DayStartPlaceholder, TodayQuote, TodayProgress },
-    mixins: [ 
-        themeColor({ dark: 'black-deep', light: 'white' }),
-        hasModals({ TodaySuggestionsModal, TasksDetailModal }),
-        colorfunction
-    ],
-    data: () => ({ progress: 0.5 }),
-    computed: {
-        tasks() {
-            return this.$store.getters['tasks/today'].data
+    components: { Topbar },
+    methods: {
+        initSamurai() {
+            this.$refs.samurai.addEventListener('click', function () {
+                // When the customer clicks on the button, redirect
+                // them to Checkout.
+                stripe.redirectToCheckout({
+                    items: [{plan: 'plan_FOsoJANNPTvJCs', quantity: 1}],
+
+                    // Do not rely on the redirect to the successUrl for fulfilling
+                    // purchases, customers may not always reach the success_url after
+                    // a successful payment.
+                    // Instead use one of the strategies described in
+                    // https://stripe.com/docs/payments/checkout/fulfillment
+                    successUrl: window.location.protocol + '//' + window.location.host + '/#/donate/success',
+                    cancelUrl: window.location.protocol + '//' + window.location.host + '/#/donate/canceled',
+                })
+                .then(function (result) {
+                    if (result.error) {
+                        // If `redirectToCheckout` fails due to a browser or network
+                        // error, display the localized error message to your customer.
+                        var displayError = document.getElementById('error-message');
+                        displayError.textContent = result.error.message;
+                    }
+                });
+            });
         },
-        openTasks() {
-            return this.tasks.filter(task => !task.isDone())
-        },
-        isDetailOpen() {
-            return this.$route.name == 'Today.Detail'
+        initNinja() {
+            this.$refs.ninja.addEventListener('click', function () {
+                // When the customer clicks on the button, redirect
+                // them to Checkout.
+                stripe.redirectToCheckout({
+                    items: [{sku: 'sku_FOsgR6BmeEb7Cj', quantity: 1}],
+                    submitType: 'donate',
+
+                    // Do not rely on the redirect to the successUrl for fulfilling
+                    // purchases, customers may not always reach the success_url after
+                    // a successful payment.
+                    // Instead use one of the strategies described in
+                    // https://stripe.com/docs/payments/checkout/fulfillment
+                    successUrl: window.location.protocol + '//' + window.location.host + '/#/donate/success',
+                    cancelUrl: window.location.protocol + '//' + window.location.host + '/#/donate/canceled',
+                })
+                .then(function (result) {
+                    if (result.error) {
+                        // If `redirectToCheckout` fails due to a browser or network
+                        // error, display the localized error message to your customer.
+                        var displayError = document.getElementById('error-message');
+                        displayError.textContent = result.error.message;
+                    }
+                });
+            });
         }
     },
+    mounted() {
+        this.initSamurai()
+        this.initNinja()
+    }
 }
 </script>
