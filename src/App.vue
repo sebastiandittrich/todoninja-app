@@ -1,6 +1,6 @@
 <template>
   <div id="app" :class="dark ? 'dark' : ''" class="h-full overflow-auto bg-white dark:bg-black absolute inset-0 lg:-z-20">
-    <router-view v-if="!splashscreenVisible" class="lg:-z-20 h-full"/>
+    <router-view v-if="!splashscreenVisible" class="lg:-z-20 min-h-full"/>
     <transition name="splashscreen" appear>
       <splashscreen v-if="splashscreenVisible" class="absolute inset-0"></splashscreen>
     </transition>

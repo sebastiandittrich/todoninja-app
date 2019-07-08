@@ -33,16 +33,7 @@
         </div>
 
         <!-- Navigation -->
-        <div class="flex flex-col items-stretch justify-start text-grey-darkest dark:text-grey-lightest mb-8">
-          <div class="mx-6 cursor-pointer select-none mb-8" @click="$router.push('/summary')">
-            <i class="feather icon-pie-chart mr-4"></i>
-            Summary
-          </div>
-          <div class="mx-6 cursor-pointer select-none" @click="$router.push('/settings')">
-            <i class="feather icon-settings mr-4"></i>
-            Settings
-          </div>
-        </div>
+        <navigation-more-list class="text-grey-darkest dark:text-grey-lightest mb-8"></navigation-more-list>
 
       </div>
 
@@ -124,10 +115,11 @@ import SelectList from '@c/home/select/List'
 import SelectItem from '@c/home/select/Item'
 import WorkspacePresenter from '@c/home/WorkspacePresenter'
 import TodayCircle from '@c/today/Circle'
+import NavigationMoreList from '@c/navigation/more/List'
 
 export default {
   extends: Base,
-  components: {  NavigationItem, NavigationSidebar, TasksToday, SelectList, SelectItem, WorkspacePresenter, TodayCircle },
+  components: {  NavigationItem, NavigationSidebar, TasksToday, SelectList, SelectItem, WorkspacePresenter, TodayCircle, NavigationMoreList },
   mixins: [
     dependsOnTheme,
     store({

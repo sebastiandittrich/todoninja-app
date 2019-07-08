@@ -1,6 +1,6 @@
 <template>
     <transition name="opacity-slide-up">
-        <div class="bg-grey-lighter dark:bg-grey-darker overflow-auto">
+        <div class="bg-grey-lighter dark:bg-grey-darker">
             <!-- Header Bar -->
             <div>
                 <div class="p-4 flex flex-row items-center justify-start text-2xl mx-auto container">

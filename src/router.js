@@ -59,6 +59,11 @@ const router = new Router({
       ]
     },
     {
+      path: '/donate',
+      name: 'Donate',
+      component: page('Donate'),
+    },
+    {
       path: '/settings',
       name: 'Settings',
       component: page('Settings'),
