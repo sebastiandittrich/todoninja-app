@@ -71,8 +71,8 @@
               <div :class="isDo ? 'font-bold' : ' text-grey-darkest dark:text-grey'">
                 Do
               </div>
-              <div :class="isDo ? '' : 'opacity-50'" class="rounded-full bg-blue-lightest dark:bg-blue-darker dark:text-blue-light text-blue px-2 py-1 ml-2 font-bold text-xs">
-                {{ tasksCount }}
+              <div :class="{ 'opacity-0': !isDo }" :style="{ transform: !isDo ? 'translateX(-25%)' : '' }" class="transition rounded-full bg-blue-lightest dark:bg-blue-darker dark:text-blue-light text-blue px-2 py-1 ml-2 font-bold text-xs">
+                {{ doCount }}
               </div>
             </div>
             <div @click="setView('all')" :class="isAll ? 'border-blue dark:border-blue-light' : 'border-transparent'" class="border-b-3 flex flex-row items-center pb-6 cursor-pointer select-none ml-8">
@@ -80,8 +80,8 @@
               <div :class="isAll ? 'font-bold' : 'text-grey-darkest dark:text-grey'">
                 All
               </div>
-              <div :class="isAll ? '' : 'opacity-50'" class="rounded-full bg-blue-lightest dark:bg-blue-darker dark:text-blue-light text-blue px-2 py-1 ml-2 font-bold text-xs">
-                {{ tasksCount }}
+              <div :class="{ 'opacity-0': !isAll }" :style="{ transform: !isAll ? 'translateX(-25%)' : '' }" class="transition rounded-full bg-blue-lightest dark:bg-blue-darker dark:text-blue-light text-blue px-2 py-1 ml-2 font-bold text-xs">
+                {{ allCount }}
               </div>
             </div>
           </div>
@@ -140,8 +140,11 @@ export default {
     })
   ],
   computed: {
-    tasksCount() {
-      return this.$store.getters['tasks/currentFind']().data.length
+    doCount() {
+      return this.$store.getters['tasks/currentFind']().data.filter(task => task.isDo()).length
+    },
+    allCount() {
+      return this.$store.getters['tasks/currentFind']().data.filter(task => !task.isDone()).length
     },
   },
 
