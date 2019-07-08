@@ -1,5 +1,5 @@
 <template>
-    <progress-circle :total="{ name: 'Today', value: this.total.length }" :data="[ { name: 'Done', value: this.done.length } ]" :completed="progress >= 1" :radius="50" :stroke="8"></progress-circle>
+    <progress-circle :total="{ name: 'Today', value: this.total.length || 1 }" :data="[ { name: 'Done', value: this.done.length } ]" :completed="progress >= 1" :radius="50" :stroke="8"></progress-circle>
 </template>
 
 <script>

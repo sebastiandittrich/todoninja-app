@@ -38,7 +38,7 @@ export default function(data, { store, Model, Models }) {
             return this.state === States.waiting
         },
         isDo() {
-            return this.state == States.do || this.isDeadlineToday() || this.isDeadlineOver()
+            return !this.isDone() && (this.state == States.do || this.isDeadlineToday() || this.isDeadlineOver())
         },
         hasDeadline() {
             return this.deadline != null && this.deadline.length > 0
