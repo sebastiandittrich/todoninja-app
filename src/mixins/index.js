@@ -12,6 +12,7 @@ import store from './store'
 import themeColor from './themeColor'
 import color from './color'
 import colorfunction from './colorfunction'
+import dependsOnTheme from './dependsOnTheme'
 
 export { 
     color,
@@ -28,4 +29,5 @@ export {
     requiresPush,
     sameWatcher,
     store,
+    dependsOnTheme,
 }

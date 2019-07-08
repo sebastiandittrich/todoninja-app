@@ -31,10 +31,14 @@ export default {
     },
 
     getIcon() {
-        return this.isInbox() ? 'icon-inbox' : 'icon-home'
+        return this.isInbox() ? 'icon-inbox' : (this.icon || 'icon-home')
     },
 
     isInbox() {
         return this.id === null
+    },
+
+    isToday() {
+        return this.id == 'today'
     }
 }

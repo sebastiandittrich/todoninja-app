@@ -1,6 +1,25 @@
 import Vue from 'vue';
-import Router from 'vue-router';
+import BaseRouter from 'vue-router';
 import store from '@/store'
+import merge from 'deepmerge'
+
+class Router extends BaseRouter {
+  mergeRoutes(base, extension) {
+    if(extension.name) {
+      const { name, params, query } = base
+      return merge({ name, params, query }, extension)
+    } else {
+      const { path, query } = base
+      return merge({ path, query }, extension)
+    }
+  }
+  softPush(route, ...args) {
+    return this.push(this.mergeRoutes(this.currentRoute, route), ...args)
+  }
+  softReplace(route, ...args) {
+    return this.replace(this.mergeRoutes(this.currentRoute, route), ...args)
+  }
+}
 
 Vue.use(Router);
 

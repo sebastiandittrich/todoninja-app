@@ -10,7 +10,7 @@
         <div class="font-bold text-sm md:text-base mt-8">State</div>
         <div class="mt-2 overflow-x-auto -mx-8 md:-mx-6 text-grey-darker">
             <div class="flex flex-row items-center justify-start pb-2 mx-8 md:mx-6">
-                <div v-for="state of State.states" :key="state.state" @click="stateClick(state)" :class="states.includes(state.state) ? 'border-blue text-white bg-blue' : 'border-grey-lighter md:border-grey'" class="rounded-lg p-2 border-2 mr-2 whitespace-no-wrap transition cursor-pointer select-none">
+                <div v-for="state of State.states" :key="state.state" @click="stateClick(state)" :class="states.includes(state.state) ? 'border-blue text-white bg-blue dark:text-blue-darkest font-bold dark:border-blue-light dark:bg-blue-light' : 'border-grey-lighter dark:border-grey-darker'" class="rounded-lg p-2 border-2 mr-2 whitespace-no-wrap transition cursor-pointer select-none">
                     {{ state.name }}
                 </div>
             </div>

@@ -16,7 +16,7 @@
         <div class="p-6 relative" :class="task.workspace.isInbox() ? 'inbox-pattern border-b border-grey-light dark:border-grey-darkest' : 'bg-blue-lightest dark:bg-black-deep'">
             <div class="flex flex-row items-center justify-between mb-6 text-2xl">
                 <!-- Back button -->
-                <i v-if="replaceOnClose" @click="$router.replace('/tasks')" class="feather icon-x cursor-pointer select-none"></i>
+                <i v-if="replaceOnClose" @click="$router.softReplace({ path: '/tasks' })" class="feather icon-x cursor-pointer select-none"></i>
                 <i v-else @click="$router.go(-1)" class="feather icon-chevron-left cursor-pointer select-none"></i>
 
                 <div :class="`text-${task.workspace.getColor()}-darker dark:text-${task.workspace.getColor()}-lighter`" class="flex flex-row items-center text-sm cursor-pointer select-none" @click="showModal('workspaces-picker', $event)">
@@ -219,7 +219,7 @@ export default {
                 this.task = (await this.getTask(parseInt(this.id)))
             } else {
                 this.mode = 'create'
-                this.task = new this.$FeathersVuex.Task({ workspaceId: this.currentWorkspace.id, today: this.today ? new Date().toString() : null })
+                this.task = new this.$FeathersVuex.Task({ workspaceId: this.workspace, today: this.today ? new Date().toString() : null })
             }
         }
 
@@ -245,6 +245,11 @@ export default {
         id: function() {
             this.fetchData()
             this.afterEnter() 
+        },
+        today: function(to) {
+            if(this.isCreate && to != this.task.isToday()) {
+                this.task.toggleToday()
+            }
         }
     }
 }

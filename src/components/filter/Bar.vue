@@ -5,7 +5,7 @@
                 <i class="feather icon-bar-chart-2 cursor-pointer mr-2 text-base transition"></i>
                 <!-- Order By -->
                 <transition name="opacity">
-                    <span v-if="orderBy.properties.length > 0">
+                    <span v-if="orderBy.properties.length > 0" class="cursor-pointer select-none">
                         {{ detailedOrderBy.filter(order => order.name == orderBy.properties[0])[0].written_name }}
                     </span>
                 </transition>

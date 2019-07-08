@@ -217,6 +217,27 @@ button:focus {
     z-index: -10
 }
 
+@screen md {
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent; 
+    }
+    ::-webkit-scrollbar-thumb {
+        @apply bg-grey-light
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-grey-dark
+    }    
+    #app.dark ::-webkit-scrollbar-thumb {
+        @apply bg-grey-darkest
+    }
+    #app.dark ::-webkit-scrollbar-thumb:hover {
+        @apply bg-grey-light
+    }    
+}
+
 /* Experiment */
 /* * {
     transform: translateX(-5px)translateY(-5px);
