@@ -1,12 +1,14 @@
 <template>
-  <div>
-    <div class="lg:hidden">
-      <mobile v-bind="$attrs"></mobile>
+  <transition name="opacity-slide-up">
+    <div>
+      <div class="lg:hidden">
+        <mobile v-bind="$attrs"></mobile>
+      </div>
+      <div class="hidden lg:block">
+        <desktop v-bind="$attrs"></desktop>
+      </div>
     </div>
-    <div class="hidden lg:block">
-      <desktop v-bind="$attrs"></desktop>
-    </div>
-  </div>
+  </transition>
 </template>
 
 <script>
