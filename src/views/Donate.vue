@@ -101,76 +101,36 @@
 
 
 <script>
-import { themeColor, hasModals, colorfunction } from '@/mixins'
+import { themeColor } from '@/mixins'
 
-import TasksList from '@c/tasks/List'
-import TodaySuggestionsModal from '@c/today/suggestions/Modal'
 import Topbar from '@c/Topbar'
-import DayStartPlaceholder from '@c/today/DayStartPlaceholder'
-import TodayQuote from '@c/today/Quote'
-import TodayProgress from '@c/today/Progress'
-import TasksDetailModal from '@c/tasks/DetailModal'
-
-var stripe = Stripe('pk_test_skuFEKk7Hjq2nqdRkWFcda7c00hkDhu1Vh');
 
 export default {
     components: { Topbar },
+    mixins: [ themeColor('blue') ],
     methods: {
-        initSamurai() {
-            this.$refs.samurai.addEventListener('click', function () {
-                // When the customer clicks on the button, redirect
-                // them to Checkout.
-                stripe.redirectToCheckout({
-                    items: [{plan: 'plan_FOsoJANNPTvJCs', quantity: 1}],
-
-                    // Do not rely on the redirect to the successUrl for fulfilling
-                    // purchases, customers may not always reach the success_url after
-                    // a successful payment.
-                    // Instead use one of the strategies described in
-                    // https://stripe.com/docs/payments/checkout/fulfillment
-                    successUrl: window.location.protocol + '//' + window.location.host + '/#/donate/success',
-                    cancelUrl: window.location.protocol + '//' + window.location.host + '/#/donate/canceled',
-                })
-                .then(function (result) {
-                    if (result.error) {
-                        // If `redirectToCheckout` fails due to a browser or network
-                        // error, display the localized error message to your customer.
-                        var displayError = document.getElementById('error-message');
-                        displayError.textContent = result.error.message;
+        async checkoutNinja() {
+            await this.$store.dispatch('stripe/redirectToCheckout', { 
+                submitType: 'donate',
+                items: [
+                    {
+                        sku: 'sku_FOsgR6BmeEb7Cj',
+                        quantity: 1
                     }
-                });
-            });
+                ],
+            })
         },
-        initNinja() {
-            this.$refs.ninja.addEventListener('click', function () {
-                // When the customer clicks on the button, redirect
-                // them to Checkout.
-                stripe.redirectToCheckout({
-                    items: [{sku: 'sku_FOsgR6BmeEb7Cj', quantity: 1}],
-                    submitType: 'donate',
-
-                    // Do not rely on the redirect to the successUrl for fulfilling
-                    // purchases, customers may not always reach the success_url after
-                    // a successful payment.
-                    // Instead use one of the strategies described in
-                    // https://stripe.com/docs/payments/checkout/fulfillment
-                    successUrl: window.location.protocol + '//' + window.location.host + '/#/donate/success',
-                    cancelUrl: window.location.protocol + '//' + window.location.host + '/#/donate/canceled',
-                })
-                .then(function (result) {
-                    if (result.error) {
-                        // If `redirectToCheckout` fails due to a browser or network
-                        // error, display the localized error message to your customer.
-                        var displayError = document.getElementById('error-message');
-                        displayError.textContent = result.error.message;
+        async checkoutSamurai() {
+            await this.$store.dispatch('stripe/redirectToCheckout', { 
+                submitType: 'donate',
+                items: [
+                    {
+                        plan: 'plan_FOsoJANNPTvJCs',
+                        quantity: 1
                     }
-                });
-            });
-        }
+                ],
+            })
+        },   
     },
-    mounted() {
-        this.initSamurai()
-        this.initNinja()
-    }
 }
 </script>

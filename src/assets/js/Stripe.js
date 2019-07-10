@@ -1,0 +1,1 @@
+export default Stripe('pk_test_skuFEKk7Hjq2nqdRkWFcda7c00hkDhu1Vh');
