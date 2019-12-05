@@ -1,0 +1,5 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { "namespace": "android_app", "package_name": "com.dittrich.todoninja",
+               "sha256_cert_fingerprints": ["24:6A:4F:F9:19:98:5E:4D:8F:D3:71:01:95:75:8C:0B:91:04:96:63:2C:EE:07:37:EA:1C:9B:FB:3C:36:95:98"] }
+}]
