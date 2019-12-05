@@ -35,7 +35,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="cursor-pointer select-none p-6 flex flex-row items-center justify-center bg-grey-lighter hover:bg-grey-lightest text-center text-blue uppercase tracking-wide font-bold">
+                        <div @click="checkoutNinja" class="cursor-pointer select-none p-6 flex flex-row items-center justify-center bg-grey-lighter hover:bg-grey-lightest text-center text-blue uppercase tracking-wide font-bold">
                             Donate
                             <i class="feather icon-chevron-right ml-2"></i>
                         </div>
@@ -72,7 +72,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div ref="samurai" class="cursor-pointer select-none p-8 flex flex-row items-center justify-center bg-blue hover:bg-blue-darker text-center text-white uppercase tracking-wide font-bold">
+                        <div @click="checkoutSamurai" class="cursor-pointer select-none p-8 flex flex-row items-center justify-center bg-blue hover:bg-blue-darker text-center text-white uppercase tracking-wide font-bold">
                             Donate
                             <i class="feather icon-chevron-right ml-2"></i>
                         </div>
@@ -112,6 +112,7 @@ export default {
         async checkoutNinja() {
             await this.$store.dispatch('stripe/redirectToCheckout', { 
                 submitType: 'donate',
+                clientReferenceId: this.$store.state.auth.user.id.toString(),
                 items: [
                     {
                         sku: 'sku_FOsgR6BmeEb7Cj',
@@ -122,7 +123,6 @@ export default {
         },
         async checkoutSamurai() {
             await this.$store.dispatch('stripe/redirectToCheckout', { 
-                submitType: 'donate',
                 items: [
                     {
                         plan: 'plan_FOsoJANNPTvJCs',
