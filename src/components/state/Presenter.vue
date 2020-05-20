@@ -10,7 +10,7 @@
                     <div class="font-bold text-sm">
                         {{ activeState.name }} {{ value.isWaiting() ? 'for' : null }}
                     </div>
-                    <div v-if="value.state === 1" class="flex flex-row items-start justify-start"> <!-- Was postponed, is now do again -->
+                    <div v-if="value.state === 1" class="flex flex-row items-center justify-start"> <!-- Was postponed, is now do again -->
                       <i class="feather icon-chevrons-right text-grey-darkest"></i>
                       <div class="text-sm text-grey-darker">
                         {{ value.humanDeadline() }}
