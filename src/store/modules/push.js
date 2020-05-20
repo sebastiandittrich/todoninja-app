@@ -54,7 +54,7 @@ export default {
         },
     },
     actions: {
-    
+
         async sendToServer({ dispatch, state }) {
             await dispatch('initialize')
             const key = state.subscription.getKey('p256dh')
@@ -64,16 +64,18 @@ export default {
                 public_key: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
                 auth_token: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null
             }
+            console.log('here i am')
             await dispatch('push-subscriptions/create', data, { root: true }).catch(() => {
+              console.log('and faiiled')
                 state.subscription.unsubscribe()
             })
         },
-    
+
         async deactivate({ dispatch, state }) {
             await state.subscription && state.subscription.unsubscribe()
             dispatch('initialize')
         },
-    
+
         async activate({ dispatch, state, getters }) {
             if(state.subscription === null && state.available) {
                 await state.pushManager.subscribe({
@@ -85,9 +87,9 @@ export default {
             } else {
                 throw new Error('Push is not supported')
             }
-            
+
         },
-    
+
         async initialize({ commit }) {
             if( ! ('serviceWorker' in navigator) ) {
                 commit('setAvailable', false)

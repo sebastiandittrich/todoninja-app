@@ -9,19 +9,21 @@
                 <transition name="expand">
                     <div class="text-sm font-light text-grey-darker dark:text-grey flex flex-row items-center flex-no-wrap info overflow-hidden" v-if="!task.isDone()">
                         <div>
-                            {{ States.states.filter(state => state.state == task.state)[0].name }}
+                            {{ States.states.filter(state => state.state == task.getState())[0].name }}
                         </div>
-                        <div v-if="task.isDeadlineToday()" class="ml-1">
-                            &bull;
-                            <span class="text-blue dark:text-blue-light font-bold">
-                                Today
-                            </span>
-                        </div>
-                        <div v-if="task.isDeadlineOver()" class="ml-1">
-                            &bull;
-                            <span class="text-orange-light font-bold">
-                                {{ task.deadlineMoment().fromNow() }} 
-                            </span>
+                        <div v-if="task.state != States.postponed">
+                          <div v-if="task.isDeadlineToday()" class="ml-1">
+                              &bull;
+                              <span class="text-blue dark:text-blue-light font-bold">
+                                  Today
+                              </span>
+                          </div>
+                          <div v-if="task.isDeadlineOver()" class="ml-1">
+                              &bull;
+                              <span class="text-orange-light font-bold">
+                                  {{ task.deadlineMoment().fromNow() }}
+                              </span>
+                          </div>
                         </div>
                         <div v-if="task.remindAtMoment() && task.remindAtMoment().isAfter()" class="ml-1">
                             &bull;
