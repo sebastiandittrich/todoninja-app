@@ -132,7 +132,7 @@ export default {
                 user: state => state.auth.user || {},
             },
             mutations: {
-                setDark: 'theme/setDark'
+                setDark: 'theme/setDark',
             },
             actions: {
                 logout: 'auth/logout',

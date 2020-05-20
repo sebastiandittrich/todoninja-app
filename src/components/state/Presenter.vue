@@ -10,7 +10,13 @@
                     <div class="font-bold text-sm">
                         {{ activeState.name }} {{ value.isWaiting() ? 'for' : null }}
                     </div>
-                    <div class="font-light text-lg">
+                    <div v-if="value.state === 1" class="flex flex-row items-start justify-start"> <!-- Was postponed, is now do again -->
+                      <i class="feather icon-chevrons-right text-grey-darkest"></i>
+                      <div class="text-sm text-grey-darker">
+                        {{ value.humanDeadline() }}
+                      </div>
+                    </div>
+                    <div v-else class="font-light text-lg">
                         {{ value.isWaiting() ? value.waiting_for : value.humanDeadline() }}
                     </div>
                 </div>
@@ -37,7 +43,7 @@
         <personpicker @input="$emit('change', $event)" v-model="value.waiting_for" :state="modalState('personpicker')" @hide="hideModal('personpicker')"></personpicker>
         <datepicker @input="$emit('change', $event)" v-model="value.deadline" :state="modalState('datepicker')" @hide="hideModal('datepicker')"></datepicker>
     </div>
-</template> 
+</template>
 
 <style scoped>
     .icon-presenter {
@@ -72,7 +78,7 @@ export default {
     }),
     computed: {
         activeState() {
-            return this.states.filter(state => this.value.state == state.state)[0]
+            return this.states.filter(state => this.value.getState() == state.state)[0]
         },
     }
 }

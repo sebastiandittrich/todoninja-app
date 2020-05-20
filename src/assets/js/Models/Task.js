@@ -12,6 +12,7 @@ export default function(data, { store, Model, Models }) {
         deadline: null,
         today: null,
         tags: [],
+        remindAt: null,
 
         get workspace() {
             return store.getters['workspaces/withStandard'].filter(workspace => workspace.id === this.workspaceId)[0] || store.getters['workspaces/getStandard']
@@ -19,18 +20,27 @@ export default function(data, { store, Model, Models }) {
         get fullTags() {
             return Models.Workspace.findInStore({ query: { id: { $in: this.tags } } }).data
         },
-    
+
         get deadlineAsDate() {
             if(!this.deadline || this.deadline instanceof Date) {
                 return this.deadline
             }
-    
+
             return new Date(this.deadline)
         },
         set deadlineAsDate(value) {
             return this.deadline = value
         },
-    
+
+        getState() {
+          if(this.isDo()) {
+            // Check for postponed tasks, that are now do again
+            return 0
+          } else {
+            return this.state
+          }
+        },
+
         isDone() {
             return this.doneAt != null
         },
@@ -61,7 +71,7 @@ export default function(data, { store, Model, Models }) {
                 .replace(/((https|http):\/\/)?[\w]+(\.[^\s.,;]+)+/g, match => `<a target="_blank" href="${match.startsWith('http') ? match : `http://${match}`}" class="link">${match}</a>`)
                 .replace(/\n/g, '<br>')
         },
-    
+
         toggleState() {
             if(!this.isDone()){
                 this.doneAt = new Date()
